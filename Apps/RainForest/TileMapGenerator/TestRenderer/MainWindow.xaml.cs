@@ -1,0 +1,45 @@
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
+
+namespace TestRenderer
+{
+    /// <summary>
+    /// Interaction logic for MainWindow.xaml
+    /// </summary>
+    public partial class MainWindow : Window
+    {
+        public MainWindow()
+        {
+            InitializeComponent();
+        }
+
+        protected override void OnInitialized(EventArgs e)
+        {
+            var mapImage = File.ReadAllBytes("map256.raw");
+            var heightmapImage = File.ReadAllBytes("heightMap.raw");
+
+            RawImage.ImageSource = heightmapImage;
+
+            //LODRenderer.ImageSource = mapImage;
+            //LODRenderer.LevelOfDetail = 8;
+
+            HMRenderer.ImageSource = heightmapImage;
+            HMRenderer.LevelOfDetail = 8;
+
+            base.OnInitialized(e);
+        }
+    }
+}

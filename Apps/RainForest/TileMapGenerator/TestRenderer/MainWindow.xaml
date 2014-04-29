@@ -1,0 +1,11 @@
+﻿<Window x:Class="TestRenderer.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:testRenderer="clr-namespace:TestRenderer"
+        Title="MainWindow" Height="512" Width="512">
+    <ItemsControl>
+        <testRenderer:RawImageCanvas x:Name="RawImage" />
+        <testRenderer:TileRenderer x:Name="LODRenderer" />
+        <testRenderer:HeightmapRenderer x:Name="HMRenderer" />
+    </ItemsControl>
+</Window>

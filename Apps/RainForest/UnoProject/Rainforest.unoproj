@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<Project>
+  <References>
+    <PackageReference Name="Outracks.WowFactory" />
+    <PackageReference Name="Uno.Content.Utilities" />
+    <PackageReference Name="Uno.Designer" Version="0.1.0.0" />
+    <PackageReference Name="Uno.Geometry" Version="0.1.0.0" />
+    <PackageReference Name="Uno.Scenes" />
+    <PackageReference Name="Uno.UI" Version="0.1.0.0" />
+  </References>
+  <Files>
+    <UxFile Path="RainforestScene.ux" />
+    <SourceFile Path="Camera/CameraController.uno" />
+    <SourceFile Path="Camera/CameraOpacityAdjustingNode.uno" />
+    <SourceFile Path="Camera/CameraState.uno" />
+    <SourceFile Path="Materials/MapMaterial.uno" />
+    <SourceFile Path="Materials/SkyboxMaterial.uno" />
+    <SourceFile Path="Materials/WaterMaterial.uno" />
+    <SourceFile Path="Materials/WaterPlane.uno" />
+    <SourceFile Path="TileGeneration/ITileLodMapLoader.uno" />
+    <SourceFile Path="TileGeneration/LODMathUtils.uno" />
+    <SourceFile Path="TileGeneration/RainforestTileLodMapLoader.uno" />
+    <SourceFile Path="TileGeneration/Tile.uno" />
+    <SourceFile Path="TileGeneration/TileListGenerator.uno" />
+    <SourceFile Path="TileGeneration/TileManager.uno" />
+    <SourceFile Path="TileRenderer/ForestTileRenderer.uno" />
+    <SourceFile Path="TileRenderer/TileMeshBatcher.uno" />
+    <SourceFile Path="TileRenderer/TileRenderer.uno" />
+    <SourceFile Path="RainforestScene.ux.uno" />
+    <ExtraFile Path="Assets/100x100Tile.max" />
+    <ExtraFile Path="Assets/16x16Tile.max" />
+    <ExtraFile Path="Assets/4x1Plane.FBX" />
+    <ExtraFile Path="Assets/8x8Tile.max" />
+    <ExtraFile Path="Assets/AmbientColorMap - Copy.png" />
+    <ExtraFile Path="Assets/AmbientColorMap.png" />
+    <ExtraFile Path="Assets/AmbientColorMap2.png" />
+    <ExtraFile Path="Assets/AmbientColorMap3.png" />
+    <ExtraFile Path="Assets/backDrop.jpg" />
+    <ExtraFile Path="Assets/colorMap.png" />
+    <ExtraFile Path="Assets/colorMapTransparent.png" />
+    <ExtraFile Path="Assets/mapMesh.FBX" />
+    <ExtraFile Path="Assets/segoeui.ttf" />
+    <ExtraFile Path="Assets/Semi_Transparent_Background.png" />
+    <ExtraFile Path="Assets/shopped16x16.FBX" />
+    <ExtraFile Path="Assets/shopped32x32.FBX" />
+    <ExtraFile Path="Assets/shopped64x64.FBX" />
+    <ExtraFile Path="Assets/shopped8x8.FBX" />
+    <ExtraFile Path="Assets/Tree.FBX" />
+    <ExtraFile Path="Assets/trees16x16.FBX" />
+    <ExtraFile Path="Assets/trees32x32.FBX" />
+    <ExtraFile Path="Assets/trees8x8.FBX" />
+    <ExtraFile Path="Assets/water.FBX" />
+    <ExtraFile Path="Assets/water_texture.jpg" />
+    <StartupFile Path="RainforestScene.ux" />
+  </Files>
+</Project>

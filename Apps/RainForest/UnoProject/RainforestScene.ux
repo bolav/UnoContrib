@@ -1,0 +1,112 @@
+<Scene xmlns:ux="http://schemas.outracks.com/ux" xmlns:rf="RainForest" xmlns:usp="Uno.Scenes.Primitives" ux:ClassName="RainforestScene" AlwaysClear="false" ClearColor="1, 0, 0, 1" xmlns="Uno.Scenes, Uno.Styling, Uno.UI, Uno">
+  <Entity ux:Name="Sky">
+    <Transform Position="666.4228, 1014.106, -6.103516E-05" Scaling="750, 750, 750" ux:Name="Transform15" />
+    <usp:SphereRenderer ux:Name="Entity7SphereRenderer1">
+      <rf:SkyboxMaterial Color1="0.1568628, 0.6235294, 1" Color2="0.02745098, 0.05882353, 0.3843137" ux:Name="SkyboxMaterial1" />
+      <DefaultMaterial ux:AutoBind="false" ux:Name="DefaultMaterial3" />
+    </usp:SphereRenderer>
+  </Entity>
+  <Entity ux:Name="Water">
+    <Entity ux:Name="Entity10">
+      <Entity ux:Name="Entity11">
+        <Transform Position="69.52478, 17.24071, -0.4210091" RotationDegrees="0, 0, 0" Scaling="0.4785827, 0.4785827, 1" ux:Name="Transform14" />
+        <MeshRenderer ux:Name="MeshRenderer8">
+          <Mesh ux:Name="Mesh5" ux:MeshIndex="0" ux:Path="Assets/water.FBX" />
+        </MeshRenderer>
+      </Entity>
+    </Entity>
+    <MeshRenderer ux:Name="MeshRenderer7">
+      <rf:WaterMaterial WaterColor="0.2784314, 0.7647059, 0.9921569" SpecularColor="0.145098, 0.4313726, 0.5058824" ux:Name="WaterMaterial1" />
+    </MeshRenderer>
+    <Transform Position="-1784.243, -80.51132, -2.701447" Scaling="40, 67, 40" ux:Name="Transform9" />
+    <DefaultMaterial ux:AutoBind="false" DiffuseColor="0.2, 0.2627451, 0.6352941" SpecularColor="0.2705882, 0.3686275, 0.372549" ux:Name="DefaultMaterial2" />
+  </Entity>
+  <Entity ux:Name="MapMesh">
+    <Entity ux:Name="Entity8">
+      <Entity ux:Name="Entity9">
+        <MeshRenderer ux:Name="MeshRenderer6">
+          <Mesh ux:Name="Mesh4" ux:MeshIndex="0" ux:Path="Assets/mapMesh.FBX" />
+          <rf:MapMaterial LightCubeOffset="0, 0.2, 0" TintColor="0.6666667, 0.6666667, 0.6666667" ColormapFactor="2" DeadForestCenter="800, 1000, 0" DeadForestAngles="-45, -22" ux:Name="MapMaterial1">
+            <ux:PropertyBinding Destination="DeadForestCenter" SourceRef="ForestTileRenderer1" SourceProperty="DeadForestCenter" />
+            <ux:PropertyBinding Destination="DeadForestAngles" SourceRef="ForestTileRenderer1" SourceProperty="DeadForestAngles" />
+          </rf:MapMaterial>
+        </MeshRenderer>
+      </Entity>
+    </Entity>
+    <MeshRenderer ux:Name="MeshRenderer5">
+      <rf:MapMaterial ux:Ref="MapMaterial1" />
+    </MeshRenderer>
+    <Transform Position="998.183, 1019.561, -6.5" RotationDegrees="0, 0, 90" ux:Name="Transform1" />
+  </Entity>
+  <rf:TileManager LOD0="0" LOD1="0" LOD2="0" LOD3="0" LOD4="400" LOD5="30" LOD6="20" LOD7="8" FrustumCulling="true" ux:Name="TileManager1">
+    <Entity ux:Binding="Camera" ux:AutoBind="false" ux:Name="Camera1">
+      <Transform Position="1053.233, 1107.251, 69.36091" RotationDegrees="324.1908, 21.0067, 146.7227" ux:Name="Camera1Transform" />
+      <Frustum FovDegrees="70" Aspect="0.7245409" ZNear="1" ZFar="1000000" ux:Name="Camera1Frustum" />
+    </Entity>
+  </rf:TileManager>
+  <Entity ux:Name="Camera2">
+    <Frustum Aspect="0.9415584" ZFar="100000" ux:Name="Frustum1Frustum" />
+    <Transform Position="687.6742, 966.9754, 173.5935" RotationDegrees="24.46815, 39.70158, 63.487" ux:Name="Transform3" />
+  </Entity>
+  <Entity ux:Name="MapCenter">
+    <Transform Position="665, 1050, 30" RotationDegrees="0, 0, 0" ux:Name="Transform7" />
+  </Entity>
+  <Entity ux:Name="StateDeadForestPosition">
+    <Transform Position="479.6669, 1165.023, 5" RotationDegrees="0, 0, 0" ux:Name="Transform6" />
+  </Entity>
+  <Slider Minimum="0" Maximum="2" Value="1.2" X="0" Y="-400" Width="700" Height="56" Color="1, 1, 1, 0.4901961" ForegroundColor="1, 1, 1, 1" ux:Name="Slider2" />
+  <rf:ForestTileRenderer LightCubeOffset="0, 0, -0.7" ColormapFactor="0.25" FadeStart="250" FadeSpeed="0.02" CamFadeRadius="1" CamFadeSpeed="1" DeadForestCenter="800, 1000, 0" DeadForestAngles="-40, -20" RenderWireframe="false" RenderTile="true" ux:Name="ForestTileRenderer1">
+    <ux:PropertyBinding Destination="DeadForestCenter" SourceRef="Transform2" SourceProperty="Position" />
+    <Transform ux:Name="Transform4" />
+    <rf:TileManager ux:Binding="TileManager" ux:AutoBind="false" ux:Ref="TileManager1" />
+  </rf:ForestTileRenderer>
+  <Entity ux:Name="StateWelcomePosition">
+    <Transform Position="2394.742, 845.5275, 305.4177" ux:Name="Transform10" />
+  </Entity>
+  <Entity ux:Name="StateWelcomeTarget">
+    <Transform Position="695.0092, 991.2527, 0" ux:Name="Transform11" />
+  </Entity>
+  <Entity ux:Name="StateDeadForestTarget">
+    <Transform Position="354, 997, -29" ux:Name="Transform12" />
+  </Entity>
+  <Entity ux:Name="StateCircleMapPosition">
+    <Transform Position="1236, 1050, 20" ux:Name="Transform13" />
+  </Entity>
+  <rf:CameraController StateFader="1.093482" TargetBias="0.236517" PositionBias="0" ux:Name="CameraControl1">
+    <ux:PropertyBinding Destination="StateFader" SourceRef="Slider2" SourceProperty="Value" />
+    <rf:CameraState ux:Binding="States" Position="850, 1300, 1500" Radius="50" RotationSpeed="0.6" Target="700, 950, 0" ux:Name="StateWelcome">
+      <ux:PropertyBinding Destination="Position" SourceRef="Transform10" SourceProperty="Position" />
+      <ux:PropertyBinding Destination="Target" SourceRef="Transform11" SourceProperty="Position" />
+    </rf:CameraState>
+    <rf:CameraState ux:Binding="States" Position="44, 43, 22" Radius="88" RotationSpeed="0.5" ux:Name="StateDeadForest">
+      <ux:PropertyBinding Destination="Position" SourceRef="Transform6" SourceProperty="Position" />
+      <ux:PropertyBinding Destination="Target" SourceRef="Transform12" SourceProperty="Position" />
+    </rf:CameraState>
+    <rf:CameraState ux:Binding="States" Position="800, 900, 281" Radius="100" RotationSpeed="1" Target="400, 900, 0" ux:Name="StateCircleMap">
+      <ux:PropertyBinding Destination="Position" SourceRef="Transform13" SourceProperty="Position" />
+      <ux:PropertyBinding Destination="Target" SourceRef="Transform7" SourceProperty="Position" />
+    </rf:CameraState>
+    <Entity ux:Binding="Camera" ux:AutoBind="false" ux:Ref="Camera1" />
+  </rf:CameraController>
+  <Entity ux:Binding="Camera" ux:AutoBind="false" ux:Ref="Camera1" />
+  <Entity ux:AutoBind="false" ux:Name="Entity1">
+    <Entity ux:Name="Entity2">
+      <Entity ux:Name="Entity3">
+        <Transform Position="0, 0, 0" RotationDegrees="3.508355E-15, 0, 0" Scaling="1, 1, 1" ux:Name="Transform8" />
+        <MeshRenderer ux:Name="MeshRenderer2">
+          <Mesh ux:Name="Mesh1" ux:MeshIndex="1" ux:Path="Assets/Tree.FBX" />
+        </MeshRenderer>
+      </Entity>
+      <Entity ux:Name="Entity4">
+        <Transform Position="0, 0, 0" RotationDegrees="3.508355E-15, 0, 0" Scaling="1, 1, 1" ux:Name="Transform5" />
+        <MeshRenderer ux:Name="MeshRenderer3">
+          <Mesh ux:Name="Mesh2" ux:MeshIndex="0" ux:Path="Assets/Tree.FBX" />
+        </MeshRenderer>
+      </Entity>
+    </Entity>
+    <MeshRenderer ux:Name="MeshRenderer1">
+      <DefaultMaterial DiffuseColor="0.5584165, 0.1317433, 0.401017" ux:Name="DefaultMaterial1" />
+    </MeshRenderer>
+    <Transform Position="826.0264, 984.4445, -7.629395E-05" ux:Name="Transform2" />
+  </Entity>
+</Scene>
