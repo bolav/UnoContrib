@@ -1,0 +1,86 @@
+<Layouts>
+  <Node RefId="this" PanX="-935.191247427945" PanY="141.290955400756" RootX="10" RootY="50">
+    <Node RefId="Camera1" X="1080.62194448014" Y="119.01972401277" PanX="-69.1481552129082" PanY="120.581158879072" RootX="10" RootY="50">
+      <Node RefId="Camera1Frustum" X="339.941176470588" Y="7.61764705882354" RootX="10" RootY="50" />
+      <Node RefId="Camera1Transform" X="192.5" Y="100.117647058824" RootX="10" RootY="50" />
+    </Node>
+    <Node RefId="TileManager1" X="583.386968085106" Y="69.6322488291148" RootX="10" RootY="50" />
+    <Node RefId="Camera2" X="104.358701476542" Y="-238.359996924111" RootX="10" RootY="50">
+      <Node RefId="Frustum1Frustum" X="261.160172064777" Y="-144.518085159405" RootX="10" RootY="50" />
+      <Node RefId="Transform3" X="261.160172064777" Y="-144.518085159405" RootX="10" RootY="50" />
+    </Node>
+    <Node RefId="ForestTileRenderer1" X="469.510905724253" Y="-152.989846925822" RootX="10" RootY="50">
+      <Node RefId="Transform4" X="440.019781671816" Y="49.3025187940326" RootX="10" RootY="50" />
+    </Node>
+    <Node RefId="MapMesh" X="337.272766902063" Y="-184.342007289547" PanX="7" PanY="233" RootX="10" RootY="50">
+      <Node RefId="MeshRenderer5" X="150" RootX="10" RootY="50" />
+      <Node RefId="Transform1" X="150" Y="50" RootX="10" RootY="50" />
+      <Node RefId="Entity9" X="300" Y="100" PanX="43" PanY="270" RootX="10" RootY="50">
+        <Node RefId="Mesh4" X="300" RootX="10" RootY="50" />
+        <Node RefId="MeshRenderer6" X="150" PanX="73.249602918071" PanY="135.874104875639" RootX="10" RootY="50">
+          <Node RefId="MapMaterial1" RootX="10" RootY="50" />
+        </Node>
+      </Node>
+      <Node RefId="Entity8" X="150" Y="100" RootX="10" RootY="50" />
+    </Node>
+    <Node RefId="Water" X="213" Y="-173.176470588235" RootX="10" RootY="50">
+      <Node RefId="DefaultMaterial2" X="300" RootX="10" RootY="50" />
+      <Node RefId="MeshRenderer7" X="150" RootX="10" RootY="50">
+        <Node RefId="WaterMaterial1" RootX="10" RootY="50" />
+      </Node>
+      <Node RefId="Transform9" X="150" Y="50" RootX="10" RootY="50" />
+      <Node RefId="Entity11" X="300" Y="100" RootX="10" RootY="25">
+        <Node RefId="Transform14" X="150" RootX="10" RootY="50" />
+        <Node RefId="Mesh5" X="300" Y="50" RootX="10" RootY="50" />
+        <Node RefId="MeshRenderer8" X="150" Y="50" RootX="10" RootY="50" />
+      </Node>
+      <Node RefId="Entity10" X="150" Y="100" RootX="10" RootY="50" />
+    </Node>
+    <Node RefId="Sky" X="-12.9256382121974" Y="-191.178938732585" RootX="10" RootY="50">
+      <Node RefId="Transform15" X="296.766875156786" Y="-130.283216807452" RootX="10" RootY="50" />
+      <Node RefId="Entity7SphereRenderer1" X="496.766875156786" Y="30" RootX="10" RootY="50">
+        <Node RefId="DefaultMaterial3" X="496.766875156786" Y="30" RootX="10" RootY="50" />
+        <Node RefId="SkyboxMaterial1" RootX="10" RootY="50" />
+      </Node>
+    </Node>
+    <Node RefId="CameraControl1" X="806.075929780015" Y="-138.052026708005" RootX="10" RootY="50" />
+    <Node RefId="StateWelcome" X="1043.05465318427" Y="-159.222239473962" RootX="10" RootY="50" />
+    <Node RefId="MapCenter" X="1331.47137399321" Y="76.2710948944755" PanX="118" PanY="145" RootX="10" RootY="50">
+      <Node RefId="Transform7" X="306.471373993214" Y="-7.72890510552452" RootX="10" RootY="50" />
+    </Node>
+    <Node RefId="StateCircleMap" X="1047.47137399321" Y="2.27109489447548" RootX="10" RootY="50" />
+    <Node RefId="StateDeadForest" X="1042.50256648493" Y="-90.787816588778" RootX="10" RootY="50" />
+    <Node RefId="StateDeadForestPosition" X="1402.36944843097" Y="-67.5408080978095" PanX="-155" PanY="80" RootX="10" RootY="50">
+      <Node RefId="Transform6" X="1268.77529375766" Y="-61.969634770596" RootX="10" RootY="50" />
+    </Node>
+    <Node RefId="Slider2" X="929.416995348846" Y="-213.849068071809" RootX="10" RootY="50" />
+    <Node RefId="Entity1" X="626.652781583996" Y="-259.057824061387" PanX="-29" PanY="180" RootX="10" RootY="75">
+      <Node RefId="DefaultMaterial1" X="300" RootX="10" RootY="50" />
+      <Node RefId="MeshRenderer1" X="150" RootX="10" RootY="50" />
+      <Node RefId="Transform2" X="150" Y="50" RootX="10" RootY="50" />
+      <Node RefId="Entity3" X="300" Y="100" RootX="10" RootY="25">
+        <Node RefId="Transform8" X="150" RootX="10" RootY="50" />
+        <Node RefId="Mesh1" X="300" Y="50" RootX="10" RootY="50" />
+        <Node RefId="MeshRenderer2" X="150" Y="50" RootX="10" RootY="50" />
+      </Node>
+      <Node RefId="Entity4" X="300" Y="150" RootX="10" RootY="25">
+        <Node RefId="Transform5" X="150" RootX="10" RootY="50" />
+        <Node RefId="Mesh2" X="300" Y="50" RootX="10" RootY="50" />
+        <Node RefId="MeshRenderer3" X="150" Y="50" RootX="10" RootY="50" />
+      </Node>
+      <Node RefId="Entity2" X="150" Y="125" RootX="10" RootY="50" />
+    </Node>
+    <Node RefId="StateWelcomePosition" X="1402.52635401733" Y="-166.358909199446" PanX="269" PanY="54" RootX="10" RootY="50">
+      <Node RefId="Transform10" X="256.526354017327" Y="17.6410908005541" RootX="10" RootY="50" />
+    </Node>
+    <Node RefId="StateWelcomeTarget" X="1403.03455073864" Y="-113.940876412561" PanX="337" PanY="54" RootX="10" RootY="50">
+      <Node RefId="Transform11" X="198.034550738638" Y="13.0591235874393" RootX="10" RootY="50" />
+    </Node>
+    <Node RefId="StateDeadForestTarget" X="1402.7713689133" Y="-24.1314065919133" PanX="-221" PanY="51" RootX="10" RootY="50">
+      <Node RefId="Transform12" X="1482.7713689133" Y="-24.1314065919133" RootX="10" RootY="50" />
+    </Node>
+    <Node RefId="StateCircleMapPosition" X="1331.33351310138" Y="18.4164946265095" RootX="10" RootY="50">
+      <Node RefId="Transform13" X="1356.33351310138" Y="35.4164946265095" RootX="10" RootY="50" />
+    </Node>
+  </Node>
+</Layouts>
