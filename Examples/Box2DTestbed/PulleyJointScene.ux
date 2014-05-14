@@ -1,0 +1,4 @@
+<Scene xmlns:ux="http://schemas.outracks.com/ux" xmlns:tb="TowerBuilder" ux:ClassName="PulleyJointScene" xmlns="Uno.Scenes, Uno.Styling, Uno.UI, Uno">
+  <tb:PulleyJoint ux:Name="PulleyJoint1" />
+  <Style ux:Name="Style1" ux:StaticRef="Uno.UI.DefaultStyle.Style" />
+</Scene>
