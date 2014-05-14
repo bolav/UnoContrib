@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<Project>
+  <References>
+    <PackageReference Name="Uno.Content.Utilities" />
+    <PackageReference Name="Uno.Designer" />
+    <PackageReference Name="Uno.Physics.Box2D" Version="0.1.0.0" />
+    <PackageReference Name="Uno.Scenes" />
+    <PackageReference Name="Uno.Styling" />
+    <PackageReference Name="Uno.Tweening" />
+    <PackageReference Name="Uno.UI" />
+  </References>
+  <Files>
+    <UxFile Path="Level1.ux" />
+    <UxFile Path="Level2.ux" />
+    <SourceFile Path="AngryBlocks.uno" />
+    <SourceFile Path="Box2DMath.uno" />
+    <SourceFile Path="Box2DRenderer.uno" />
+    <SourceFile Path="DebugRenderer.uno" />
+    <SourceFile Path="Level1.ux.uno" />
+    <SourceFile Path="Level2.ux.uno" />
+    <SourceFile Path="PhysicsBall.uno" />
+    <SourceFile Path="PhysicsBlock.uno" />
+    <SourceFile Path="PhysicsEntity.uno" />
+    <SourceFile Path="PhysicsTriangle.uno" />
+    <StartupFile Path="Level2.ux" />
+  </Files>
+</Project>

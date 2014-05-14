@@ -1,0 +1,18 @@
+<AngryBlocks.AngryBlocks xmlns:ux="http://schemas.outracks.com/ux" xmlns:ab="AngryBlocks" ux:ClassName="Level1" xmlns="Uno.Scenes, Uno.Styling, Uno.UI, Uno">
+  <ab:PhysicsBall Radius="3" Position="16, -5" BodyType="Dynamic" MaxImpulse="5" ux:Name="Pig1" />
+  <ab:PhysicsBall Radius="3" Position="42, -5" BodyType="Dynamic" MaxImpulse="5" ux:Name="Pig11" />
+  <ab:PhysicsBall Radius="3" Color="0, 0.3294118, 1" Position="29, 11.5" BodyType="Dynamic" MaxImpulse="5" ux:Name="Pig" />
+  <ab:PhysicsBlock Dimensions="2, 2" Position="11, -6" BodyType="Dynamic" ux:Name="PhysicsBlock2" />
+  <ab:PhysicsBlock Dimensions="2, 2" Position="47, -6" BodyType="Dynamic" ux:Name="PhysicsBlock21" />
+  <ab:PhysicsBlock Dimensions="10, 1" Position="19, -9" Rotation="0" BodyType="Dynamic" ux:Name="PhysicsBlock1121" />
+  <ab:PhysicsBlock Dimensions="10, 1" Position="39, -9" Rotation="0" BodyType="Dynamic" ux:Name="PhysicsBlock112" />
+  <ab:PhysicsBlock Dimensions="10, 1" Position="18, -20" Rotation="90" BodyType="Dynamic" ux:Name="PhysicsBlock111" />
+  <ab:PhysicsBlock Dimensions="10, 1" Position="29, -20" Rotation="90" BodyType="Dynamic" ux:Name="PhysicsBlock1" />
+  <ab:PhysicsBlock Dimensions="10, 1" Position="40, -20" Rotation="90" BodyType="Dynamic" ux:Name="PhysicsBlock11" />
+  <ab:PhysicsBlock Dimensions="7, 1" Position="26, -1" Rotation="90" BodyType="Dynamic" ux:Name="PhysicsBlock112111" />
+  <ab:PhysicsBlock Dimensions="7, 1" Position="32, -1" Rotation="90" BodyType="Dynamic" ux:Name="PhysicsBlock11211" />
+  <ab:PhysicsBlock Dimensions="7, 1" Position="29, 7" Rotation="0" BodyType="Dynamic" ux:Name="PhysicsBlock1121111" />
+  <ab:PhysicsTriangle Dimensions="7, 4" Position="22, 8" BodyType="Dynamic" ux:Name="PhysicsTriangle11" />
+  <ab:PhysicsTriangle Dimensions="-7, 4" Position="29, 8" BodyType="Dynamic" ux:Name="PhysicsTriangle1" />
+  <Style ux:Name="Style1" ux:StaticRef="Uno.UI.DefaultStyle.Style" />
+</AngryBlocks.AngryBlocks>

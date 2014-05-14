@@ -1,0 +1,38 @@
+<AngryBlocks.AngryBlocks xmlns:ux="http://schemas.outracks.com/ux" xmlns:ab="AngryBlocks" ux:ClassName="Level2" xmlns="Uno.Scenes, Uno.Styling, Uno.UI, Uno">
+  <ab:PhysicsBall Radius="4" Position="7, -26" BodyType="Dynamic" MaxImpulse="5" ux:Name="PhysicsBall1" />
+  <ab:PhysicsBall Radius="2" Position="0, -28" BodyType="Dynamic" MaxImpulse="5" ux:Name="PhysicsBall11" />
+  <ab:PhysicsBlock Dimensions="1, 8" Position="-9, -22" BodyType="Dynamic" MaxImpulse="5" ux:Name="PhysicsBlock1" />
+  <ab:PhysicsBlock Dimensions="1, 8" Position="18, -22" BodyType="Dynamic" ux:Name="PhysicsBlock11" />
+  <ab:PhysicsBall Radius="2" Position="36, -18" BodyType="Dynamic" MaxImpulse="5" ux:Name="PhysicsBall111" />
+  <ab:PhysicsBlock Dimensions="4, 2" Position="34, -22" BodyType="Dynamic" ux:Name="PhysicsBlock212111" />
+  <ab:PhysicsTriangle Dimensions="-8, 8" Position="22, -28" BodyType="Dynamic" ux:Name="PhysicsTriangle2" />
+  <ab:PhysicsBlock Dimensions="4, 2" Position="42, -22" BodyType="Dynamic" ux:Name="PhysicsBlock21212" />
+  <ab:PhysicsBlock Dimensions="8, 1" Position="30, -29" BodyType="Dynamic" ux:Name="PhysicsBlock2" />
+  <ab:PhysicsBlock Dimensions="4, 2" Position="50, -22" BodyType="Dynamic" ux:Name="PhysicsBlock2122" />
+  <ab:PhysicsBlock Dimensions="4, 2" Position="50, -26" BodyType="Dynamic" ux:Name="PhysicsBlock212" />
+  <ab:PhysicsBlock Dimensions="8, 1" Position="46, -29" BodyType="Dynamic" ux:Name="PhysicsBlock21" />
+  <ab:PhysicsBlock Dimensions="4, 2" Position="42, -26" BodyType="Dynamic" ux:Name="PhysicsBlock2121" />
+  <ab:PhysicsTriangle Dimensions="-8, 8" Position="62, -22" Rotation="-180" BodyType="Dynamic" ux:Name="PhysicsTriangle1" />
+  <ab:PhysicsBlock Dimensions="2, 2" Position="61, -28" BodyType="Dynamic" ux:Name="PhysicsBlock211" />
+  <ab:PhysicsBlock Dimensions="2, 4" Position="65, -26" BodyType="Dynamic" ux:Name="PhysicsBlock2111" />
+  <ab:PhysicsBlock Dimensions="8.5, 1" Position="62.5, -21" BodyType="Dynamic" ux:Name="PhysicsBlock211111" />
+  <ab:PhysicsTriangle Dimensions="-8, 8" Position="39, -20" BodyType="Dynamic" ux:Name="PhysicsTriangle21" />
+  <ab:PhysicsBlock Dimensions="4, 2" Position="51, -18" BodyType="Dynamic" ux:Name="PhysicsBlock21221" />
+  <ab:PhysicsBlock Dimensions="4, 2" Position="51, -14" BodyType="Dynamic" ux:Name="PhysicsBlock212211" />
+  <ab:PhysicsBlock Dimensions="4, 2" Position="59, -14" BodyType="Dynamic" ux:Name="PhysicsBlock2122111" />
+  <ab:PhysicsBlock Dimensions="4, 2" Position="59, -18" BodyType="Dynamic" ux:Name="PhysicsBlock212212" />
+  <ab:PhysicsBlock Dimensions="4, 2" Position="67, -18" BodyType="Dynamic" ux:Name="PhysicsBlock2122121" />
+  <ab:PhysicsBlock Dimensions="4, 2" Position="67, -14" BodyType="Dynamic" ux:Name="PhysicsBlock21221211" />
+  <ab:PhysicsBlock Dimensions="2, 4" Position="49, -8" BodyType="Dynamic" ux:Name="PhysicsBlock2122112" />
+  <ab:PhysicsBlock Dimensions="2, 4" Position="61, -8" BodyType="Dynamic" ux:Name="PhysicsBlock21221121" />
+  <ab:PhysicsTriangle Dimensions="8, 8" Position="63, -12" BodyType="Dynamic" ux:Name="PhysicsTriangle211" />
+  <ab:PhysicsBall Radius="3.5" Position="55, -8.5" BodyType="Dynamic" MaxImpulse="5" ux:Name="PhysicsBall1111" />
+  <ab:PhysicsBlock Dimensions="8, 1" Position="55, -3" BodyType="Dynamic" ux:Name="PhysicsBlock21221122" />
+  <ab:PhysicsBlock Dimensions="8, 1" Position="55, 7" BodyType="Dynamic" ux:Name="PhysicsBlock212211221" />
+  <ab:PhysicsBlock Dimensions="2, 4" Position="49, 2" BodyType="Dynamic" ux:Name="PhysicsBlock21221123" />
+  <ab:PhysicsBlock Dimensions="2, 4" Position="61, 2" BodyType="Dynamic" ux:Name="PhysicsBlock212211211" />
+  <ab:PhysicsBall Radius="2" Position="57, 0" BodyType="Dynamic" MaxImpulse="5" ux:Name="PhysicsBall11111" />
+  <Style ux:Name="Style1" ux:StaticRef="Uno.UI.DefaultStyle.Style" />
+  <ab:PhysicsBlock ux:AutoBind="false" Dimensions="2, 4" Position="69, -26" BodyType="Dynamic" ux:Name="PhysicsBlock21111" />
+  <ab:PhysicsBlock ux:AutoBind="false" Dimensions="4, 2" Position="34, -26" BodyType="Dynamic" ux:Name="PhysicsBlock2121111" />
+</AngryBlocks.AngryBlocks>

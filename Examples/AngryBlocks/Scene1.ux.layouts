@@ -1,0 +1,5 @@
+<Layouts>
+  <Node RefId="this" PanX="33" PanY="109" Default="this.Children">
+    <Node RefId="Camera1" X="159" Y="-9" />
+  </Node>
+</Layouts>

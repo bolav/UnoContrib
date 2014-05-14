@@ -1,0 +1,39 @@
+<Layouts>
+  <Node RefId="this" PanX="-376.393814112203" PanY="54.8989686358749" Default="this.Children">
+    <Node RefId="PhysicsBall1" X="295.0425" Y="-99.0028803339517" />
+    <Node RefId="PhysicsBall11" X="292.0425" Y="-73.0028803339517" />
+    <Node RefId="PhysicsBlock1" X="296.0425" Y="-118.002880333952" />
+    <Node RefId="PhysicsBlock11" X="291.0425" Y="-54.0028803339517" />
+    <Node RefId="PhysicsBlock2" X="504.934108391608" Y="185.602014770943" />
+    <Node RefId="PhysicsBlock21" X="614.025017482517" Y="186.738378407307" />
+    <Node RefId="PhysicsTriangle1" X="732.206835664336" Y="157.192923861852" />
+    <Node RefId="PhysicsBlock211" X="749.25229020979" Y="189.011105680034" />
+    <Node RefId="PhysicsBlock2111" X="871.979562937063" Y="191.283832952761" />
+    <Node RefId="PhysicsBlock21111" X="996.979562937063" Y="191.283832952762" />
+    <Node RefId="PhysicsBlock211111" X="859.479562937063" Y="134.46565113458" />
+    <Node RefId="PhysicsBlock212" X="607.206835664336" Y="160.602014770943" />
+    <Node RefId="PhysicsBlock2121" X="485.18979020979" Y="161.738378407307" />
+    <Node RefId="PhysicsTriangle2" X="411.564238130291" Y="90.8571215063134" />
+    <Node RefId="PhysicsBlock212111" X="364.195817077659" Y="136.909753085261" />
+    <Node RefId="PhysicsBlock2121111" X="670.77476444608" Y="-255.195510072634" />
+    <Node RefId="PhysicsBlock21212" X="498.406343393448" Y="140.857121506313" />
+    <Node RefId="PhysicsBlock2122" X="623.406343393448" Y="136.909753085261" />
+    <Node RefId="PhysicsBall111" X="295.691377438351" Y="-15.7580560792591" />
+    <Node RefId="PhysicsTriangle21" X="573.585588490457" Y="78.9870376428084" />
+    <Node RefId="PhysicsBlock21221" X="705.728445633314" Y="78.9870376428084" />
+    <Node RefId="PhysicsBlock212211" X="702.157017061885" Y="57.558466214237" />
+    <Node RefId="PhysicsBlock2122111" X="843.228445633314" Y="59.3441804999513" />
+    <Node RefId="PhysicsBlock212212" X="839.657017061885" Y="80.7727519285227" />
+    <Node RefId="PhysicsBlock2122121" X="978.049874204743" Y="81.6656090713799" />
+    <Node RefId="PhysicsBlock21221211" X="981.621302776171" Y="59.3441804999513" />
+    <Node RefId="PhysicsBlock2122112" X="703.9427313476" Y="14.7013233570941" />
+    <Node RefId="PhysicsBlock21221121" X="884.299874204742" Y="20.9513233570942" />
+    <Node RefId="PhysicsTriangle211" X="1053.04987420474" Y="10.2370376428085" />
+    <Node RefId="PhysicsBall1111" X="821.260913165782" Y="-11.297651352407" />
+    <Node RefId="PhysicsBlock21221122" X="705.471439481571" Y="-41.5608092471438" />
+    <Node RefId="PhysicsBlock212211221" X="796.260913165781" Y="-167.876598720828" />
+    <Node RefId="PhysicsBlock21221123" X="704.155650007887" Y="-86.2976513524069" />
+    <Node RefId="PhysicsBlock212211211" X="888.366176323676" Y="-88.9292302997753" />
+    <Node RefId="PhysicsBall11111" X="814.68196579736" Y="-113.929230299775" />
+  </Node>
+</Layouts>
