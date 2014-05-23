@@ -1,0 +1,5 @@
+<Layouts>
+  <Node RefId="this" PanX="24" PanY="82">
+    <Node RefId="TowerBlock1" X="211" Y="51.7465091299673" />
+  </Node>
+</Layouts>

@@ -1,0 +1,8 @@
+<Scene xmlns:ux="http://schemas.outracks.com/ux" xmlns:tb="TowerBuilder" ux:ClassName="TowerBlockScene" xmlns="Uno.Scenes, Uno.Styling, Uno.UI, Uno">
+  <Entity ux:Binding="Camera" ux:Name="Camera1">
+    <Transform Position="100, 100, 100" RotationDegrees="325, 45, 120" />
+    <Frustum FovDegrees="45" Aspect="2.4" ZNear="10" ZFar="5000" />
+  </Entity>
+  <tb:TowerBlock ux:Name="TowerBlock1" />
+  <Style ux:Name="Style1" ux:StaticRef="Uno.UI.DefaultStyle.Style" />
+</Scene>
