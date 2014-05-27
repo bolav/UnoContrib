@@ -1,0 +1,31 @@
+<Scene xmlns:ux="http://schemas.outracks.com/ux" xmlns:pongd="PONG2D" xmlns:owf="Outracks.WowFactory" ux:ClassName="Scene1" ClearColor="0.654902, 0.6431373, 0.6431373, 1" xmlns="Uno.Scenes, Uno.Styling, Uno.UI, Uno">
+  <Entity ux:Binding="Camera" ux:Name="Camera1">
+    <Transform Position="100, 100, 100" RotationDegrees="325, 45, 120" />
+    <Frustum FovDegrees="45" Aspect="2.4" ZNear="10" ZFar="5000" />
+  </Entity>
+  <owf:WowFactory AOColor="0, 0, 0" AOEnabled="true" AOMultiplier="4.509089" AOExponent="6.818623" AORadius="9.348111" AOBias="0.04674056" AOEps="49.49" BBNormalEffect="22.43547" BBDepthEffect="2.194057" AOMaxScreenRadius="2.001596" DOFPasses="10" DOFEnabled="false" DOFFocusRange="1000.798" DOFFocusOffset="-100.0798" GEnabled="true" IsVisible="true" IsEnabled="true" ux:Name="WowFactory1">
+    <Entity ux:Name="Entity1">
+      <pongd:SomeEffect ux:Name="SomeEffect1" />
+      <Transform Position="-340.2612, -354.9329, -192.1158" Scaling="20, 20, 20" ux:Name="Transform1" />
+    </Entity>
+  </owf:WowFactory>
+  <pongd:Devider DeviderSize="10, 30" DeviderOffset="10" DeviderCount="40" DeviderColor="0, 1, 0.3098039, 1" ux:Name="Devider1" />
+  <pongd:Ball BallVelocity="2, 2" ux:Name="Ball1">
+    <Image ux:Binding="BallImage" ux:AutoBind="false" Width="100" Height="100" HorizontalAlignment="Left" VerticalAlignment="Top" ux:Name="Image1">
+      <texture2D ux:Binding="Texture" ux:Name="Aqua Ball.png" ux:Path="Aqua Ball.png" />
+    </Image>
+  </pongd:Ball>
+  <pongd:PlayerPads PadVelocity="10" ux:Name="PlayerPads1">
+    <Image ux:Binding="Player1" ux:AutoBind="false" Width="50" Height="150" HorizontalAlignment="Left" VerticalAlignment="Top" ux:Name="Image2">
+      <texture2D ux:Binding="Texture" ux:Name="glossy_button_blank_green_rectangle.png" ux:Path="glossy_button_blank_green_rectangle.png" />
+    </Image>
+    <Image ux:Binding="Player2" ux:AutoBind="false" StretchMode="Fill" Width="50" Height="155" HorizontalAlignment="Right" VerticalAlignment="Top" ux:Name="Image3">
+      <texture2D ux:Binding="Texture" ux:Name="glossy_button_blank_yellow_rectangle.png" ux:Path="glossy_button_blank_yellow_rectangle.png" />
+    </Image>
+    <pongd:Ball ux:Binding="Ball" ux:AutoBind="false" ux:Ref="Ball1" />
+  </pongd:PlayerPads>
+  <Image ux:Ref="Image2" />
+  <Image ux:Ref="Image3" />
+  <Image ux:Ref="Image1" />
+  <Style ux:Name="Style1" ux:StaticRef="Uno.UI.DefaultStyle.Style" />
+</Scene>

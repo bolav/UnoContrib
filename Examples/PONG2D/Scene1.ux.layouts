@@ -1,0 +1,14 @@
+<Layouts>
+  <Node RefId="this" PanX="322.026852663967" PanY="120.994509732793" Default="this.Children">
+    <Node RefId="Image1" X="368" Y="91" />
+    <Node RefId="Image2" X="278.4375" Y="-139.5625" />
+    <Node RefId="Image3" X="278.846590909091" Y="-168.471590909091" />
+    <Node RefId="Style1" X="147" Y="128" />
+    <Node RefId="Camera1" X="154" Y="70" />
+    <Node RefId="Devider1" X="87" Y="-201" />
+    <Node RefId="Ball1" X="533" Y="-21" />
+    <Node RefId="PlayerPads1" X="314" Y="-90" />
+    <Node RefId="Entity1" X="531.973147336033" Y="126.005490267207" />
+    <Node RefId="WowFactory1" X="302.973147336033" Y="156.005490267207" />
+  </Node>
+</Layouts>
