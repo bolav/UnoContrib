@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<Project>
+  <Settings Title="BlockGame" />
+  <References>
+    <PackageReference Name="Experimental.Audio" Version="0.1.0.0" />
+    <PackageReference Name="Uno.Geometry" Version="0.1.0.0" />
+    <PackageReference Name="Uno.Scenes" />
+  </References>
+  <Files>
+    <SourceFile Path="App.uno" />
+    <SourceFile Path="Ball.uno" />
+    <SourceFile Path="GameCamera.uno" />
+    <SourceFile Path="GameEntity.uno" />
+    <SourceFile Path="PlayerPedal.uno" />
+    <SourceFile Path="ShadingBlock.uno" />
+    <SourceFile Path="TargetBlock.uno" />
+    <ExtraFile Path="Data/brdf2.jpg" />
+    <ExtraFile Path="Data/cube_product.jpg" />
+    <ExtraFile Path="Data/Molot.otf" />
+    <ExtraFile Path="Data/playerPadel.FBX" />
+    <ExtraFile Path="Data/roomDecor.FBX" />
+    <ExtraFile Path="Data/roomModel.FBX" />
+    <ExtraFile Path="Data/targetBlock.FBX" />
+  </Files>
+</Project>
