@@ -4,7 +4,7 @@ using Uno.Graphics;
 using Uno.Scenes;
 using Uno.Content;
 using Uno.Content.Models;
-using Uno.Scenes.Batching;
+using Uno.Drawing.Batching;
 using Uno.Designer;
 
 
@@ -105,7 +105,7 @@ namespace RainForest
 
 				if(RenderWireframe)
 				{
-					draw DefaultShading, Uno.Scenes.Primitives.Quad
+					draw DefaultShading, Uno.Drawing.Primitives.Quad
 					{
 						Size: float2(tile.Size);
 						DiffuseColor: tile.Color * (1.0f - (tile.Size / 80.0f - 1.0f));

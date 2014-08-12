@@ -1,7 +1,7 @@
 using Uno;
 using Uno.Collections;
 using Uno.Content.Models;
-using Uno.Scenes.Batching;
+using Uno.Drawing.Batching;
 
 namespace RainForest
 {

@@ -3,7 +3,7 @@ using Uno.Collections;
 using Uno.Graphics;
 using Uno.Scenes;
 using Uno.Designer;
-using Uno.Scenes.Primitives;
+using Uno.Drawing.Primitives;
 using Uno.Content;
 using Uno.Content.Models;
 

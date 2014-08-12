@@ -1,4 +1,4 @@
-<Scene xmlns:ux="http://schemas.outracks.com/ux" xmlns:rf="RainForest" xmlns:usp="Uno.Scenes.Primitives" ux:ClassName="RainforestScene" AlwaysClear="false" ClearColor="1, 0, 0, 1" xmlns="Uno.Scenes, Uno.Styling, Uno.UI, Uno">
+<Scene xmlns:ux="http://schemas.outracks.com/ux" xmlns:rf="RainForest" xmlns:usp="Uno.Scenes.Primitives" ux:ClassName="RainforestScene" AlwaysClear="false" ClearColor="1, 0, 0, 1" xmlns="Uno.Scenes, Uno.UI, Uno.UI.Controls, Uno">
   <Entity ux:Name="Sky">
     <Transform Position="666.4228, 1014.106, -6.103516E-05" Scaling="750, 750, 750" ux:Name="Transform15" />
     <usp:SphereRenderer ux:Name="Entity7SphereRenderer1">
@@ -41,11 +41,11 @@
   <rf:TileManager LOD0="0" LOD1="0" LOD2="0" LOD3="0" LOD4="400" LOD5="30" LOD6="20" LOD7="8" FrustumCulling="true" ux:Name="TileManager1">
     <Entity ux:Binding="Camera" ux:AutoBind="false" ux:Name="Camera1">
       <Transform Position="1053.233, 1107.251, 69.36091" RotationDegrees="324.1908, 21.0067, 146.7227" ux:Name="Camera1Transform" />
-      <Frustum FovDegrees="70" Aspect="0.7245409" ZNear="1" ZFar="1000000" ux:Name="Camera1Frustum" />
+      <Frustum FovDegrees="70" ZNear="1" ZFar="1000000" ux:Name="Camera1Frustum" />
     </Entity>
   </rf:TileManager>
   <Entity ux:Name="Camera2">
-    <Frustum Aspect="0.9415584" ZFar="100000" ux:Name="Frustum1Frustum" />
+    <Frustum ZFar="100000" ux:Name="Frustum1Frustum" />
     <Transform Position="687.6742, 966.9754, 173.5935" RotationDegrees="24.46815, 39.70158, 63.487" ux:Name="Transform3" />
   </Entity>
   <Entity ux:Name="MapCenter">
@@ -54,7 +54,7 @@
   <Entity ux:Name="StateDeadForestPosition">
     <Transform Position="479.6669, 1165.023, 5" RotationDegrees="0, 0, 0" ux:Name="Transform6" />
   </Entity>
-  <Slider Minimum="0" Maximum="2" Value="1.2" X="0" Y="-400" Width="700" Height="56" Color="1, 1, 1, 0.4901961" ForegroundColor="1, 1, 1, 1" ux:Name="Slider2" />
+  <Slider Minimum="0" Maximum="2" Value="1.2" Width="700" Height="56" ux:Name="Slider2" />
   <rf:ForestTileRenderer LightCubeOffset="0, 0, -0.7" ColormapFactor="0.25" FadeStart="250" FadeSpeed="0.02" CamFadeRadius="1" CamFadeSpeed="1" DeadForestCenter="800, 1000, 0" DeadForestAngles="-40, -20" RenderWireframe="false" RenderTile="true" ux:Name="ForestTileRenderer1">
     <ux:PropertyBinding Destination="DeadForestCenter" SourceRef="Transform2" SourceProperty="Position" />
     <Transform ux:Name="Transform4" />
