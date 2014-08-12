@@ -1,5 +1,5 @@
 <Layouts>
-  <Node RefId="this" PanX="-935.191247427945" PanY="141.290955400756" RootX="10" RootY="50">
+  <Node RefId="this" PanX="-189.191247427945" PanY="334.290955400756" RootX="10" RootY="50">
     <Node RefId="Camera1" X="1080.62194448014" Y="119.01972401277" PanX="-69.1481552129082" PanY="120.581158879072" RootX="10" RootY="50">
       <Node RefId="Camera1Frustum" X="339.941176470588" Y="7.61764705882354" RootX="10" RootY="50" />
       <Node RefId="Camera1Transform" X="192.5" Y="100.117647058824" RootX="10" RootY="50" />
