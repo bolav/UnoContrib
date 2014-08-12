@@ -75,7 +75,7 @@ namespace RainForest
 		}
 
 
-		protected override void OnDraw()
+		protected override void OnDraw(DrawContext dc)
 		{
 			if (Camera == null) return;
 
@@ -89,7 +89,7 @@ namespace RainForest
 
 			Tiles.Clear();
 
-			tileListGenerator.GenerateTiles(Tiles);
+			tileListGenerator.GenerateTiles(Tiles, dc.Aspect);
 		}
 	}
 }

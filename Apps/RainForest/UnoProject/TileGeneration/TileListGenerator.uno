@@ -51,12 +51,12 @@ namespace RainForest
 
 		public static bool FrustrumCulling = true;
 
-		public void GenerateTiles(List<Tile> tiles)
+		public void GenerateTiles(List<Tile> tiles, float aspect)
 		{
 			Uno.Scenes.Frustum frustumComponent = Camera.Components.Get<Uno.Scenes.Frustum>();
 			assert frustumComponent != null;
 
-			var frustumGeometry = frustumComponent.FrustumGeometry;
+			var frustumGeometry = frustumComponent.GetFrustumGeometry(aspect);
 
 			GenerateTiles(0, MapSizeRecti, frustumGeometry, tiles);
 		}

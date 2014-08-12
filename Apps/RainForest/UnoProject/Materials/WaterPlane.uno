@@ -24,7 +24,7 @@ namespace RainForest
 			texture = import Texture2D("../Assets/water_texture.jpg");
 		}
 
-		protected override void OnDraw()
+		protected override void OnDraw(DrawContext dc)
 		{
 			draw DefaultShading, Quad
 			{

@@ -21,6 +21,8 @@ namespace RainForest
 		public CameraController()
 		{
 			States = new List<CameraState>();
+			
+			Update += Updated;
 		}
 
 		public float Time
@@ -34,7 +36,7 @@ namespace RainForest
 		[Range(0.15f, 0.5f, 3)]
 		public float PositionBias { get; set; }
 
-		protected override void OnUpdate()
+		void Updated(object sender, SceneEventArgs args)
 		{
 			// Camera.Transform.RotationDegrees = float3(0);
 			Camera.Transform.Position = CameraPosition;

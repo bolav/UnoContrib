@@ -8,7 +8,6 @@ using Uno.Designer;
 
 namespace RainForest
 {
-
 	public class CameraOpacityAdjustingNode : Node
 	{
 		public float Opacity { get; set; }
@@ -20,8 +19,13 @@ namespace RainForest
 
 		[Uno.Designer.Range(100.0f, 1000.0f)]
 		public float HeightSpeedFactor { get; set; }
+		
+		public CameraOpacityAdjustingNode()
+		{
+			Update += Updated;
+		}
 
-		protected override void OnUpdate()
+		void Updated(object sender, SceneEventArgs args)
 		{
 			Opacity = Math.Min(1.0f, (Position.Z - HeightThreshold) / HeightSpeedFactor);
 		}

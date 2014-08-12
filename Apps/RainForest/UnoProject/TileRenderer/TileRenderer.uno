@@ -90,7 +90,7 @@ namespace RainForest
 			}
 		}
 
-		protected override void OnDraw()
+		protected override void OnDraw(DrawContext dc)
 		{
 			if(TileManager == null) return;
 
