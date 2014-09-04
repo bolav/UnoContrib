@@ -1,0 +1,56 @@
+<Scene xmlns:d="UIGlassDemo" xmlns:g="Glasses" ux:ClassName="Scene1" ClearColor="0, 0, 0, 1">
+    <Entity ux:Name="Entity8">
+        <g:TexQuad ux:Name="TexQuad1">
+            <texture2D ux:Binding="Texture" ux:Name="background.jpg" ux:Path="Assets/background.jpg" />
+        </g:TexQuad>
+        <Entity ux:Name="Entity4">
+            <Entity ux:Name="Entity5">
+                <Entity ux:Name="Entity6">
+                    <MeshRenderer ux:Name="MeshRenderer4">
+                        <Mesh ux:Binding="Mesh" ux:Name="Mesh2" ux:MeshIndex="0" ux:Path="Assets/occlusionPlane.FBX" />
+                    </MeshRenderer>
+                </Entity>
+            </Entity>
+            <MeshRenderer ux:Name="MeshRenderer3">
+                <g:BlendMaterial BlendDst="SrcColor" BlendSrc="Zero" ux:Name="BlendMaterial1">
+                    <texture2D ux:Binding="DiffuseMap" ux:Name="glassAmbientOc.jpg" ux:Path="Assets/glassAmbientOc.jpg" />
+                </g:BlendMaterial>
+            </MeshRenderer>
+            <Transform ux:Name="Transform2" />
+        </Entity>
+        <Entity ux:Name="Entity1">
+            <Entity ux:Name="Entity2">
+                <Entity ux:Name="Entity3">
+                    <MeshRenderer ux:Name="MeshRenderer2">
+                        <Mesh ux:Binding="Mesh" ux:Name="Mesh1" ux:MeshIndex="0" ux:Path="Assets/glassesFrame.FBX" />
+                    </MeshRenderer>
+                </Entity>
+            </Entity>
+            <MeshRenderer ux:Name="MeshRenderer1">
+                <DefaultMaterial SpecularColor="0.25, 0.25, 0.5" Shininess="30.26966" ux:Name="DiffuseMapMaterial2">
+                    <texture2D ux:Binding="DiffuseMap" ux:Name="GlassesDiffuseMap.jpg" ux:Path="Assets/GlassesDiffuseMap.jpg" />
+                </DefaultMaterial>
+            </MeshRenderer>
+            <Transform ux:Name="Transform1" />
+        </Entity>
+        <Entity ux:Name="Entity7">
+            <Entity ux:Name="Entity9">
+                <Entity ux:Name="Entity10">
+                    <MeshRenderer ux:Name="MeshRenderer6">
+                        <Mesh ux:Binding="Mesh" ux:Name="Mesh3" ux:MeshIndex="0" ux:Path="Assets/plasticGlass.FBX" />
+                    </MeshRenderer>
+                </Entity>
+            </Entity>
+            <MeshRenderer ux:Name="MeshRenderer5">
+                <d:GlassMaterial BlendDst="DstColor" BlendSrc="OneMinusDstColor" SubstractColor="0.01, 0.03, 0.07" ux:Name="GlassMaterial1" />
+            </MeshRenderer>
+            <Transform ux:Name="Transform3" />
+        </Entity>
+        <Transform Position="-7.327597, 7.747253, -1.907349E-06" RotationDegrees="0, 0, 0" Scaling="1, 1, 1" ux:Name="Transform7" />
+        <g:InputController ux:Name="InputController1" />
+    </Entity>
+    <Entity ux:Binding="Camera">
+        <Transform Position="34.61958, -77.40421, 18.47921" RotationDegrees="62.33509, 56.00469, 59.15047" Scaling="0.9999998, 0.9999998, 0.9999999" />
+        <Frustum FovDegrees="45" ZNear="10" ZFar="5000" />
+    </Entity>
+</Scene>

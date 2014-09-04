@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<Project>
+  <References>
+    <PackageReference Name="Outracks.UIThemes.MobileBlue" Version="0.1.0.0" />
+    <PackageReference Name="Uno.Designer" Version="0.1.0.0" />
+    <PackageReference Name="Uno.Drawing.Primitives" Version="0.1.0.0" />
+    <PackageReference Name="Uno.Scenes" />
+    <PackageReference Name="Uno.UI" Version="0.1.0.0" />
+  </References>
+  <Files>
+    <UxFile Path="Scene1.ux" />
+    <SourceFile Path="BlendMaterial.uno" />
+    <SourceFile Path="GlassMaterial.uno" />
+    <SourceFile Path="InputController.uno" />
+    <SourceFile Path="Scene1.ux.uno" />
+    <SourceFile Path="TexQuad.uno" />
+    <ExtraFile Path="Assets/background.jpg" />
+    <ExtraFile Path="Assets/cube_product.jpg" />
+    <ExtraFile Path="Assets/glassAmbientOc.jpg" />
+    <ExtraFile Path="Assets/GlassesDiffuseMap.jpg" />
+    <ExtraFile Path="Assets/glassesFrame.FBX" />
+    <ExtraFile Path="Assets/occlusionPlane.FBX" />
+    <ExtraFile Path="Assets/plasticGlass.FBX" />
+    <StartupFile Path="Scene1.ux" />
+  </Files>
+</Project>

@@ -1,0 +1,45 @@
+<Layouts>
+  <Node RefId="this" PanX="212.888522786882" PanY="119.913073926862" RootX="-183.318181818182" RootY="-66.909090909091" Default="Entity8.Children">
+    <Node RefId="GlassMaterial1" X="587.204545454545" Y="39.329545454546" RootX="10" RootY="50" />
+    <Node RefId="BlendMaterial1" X="577.386363636364" Y="-29.6704545454544" PanX="450" PanY="69" RootX="10" RootY="50">
+      <Node RefId="glassAmbientOc.jpg" X="168" Y="-5" RootX="10" RootY="50" />
+    </Node>
+    <Node RefId="DiffuseMapMaterial2" X="576.522727272727" Y="-89.215909090909" PanX="173" PanY="59" RootX="10" RootY="50">
+      <Node RefId="GlassesDiffuseMap.jpg" RootX="10" RootY="50" />
+    </Node>
+    <Node RefId="Entity1" X="465.204545454545" Y="-104.897727272727" RootX="10" RootY="50" Default="Entity1.Children">
+      <Node RefId="MeshRenderer1" X="150" RootX="85" RootY="33" />
+      <Node RefId="Transform1" X="150" Y="50" RootX="10" RootY="50" />
+      <Node RefId="Entity3" X="300" Y="100" RootX="10" RootY="50" Default="Entity3.Children">
+        <Node RefId="Mesh1" X="300" RootX="10" RootY="50" />
+        <Node RefId="MeshRenderer2" X="150" RootX="10" RootY="50" />
+      </Node>
+      <Node RefId="Entity2" X="150" Y="100" RootX="10" RootY="50" Default="Entity2.Children" />
+    </Node>
+    <Node RefId="Entity4" X="463.568181818182" Y="-50.6704545454544" RootX="10" RootY="50" Default="Entity4.Children">
+      <Node RefId="MeshRenderer3" X="150" RootX="10" RootY="50" />
+      <Node RefId="Transform2" X="150" Y="50" RootX="10" RootY="50" />
+      <Node RefId="Entity6" X="300" Y="100" RootX="10" RootY="50" Default="Entity6.Children">
+        <Node RefId="Mesh2" X="300" RootX="10" RootY="50" />
+        <Node RefId="MeshRenderer4" X="150" RootX="10" RootY="50" />
+      </Node>
+      <Node RefId="Entity5" X="150" Y="100" RootX="10" RootY="50" Default="Entity5.Children" />
+    </Node>
+    <Node RefId="Entity7" X="489.840909090909" Y="25.1477272727273" RootX="10" RootY="50" Default="Entity7.Children">
+      <Node RefId="MeshRenderer5" X="139" Y="86" RootX="10" RootY="50" />
+      <Node RefId="Transform3" X="135" Y="122" RootX="10" RootY="50" />
+      <Node RefId="Entity10" X="292" Y="25" RootX="10" RootY="50" Default="Entity10.Children">
+        <Node RefId="Mesh3" X="300" RootX="10" RootY="50" />
+        <Node RefId="MeshRenderer6" X="150" RootX="10" RootY="50" />
+      </Node>
+      <Node RefId="Entity9" X="172" Y="14" RootX="10" RootY="50" Default="Entity9.Children" />
+    </Node>
+    <Node RefId="TexQuad1" X="314.510323550514" Y="26.821334248278" RootX="10" RootY="50" Default="TexQuad1.Children">
+      <Node RefId="background.jpg" RootX="10" RootY="50" />
+    </Node>
+    <Node RefId="Entity8" X="183.322947214076" Y="-65.471590909091" PanX="30" PanY="23" RootX="10" RootY="50" Default="Entity8.Children">
+      <Node RefId="Transform7" X="512" Y="105" RootX="10" RootY="50" />
+      <Node RefId="InputController1" X="662" Y="30" RootX="10" RootY="50" />
+    </Node>
+  </Node>
+</Layouts>
