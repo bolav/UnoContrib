@@ -1,12 +1,12 @@
 using Uno;
 using Uno.Collections;
 using Uno.Graphics;
-using Uno.Scenes;
 using Uno.Content;
 using Uno.Content.Models;
 using Uno.Physics.Box2D;
-using Uno.Designer;
 using AngryBlocks.Box2DMath;
+using Fuse.Designer;
+using Fuse;
 
 namespace AngryBlocks
 {
@@ -33,12 +33,10 @@ namespace AngryBlocks
 			Color = float3(1, 1, 0);
 		}
 
-		protected override void OnDraw()
+		protected override void OnDraw(DrawContext dc)
 		{
 			if(Body.GetFixtureList() == null) return;
 
-			base.OnDraw();
-			
 			draw RenderBox2DAsQuad
 			{
 				Box2DBodyPosition: Position;

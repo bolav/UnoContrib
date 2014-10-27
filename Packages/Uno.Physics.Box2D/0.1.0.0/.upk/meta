@@ -4,6 +4,8 @@
 	"Description": "Box 2d implementation in uno",
 	"Copyright": "Copyright (c) Outracks Technologies 2013",
 	"Version": "0.1.0.0",
-	"References": [],
+	"References": [
+		["Uno.Collections", "0.1.0.0"],
+	],
     "InternalsVisibleTo": [],
 }

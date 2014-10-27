@@ -1,15 +1,14 @@
 using Uno;
 using Uno.Collections;
 using Uno.Graphics;
-using Uno.Scenes;
 using Uno.Content;
 using Uno.Content.Models;
-
 using Uno.Physics.Box2D;
+using Fuse;
 
 namespace AngryBlocks
 {
-	public abstract class PhysicsEntity : Node
+	public abstract class PhysicsEntity : Element
 	{
 		protected Body Body { get; set; }
 
@@ -55,6 +54,7 @@ namespace AngryBlocks
 		}
 
 		protected abstract Shape GetShape();
+		protected void OnDraw(DrawContext dc) {}
 
 
 	}

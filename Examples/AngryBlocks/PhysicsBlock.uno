@@ -1,10 +1,10 @@
 using Uno;
 using Uno.Collections;
 using Uno.Graphics;
-using Uno.Scenes;
 using Uno.Content;
 using Uno.Content.Models;
 using Uno.Physics.Box2D;
+using Fuse;
 
 namespace AngryBlocks
 {
@@ -23,11 +23,10 @@ namespace AngryBlocks
 			return shape;
 		}
 
-		protected override void OnDraw()
+		protected override void OnDraw(DrawContext dc)
 		{
 			if(Body.GetFixtureList() == null) return;
 
-			base.OnDraw();
 			/* Requires working rotation
 			draw RenderBox2DAsQuad
 			{

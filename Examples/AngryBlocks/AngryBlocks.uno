@@ -1,14 +1,14 @@
 using Uno;
 using Uno.Collections;
 using Uno.Graphics;
-using Uno.Scenes;
 using Uno.Content;
 using Uno.Content.Models;
 using Uno.Physics.Box2D;
+using Fuse;
 
 namespace AngryBlocks
 {
-	public class AngryBlocks : Node
+	public class AngryBlocks : App
 	{
 		Body floorBody, cannonBody, cannonBall;
 
@@ -103,11 +103,20 @@ namespace AngryBlocks
 			return cannonBall = body;
 		}
 
-		protected override void OnFixedUpdate()
+		double _interval = 1.0 / 60.0;
+		double _lockTimer = 0;
+		protected override void OnUpdate () {
+			while (_lockTimer < Application.Current.FrameTime) {
+				FixedUpdate();
+				_lockTimer += _interval;
+			}
+		}
+
+		protected void FixedUpdate()
 		{
 
 			if(!defined(Designer)) {
-				World.Current.Step((float) Uno.Application.Current.FixedInterval,(int) 4, 4);
+				World.Current.Step((float) _interval,(int) 4, 4);
 
 				foreach(var body in bodiesToDestroy)
 				{
@@ -121,14 +130,14 @@ namespace AngryBlocks
 			float2 pos = MousePosWorld - cannonBody.Position;
 			cannonBody.Rotation = Math.Atan2(pos.Y, pos.X);
 
-			if(Input.IsPointerDownTriggered())
+			if(Input.IsPointerPressedTriggered())
 			{
 				FireBall();
 			}
 
-			base.OnFixedUpdate();
 		}
 
+		public static DrawContext Context;
 		private void UpdateMousePosition()
 		{
 			float2 pos = Input.PointerCoord;
@@ -142,10 +151,9 @@ namespace AngryBlocks
 
 		protected override void OnDraw()
 		{
+			Context = DrawContext.Current;
 			World.Current.DrawDebugData();
 			World.Current.DebugDraw.DrawSegment(MousePosWorld, cannonBody.Position, float4(1, 1, 0, 1), float2(0));
-
-			base.OnDraw();
 		}
 
 		public class DestroyContactListener : IContactListener

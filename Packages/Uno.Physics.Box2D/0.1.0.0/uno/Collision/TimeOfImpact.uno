@@ -307,8 +307,8 @@ namespace Uno.Physics.Box2D
 	        int iter = 0;
 
 	        // Prepare input for distance query.
-            SimplexCache cache = new SimplexCache();
-	        DistanceInput distanceInput = new DistanceInput();
+            var cache = new SimplexCache();
+	        var distanceInput = new DistanceInput();
             distanceInput.proxyA = input.proxyA;
             distanceInput.proxyB = input.proxyB;
 	        distanceInput.useRadii = false;
