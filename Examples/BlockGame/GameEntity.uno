@@ -2,9 +2,9 @@ using Uno;
 using Uno.Collections;
 using Uno.Graphics;
 using Uno.Geometry;
-using Uno.Scenes;
 using Uno.Content;
 using Uno.Content.Models;
+using Fuse.Entities;
 
 namespace BlockGame
 {

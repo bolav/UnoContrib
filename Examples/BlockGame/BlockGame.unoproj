@@ -4,7 +4,8 @@
   <References>
     <PackageReference Name="Experimental.Audio" Version="0.1.0.0" />
     <PackageReference Name="Uno.Geometry" Version="0.1.0.0" />
-    <PackageReference Name="Uno.Scenes" />
+    <PackageReference Name="Fuse.Entities" />
+    <PackageReference Name="Fuse.Drawing.Primitives" />
   </References>
   <Files>
     <SourceFile Path="App.uno" />

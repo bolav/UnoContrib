@@ -2,8 +2,6 @@ using Uno;
 using Uno.Collections;
 using Uno.Graphics;
 using Uno.Geometry;
-using Uno.Scenes;
-using Uno.Scenes.Primitives;
 using Uno.Content;
 using Uno.Content.Models;
 using Uno.Content.Fonts;

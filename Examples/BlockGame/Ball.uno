@@ -2,7 +2,6 @@ using Uno;
 using Uno.Collections;
 using Uno.Graphics;
 using Uno.Geometry;
-using Uno.Scenes;
 using Uno.Content;
 using Uno.Content.Models;
 
@@ -50,7 +49,7 @@ namespace BlockGame
 		}
 
 		apply ShadingBlock;
-		apply Uno.Scenes.Primitives.Sphere;
+		apply Fuse.Drawing.Primitives.Sphere;
 		Radius : 25;
 
 		public override void Draw()

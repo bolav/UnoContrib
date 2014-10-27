@@ -1,13 +1,12 @@
 using Uno;
 using Uno.Collections;
 using Uno.Graphics;
-using Uno.Scenes;
 using Uno.Content;
 using Uno.Content.Models;
 
 namespace BlockGame
 {
-	class GameCamera : Uno.Scenes.Entity
+	class GameCamera : Fuse.Entities.Scene
 	{
 		public static readonly GameCamera Instance = new GameCamera();
 

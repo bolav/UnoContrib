@@ -1,8 +1,7 @@
 using Uno;
 using Uno.Graphics;
 using Uno.Geometry;
-using Uno.Scenes;
-
+using Fuse.Entities;
 
 namespace BlockGame
 {
