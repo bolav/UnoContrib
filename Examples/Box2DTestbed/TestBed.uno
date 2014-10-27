@@ -1,11 +1,10 @@
 using Uno;
 using Uno.Collections;
 using Uno.Graphics;
-using Uno.Scenes;
-using Uno.Designer;
+using Fuse.Designer;
 using Uno.Content;
 using Uno.Content.Models;
-
+using Fuse;
 using Uno.Physics.Box2D;
 
 using TowerBuilder.Box2DMath;
@@ -56,38 +55,47 @@ namespace TowerBuilder
 		protected abstract void OnInitializeTestBed();
 
 
-		protected override void OnFixedUpdate()
+
+		double _interval = 1.0 / 60.0;
+		double _lockTimer = 0;
+		protected void OnUpdate () {
+			while (_lockTimer < Application.Current.FrameTime) {
+				FixedUpdate();
+				_lockTimer += _interval;
+			}
+		}
+
+		protected void FixedUpdate()
 		{
 			if(World == null) return;
 
 			if(!defined(Designer)) {
-				World.Step((float) Uno.Application.Current.FixedInterval,(int) 4, 4);
+				World.Step((float) _interval,(int) 4, 4);
 			}
 				
 			float2 pos = Input.PointerCoord;
-			float2 center = Context.VirtualResolution / 2;
+			float2 center = DrawContext.Current.VirtualResolution / 2;
 
 			float2 posClip = (pos - center) / center;
-			posClip.X *= Context.Aspect;
+			posClip.X *= DrawContext.Current.Aspect;
 			posClip.Y *= -1.0f;
 			mousePosWorld = Box2DMath.UnoToBox2D(posClip);
 
-			if(Input.IsPointerDown() && mouseJoint == null)
+			if(Input.IsPointerPressed() && mouseJoint == null)
 			{
 				startMouseJoint();
 			}
 
-			if(Input.IsPointerDown() && mouseJoint != null)
+			if(Input.IsPointerPressed() && mouseJoint != null)
 			{
 				mouseJoint.SetTarget(mousePosWorld);
 			}
 
-			if(!Input.IsPointerDown() && mouseJoint != null)
+			if(!Input.IsPointerPressed() && mouseJoint != null)
 			{
 				endMouseJoint();
 			}
 			
-			base.OnFixedUpdate();
 		}
 
 		float2 point;
@@ -136,11 +144,12 @@ namespace TowerBuilder
 			mouseJoint = null;
 		}
 
-		protected override void OnDraw()
+		protected void OnDraw()
 		{
+			// protected override void OnDraw()
 			World.DrawDebugData();
 			
-			base.OnDraw();
+			// base.OnDraw();
 		}
 
 	}

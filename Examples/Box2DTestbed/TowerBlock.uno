@@ -1,7 +1,6 @@
 using Uno;
 using Uno.Collections;
 using Uno.Graphics;
-using Uno.Scenes;
 using Uno.Content;
 using Uno.Content.Models;
 using Uno.Physics.Box2D;
@@ -91,10 +90,8 @@ namespace TowerBuilder
 		}
 		
 		private int c = 0;
-		protected override void OnFixedUpdate()
+		protected void OnFixedUpdate()
 		{
-			base.OnFixedUpdate();
-			
 			debug_log bodies.Count;
 			if(c++ % 8 == 0 && bodies.Count < 20) CreateBox2();
 
