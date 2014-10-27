@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project Format="1.0">
+    <BuildDir>.Build</BuildDir>
+    <CacheDir>.Cache</CacheDir>
+    <References>
+        <PackageReference Name="Uno.Physics.Box2D" />
+        <PackageReference Name="Experimental.Data" />
+        <PackageReference Name="Experimental.Net.Http" />
+        <PackageReference Name="Uno.Collections" />
+        <PackageReference Name="Fuse.Animations" />
+        <PackageReference Name="Fuse.Controls" />
+        <PackageReference Name="Fuse.Designer" />
+        <PackageReference Name="Fuse.Drawing" />
+        <PackageReference Name="Fuse.Drawing.Primitives" />
+        <PackageReference Name="Fuse.Effects" />
+        <PackageReference Name="Fuse.Elements" />
+        <PackageReference Name="Fuse.Entities" />
+        <PackageReference Name="Fuse.Nodes" />
+        <PackageReference Name="Fuse.Shapes" />
+        <PackageReference Name="FuseCore" />
+        <PackageReference Name="Outracks.UIThemes.MobileBlue" />
+    </References>
+    <Files>
+        <SourceFile Path="App.uno" />
+        <UXFile Path="MainView.ux" />
+        <SourceFile Path="MainView.ux.uno" />
+    </Files>
+</Project>
