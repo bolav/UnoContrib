@@ -1,17 +1,31 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <Project>
   <References>
-    <PackageReference Name="Uno.Content.Utilities" />
-    <PackageReference Name="Uno.Designer" />
+    <!-- <PackageReference Name="Uno.Content.Utilities" /> -->
+    <!-- <PackageReference Name="Uno.Designer" /> -->
     <PackageReference Name="Uno.Physics.Box2D" Version="0.1.0.0" />
-    <PackageReference Name="Uno.Scenes" />
-    <PackageReference Name="Uno.Styling" />
-    <PackageReference Name="Uno.Tweening" />
-    <PackageReference Name="Uno.UI" />
+    <!-- <PackageReference Name="Uno.Scenes" /> -->
+    <!-- <PackageReference Name="Uno.Styling" /> -->
+    <!-- <PackageReference Name="Uno.Tweening" /> -->
+    <!-- <PackageReference Name="Uno.UI" /> -->
+    <!-- <PackageReference Name="Uno.UI" /> -->
+    <PackageReference Name="Fuse.Animations" />
+    <PackageReference Name="Fuse.Controls" />
+    <PackageReference Name="Fuse.Designer" />
+    <PackageReference Name="Fuse.Drawing" />
+    <PackageReference Name="Fuse.Drawing.Primitives" />
+    <PackageReference Name="Fuse.Effects" />
+    <PackageReference Name="Fuse.Elements" />
+    <PackageReference Name="Fuse.Entities" />
+    <PackageReference Name="Fuse.Nodes" />
+    <PackageReference Name="Fuse.Shapes" />
+    <PackageReference Name="FuseCore" />
+    <PackageReference Name="Outracks.UIThemes.MobileBlue" />
+    <PackageReference Name="Uno.Collections" />
   </References>
   <Files>
-    <UxFile Path="Level1.ux" />
-    <UxFile Path="Level2.ux" />
+    <UXFile Path="Level1.ux" />
+    <UXFile Path="Level2.ux" />
     <SourceFile Path="AngryBlocks.uno" />
     <SourceFile Path="Box2DMath.uno" />
     <SourceFile Path="Box2DRenderer.uno" />
@@ -22,6 +36,5 @@
     <SourceFile Path="PhysicsBlock.uno" />
     <SourceFile Path="PhysicsEntity.uno" />
     <SourceFile Path="PhysicsTriangle.uno" />
-    <StartupFile Path="Level2.ux" />
   </Files>
 </Project>

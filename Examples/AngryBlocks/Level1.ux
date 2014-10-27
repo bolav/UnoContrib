@@ -1,4 +1,4 @@
-<AngryBlocks.AngryBlocks xmlns:ux="http://schemas.outracks.com/ux" xmlns:ab="AngryBlocks" ux:ClassName="Level1" xmlns="Uno.Scenes, Uno.Styling, Uno.UI, Uno">
+<AngryBlocks.AngryBlocks xmlns:ux="http://schemas.outracks.com/ux" xmlns:ab="AngryBlocks" ux:ClassName="Level1">
   <ab:PhysicsBall Radius="3" Position="16, -5" BodyType="Dynamic" MaxImpulse="5" ux:Name="Pig1" />
   <ab:PhysicsBall Radius="3" Position="42, -5" BodyType="Dynamic" MaxImpulse="5" ux:Name="Pig11" />
   <ab:PhysicsBall Radius="3" Color="0, 0.3294118, 1" Position="29, 11.5" BodyType="Dynamic" MaxImpulse="5" ux:Name="Pig" />
