@@ -24,5 +24,6 @@
         <SourceFile Path="App.uno" />
         <UXFile Path="MainView.ux" />
         <SourceFile Path="MainView.ux.uno" />
+        <SourceFile Path="DebugRenderer.uno" />
     </Files>
 </Project>

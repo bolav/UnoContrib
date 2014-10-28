@@ -8,7 +8,7 @@ using Fuse;
 
 namespace AngryBlocks
 {
-	public abstract class PhysicsEntity : Element
+	public abstract class PhysicsEntity : Node
 	{
 		protected Body Body { get; set; }
 
@@ -54,8 +54,13 @@ namespace AngryBlocks
 		}
 
 		protected abstract Shape GetShape();
-		protected void OnDraw(DrawContext dc) {}
 
+		public override float2 ParentToLocal (float2 f) {
+			return f;
+		}
+		public override float2 LocalToParent (float2 f) {
+			return f;
+		}
 
 	}
 }

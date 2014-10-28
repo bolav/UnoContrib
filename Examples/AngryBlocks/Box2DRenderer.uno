@@ -3,6 +3,7 @@ using Uno.Collections;
 using Uno.Graphics;
 using Uno.Content;
 using Uno.Content.Models;
+using Fuse;
 
 namespace AngryBlocks
 {
@@ -30,7 +31,7 @@ namespace AngryBlocks
 		ushort[] Indices : new ushort[] { 0,1,2,2,3,0 };
 		VertexCount : 6;
 
-		float2 AspectCorrection: float2(1 / AngryBlocks.Context.Aspect, 1);
+		float2 AspectCorrection: float2(1 / DrawContext.Current.Aspect, 1);
 
 		float3 QuadPosition: float3(Box2DMath.Box2DToUno(Box2DBodyPosition), 0) * float3(AspectCorrection.XY, 0);
 		public float2 Size: Box2DMath.Box2DToUno(Box2DQuadSize) * AspectCorrection;

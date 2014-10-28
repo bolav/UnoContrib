@@ -6,6 +6,7 @@ using Uno.Content.Models;
 
 using Uno.Physics.Box2D;
 using AngryBlocks.Box2DMath;
+using Fuse;
 
 namespace AngryBlocks
 {
@@ -30,7 +31,7 @@ namespace AngryBlocks
 			draw {
 				ushort[] Indices : indices;
 				float2 VertexData: vertex_attrib(vertices, Indices);
-				float2 VertexPosition: VertexData.XY * float2(1 / AngryBlocks.Context.Aspect, 1.0f);
+				float2 VertexPosition: VertexData.XY * float2(1 / DrawContext.Current.Aspect, 1.0f);
 				VertexCount: indices.Length;
 				ClipPosition : float4(Box2DToUno(VertexPosition), 0, 1);
 				public float3 VertexNormal: float3(0, 0, 1);
@@ -43,7 +44,7 @@ namespace AngryBlocks
 			draw {
 				ushort[] Indices : indices;
 				float2 VertexData: vertex_attrib(vertices, Indices);
-				float2 VertexPosition: VertexData.XY * float2(1 / AngryBlocks.Context.Aspect, 1.0f);
+				float2 VertexPosition: VertexData.XY * float2(1 / DrawContext.Current.Aspect, 1.0f);
 				VertexCount: indices.Length;
 				ClipPosition : float4(Box2DToUno(VertexPosition), 0, 1);
 				public float3 VertexNormal: float3(0, 0, 1);
@@ -78,7 +79,7 @@ namespace AngryBlocks
 		{
 			draw {
 				float2 VertexData: vertex_attrib(new float2[]{p1, p2});
-				float2 VertexPosition: VertexData.XY * float2(1 / AngryBlocks.Context.Aspect, 1.0f);
+				float2 VertexPosition: VertexData.XY * float2(1 / DrawContext.Current.Aspect, 1.0f);
 				VertexCount: 2;
 				ClipPosition : float4(Box2DToUno(VertexPosition), 0, 1);
 				PixelColor: color;

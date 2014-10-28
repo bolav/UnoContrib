@@ -23,7 +23,7 @@ namespace AngryBlocks
 			return shape;
 		}
 
-		protected override void OnDraw(DrawContext dc)
+		public override void Draw(Fuse.DrawContext dc)
 		{
 			if(Body.GetFixtureList() == null) return;
 

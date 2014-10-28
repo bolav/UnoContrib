@@ -137,21 +137,19 @@ namespace AngryBlocks
 
 		}
 
-		public static DrawContext Context;
 		private void UpdateMousePosition()
 		{
 			float2 pos = Input.PointerCoord;
-			float2 center = Context.VirtualResolution / 2;
+			float2 center = DrawContext.Current.VirtualResolution / 2;
 
 			float2 posClip = (pos - center) / center;
-			posClip.X *= Context.Aspect;
+			posClip.X *= DrawContext.Current.Aspect;
 			posClip.Y *= -1.0f;
 			mousePosWorld = Box2DMath.UnoToBox2D(posClip);
 		}
 
 		protected override void OnDraw()
 		{
-			Context = DrawContext.Current;
 			World.Current.DrawDebugData();
 			World.Current.DebugDraw.DrawSegment(MousePosWorld, cannonBody.Position, float4(1, 1, 0, 1), float2(0));
 		}
