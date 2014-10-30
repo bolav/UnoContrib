@@ -25,6 +25,8 @@ namespace AngryBlocks
 			World.Current.DebugDraw.AppendFlags(DebugDrawFlags.Joint);
 			World.Current.ContactListener = new DestroyContactListener(this);
 
+			RootNode = new Fuse.Controls.Panel();
+
 			CreateFloor();
 			CreateCannon();
 		}

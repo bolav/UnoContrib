@@ -1,26 +1,18 @@
-﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<Project>
-  <References>
-    <PackageReference Name="Outracks.WowFactory" Version="0.1.0.0" />
-    <PackageReference Name="Uno.Content.Utilities" />
-    <PackageReference Name="Uno.Designer" />
-    <PackageReference Name="Uno.Drawing" Version="0.1.0.0" />
-    <PackageReference Name="Uno.Scenes" />
-    <PackageReference Name="Uno.Styling" />
-    <PackageReference Name="Uno.Tweening" />
-    <PackageReference Name="Uno.UI" />
-  </References>
-  <Files>
-    <UxFile Path="Scene1.ux" />
-    <SourceFile Path="Ball.uno" />
-    <SourceFile Path="Devider.uno" />
-    <SourceFile Path="PlayerPads.uno" />
-    <SourceFile Path="Pong.uno" />
-    <SourceFile Path="Scene1.ux.uno" />
-    <SourceFile Path="SomeEffect.uno" />
-    <ExtraFile Path="Aqua Ball.png" />
-    <ExtraFile Path="glossy_button_blank_green_rectangle.png" />
-    <ExtraFile Path="glossy_button_blank_yellow_rectangle.png" />
-    <StartupFile Path="Scene1.ux" />
-  </Files>
+<?xml version="1.0" encoding="utf-8"?>
+<Project Format="1.0">
+    <References>
+        <PackageReference Name="Outracks.WowFactory" Version="0.1.0.0" />
+    </References>
+    <Files>
+        <File Path="Aqua Ball.png" />
+        <SourceFile Path="Ball.uno" />
+        <SourceFile Path="Devider.uno" />
+        <File Path="glossy_button_blank_green_rectangle.png" />
+        <File Path="glossy_button_blank_yellow_rectangle.png" />
+        <SourceFile Path="PlayerPads.uno" />
+        <SourceFile Path="Pong.uno" />
+        <UXFile Path="Scene1.ux" />
+        <SourceFile Path="Scene1.ux.uno" />
+        <SourceFile Path="SomeEffect.uno" />
+    </Files>
 </Project>
