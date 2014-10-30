@@ -33,7 +33,7 @@ namespace AngryBlocks
 			Color = float3(1, 1, 0);
 		}
 
-		public override void Draw(Fuse.DrawContext dc)
+		public void Draw(Fuse.DrawContext dc)
 		{
 			if(Body.GetFixtureList() == null) return;
 

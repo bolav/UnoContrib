@@ -1,0 +1,3 @@
+<AngryBlocks.AngryBlocks xmlns:ux="http://schemas.outracks.com/ux" xmlns:ab="AngryBlocks" ux:ClassName="Level3">
+    <ab:PhysicsBall Radius="4" Position="7, -26" BodyType="Dynamic" MaxImpulse="5" ux:Name="PhysicsBall1" ux:AutoBind="false" />
+</AngryBlocks.AngryBlocks>

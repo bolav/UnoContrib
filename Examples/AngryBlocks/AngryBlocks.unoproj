@@ -19,12 +19,14 @@
   <Files>
     <UXFile Path="Level1.ux" />
     <UXFile Path="Level2.ux" />
+    <UXFile Path="Level3.ux" />
     <SourceFile Path="AngryBlocks.uno" />
     <SourceFile Path="Box2DMath.uno" />
     <SourceFile Path="Box2DRenderer.uno" />
     <SourceFile Path="DebugRenderer.uno" />
     <SourceFile Path="Level1.ux.uno" />
     <SourceFile Path="Level2.ux.uno" />
+    <SourceFile Path="Level3.ux.uno" />
     <SourceFile Path="PhysicsBall.uno" />
     <SourceFile Path="PhysicsBlock.uno" />
     <SourceFile Path="PhysicsEntity.uno" />

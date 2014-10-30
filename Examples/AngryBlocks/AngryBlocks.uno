@@ -20,15 +20,15 @@ namespace AngryBlocks
 
 		public AngryBlocks()
 		{
+			CreateFloor();
+			CreateCannon();
+
 			World.Current.DebugDraw = new DebugRenderer();
 			World.Current.DebugDraw.AppendFlags(DebugDrawFlags.Shape);
 			World.Current.DebugDraw.AppendFlags(DebugDrawFlags.Joint);
 			World.Current.ContactListener = new DestroyContactListener(this);
 
 			Update += OnUpdate;
-
-			CreateFloor();
-			CreateCannon();
 		}
 
 		void CreateFloor()

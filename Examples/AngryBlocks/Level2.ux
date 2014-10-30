@@ -34,5 +34,4 @@
   <ab:PhysicsBall Radius="2" Position="57, 0" BodyType="Dynamic" MaxImpulse="5" ux:Name="PhysicsBall11111" ux:AutoBind="false" />
   <ab:PhysicsBlock ux:AutoBind="false" Dimensions="2, 4" Position="69, -26" BodyType="Dynamic" ux:Name="PhysicsBlock21111" />
   <ab:PhysicsBlock ux:AutoBind="false" Dimensions="4, 2" Position="34, -26" BodyType="Dynamic" ux:Name="PhysicsBlock2121111" />
-  <Outracks.UIThemes.MobileBlue.MobileBlueStyle  ux:Name="Style1" />
 </AngryBlocks.AngryBlocks>

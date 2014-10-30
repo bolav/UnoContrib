@@ -8,7 +8,7 @@ using Fuse;
 
 namespace AngryBlocks
 {
-	public abstract class PhysicsEntity : Node
+	public abstract class PhysicsEntity
 	{
 		protected Body Body { get; set; }
 
@@ -27,7 +27,9 @@ namespace AngryBlocks
 		public BodyType BodyType
 		{
 			get { return Body.GetBodyType(); }
-			set { Body.SetType(value); }
+			set { 
+				Body.SetType(value);
+			}
 		}
 
 		public float MaxImpulse
@@ -54,13 +56,6 @@ namespace AngryBlocks
 		}
 
 		protected abstract Shape GetShape();
-
-		public override float2 ParentToLocal (float2 f) {
-			return f;
-		}
-		public override float2 LocalToParent (float2 f) {
-			return f;
-		}
 
 	}
 }
