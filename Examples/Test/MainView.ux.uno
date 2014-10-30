@@ -1,5 +1,4 @@
 using Fuse.Shapes;
-using Uno.Geometry;
 using Fuse.Entities;
 using Fuse.Time;
 using Fuse;
@@ -25,7 +24,6 @@ public partial class MainView
 		InitializeUX();
 		Update += OnUpdate;
 
-		debug_log World.Current;
 		var bodyDef = new BodyDef();
 		bodyDef.position = float2(0, -10.0f);
 		var groundBody = World.Current.CreateBody(bodyDef);
@@ -35,19 +33,20 @@ public partial class MainView
 		
 		var bodyDef2 = new BodyDef();
 		bodyDef2.type = BodyType.Dynamic;
-		bodyDef2.position = float2(0.0f, 4.0f);
+		bodyDef2.position = float2(0.0f, 50.0f);
 		body = World.Current.CreateBody(bodyDef2);
-		debug_log body;
-		var dynamicBox = new PolygonShape();
-		dynamicBox.SetAsBox(1.0f, 1.0f);
+		var shape = new CircleShape();
+		shape._radius = 2.0f;
+		// var dynamicBox = new PolygonShape();
+		// dynamicBox.SetAsBox(1.0f, 1.0f);
 		
 		var fixtureDef = new FixtureDef();
-		fixtureDef.shape = dynamicBox;
+		fixtureDef.shape = shape;
 		fixtureDef.density = 1.0f;
 		fixtureDef.friction = 0.3f;
 		body.CreateFixture(fixtureDef);
 
-		World.Current.DebugDraw = new DebugRenderer();
+		World.Current.DebugDraw = new AngryBlocks.DebugRenderer();
 		World.Current.DebugDraw.AppendFlags(DebugDrawFlags.Shape);
 		World.Current.DebugDraw.AppendFlags(DebugDrawFlags.Joint);
 	}

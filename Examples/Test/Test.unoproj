@@ -25,5 +25,6 @@
         <UXFile Path="MainView.ux" />
         <SourceFile Path="MainView.ux.uno" />
         <SourceFile Path="DebugRenderer.uno" />
+        <SourceFile Path="Box2DMath.uno" />
     </Files>
 </Project>

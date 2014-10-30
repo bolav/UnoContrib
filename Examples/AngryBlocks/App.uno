@@ -4,7 +4,7 @@ namespace AngryBlocks
 	{
 		public App()
 		{
-			RootNode = new Level3();
+			RootNode = new Level2();
 		}
 	}
 }
