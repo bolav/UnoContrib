@@ -36,5 +36,7 @@
     <SourceFile Path="PhysicsBlock.uno" />
     <SourceFile Path="PhysicsEntity.uno" />
     <SourceFile Path="PhysicsTriangle.uno" />
+    <SourceFile Path="App.uno" />
+    <SourceFile Path="PanelHack.uno" />
   </Files>
 </Project>

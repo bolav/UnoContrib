@@ -8,7 +8,7 @@ using Fuse;
 
 namespace AngryBlocks
 {
-	public class AngryBlocks : App
+	public class AngryBlocks : Fuse.Element
 	{
 		Body floorBody, cannonBody, cannonBall;
 
@@ -25,7 +25,7 @@ namespace AngryBlocks
 			World.Current.DebugDraw.AppendFlags(DebugDrawFlags.Joint);
 			World.Current.ContactListener = new DestroyContactListener(this);
 
-			RootNode = new Fuse.Controls.Panel();
+			Update += OnUpdate;
 
 			CreateFloor();
 			CreateCannon();
@@ -107,10 +107,11 @@ namespace AngryBlocks
 
 		double _interval = 1.0 / 60.0;
 		double _lockTimer = 0;
-		protected override void OnUpdate () {
+		protected void OnUpdate (object sender, Uno.EventArgs args) {
 			while (_lockTimer < Application.Current.FrameTime) {
 				FixedUpdate();
 				_lockTimer += _interval;
+				InvalidateVisual();
 			}
 		}
 
@@ -141,7 +142,7 @@ namespace AngryBlocks
 
 		private void UpdateMousePosition()
 		{
-			float2 pos = Input.PointerCoord;
+			float2 pos = FromAbsolute(Input.PointerCoord);
 			float2 center = DrawContext.Current.VirtualResolution / 2;
 
 			float2 posClip = (pos - center) / center;
@@ -150,7 +151,7 @@ namespace AngryBlocks
 			mousePosWorld = Box2DMath.UnoToBox2D(posClip);
 		}
 
-		protected override void OnDraw()
+		protected override void OnDraw(DrawContext dc)
 		{
 			World.Current.DrawDebugData();
 			World.Current.DebugDraw.DrawSegment(MousePosWorld, cannonBody.Position, float4(1, 1, 0, 1), float2(0));
