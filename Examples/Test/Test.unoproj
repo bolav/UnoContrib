@@ -4,8 +4,6 @@
     <CacheDir>.Cache</CacheDir>
     <References>
         <PackageReference Name="Uno.Physics.Box2D" />
-        <PackageReference Name="Experimental.Data" />
-        <PackageReference Name="Experimental.Net.Http" />
         <PackageReference Name="Uno.Collections" />
         <PackageReference Name="Fuse.Animations" />
         <PackageReference Name="Fuse.Controls" />
@@ -18,7 +16,6 @@
         <PackageReference Name="Fuse.Nodes" />
         <PackageReference Name="Fuse.Shapes" />
         <PackageReference Name="FuseCore" />
-        <PackageReference Name="Outracks.UIThemes.MobileBlue" />
     </References>
     <Files>
         <SourceFile Path="App.uno" />

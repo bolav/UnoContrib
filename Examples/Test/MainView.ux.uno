@@ -13,8 +13,6 @@ public partial class MainView
 
 	protected override void OnDraw (Fuse.DrawContext dc) {
 		base.OnDraw(dc);
-	// protected override void OnDraw () {
-		// base.OnDraw();
 		World.Current.DrawDebugData();
 	}
 
@@ -33,7 +31,7 @@ public partial class MainView
 		
 		var bodyDef2 = new BodyDef();
 		bodyDef2.type = BodyType.Dynamic;
-		bodyDef2.position = float2(0.0f, 50.0f);
+		bodyDef2.position = float2(0.0f, 40.0f);
 		body = World.Current.CreateBody(bodyDef2);
 		var shape = new CircleShape();
 		shape._radius = 2.0f;
