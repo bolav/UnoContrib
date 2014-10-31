@@ -4,7 +4,7 @@ namespace AngryBlocks
 	{
 		public App()
 		{
-			RootNode = new PulleyJointScene();
+			RootNode = new RubeScene();
 		}
 	}
 }

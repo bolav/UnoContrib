@@ -1,0 +1,5 @@
+<Scene xmlns:ux="http://schemas.outracks.com/ux" ux:ClassName="RubeScene">
+	<RubeLoader>
+		<Uno.BundleFile ux:Binding="RubeFile" ux:Path="Assets/jointTypes.json" />
+	</RubeLoader>
+</Scene>

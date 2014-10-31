@@ -10,7 +10,7 @@
     <PackageReference Name="Uno.Geometry" Version="0.1.0.0" />
     <PackageReference Name="Uno.Physics.Box2D" Version="0.1.0.0" />
     <PackageReference Name="Outracks.UIThemes.MobileBlue" />
-	
+    <PackageReference Name="Experimental.Data" />
   </References>
   <Files>
     <UXFile Path="PulleyJointScene.ux" />
@@ -26,5 +26,8 @@
     <SourceFile Path="TowerDebugDrawer.uno" />
     <SourceFile Path="TowerBlock.uno" />
     <SourceFile Path="PulleyJoint.uno" />
+    <UXFile Path="RubeScene.ux" />
+    <SourceFile Path="RubeScene.uno" />
+    <SourceFile Path="RubeLoader.uno" />
   </Files>
 </Project>
