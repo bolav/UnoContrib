@@ -17,6 +17,7 @@
     <UXFile Path="TowerBlockScene.ux" />
     <!-- <SourceFile Path="Tests/PulleyJoint.uno" />
     <SourceFile Path="Tests/TowerBlock.uno" /> -->
+    <SourceFile Path="App.uno" />
     <SourceFile Path="Box2DMath.uno" />
     <SourceFile Path="PhysicsWorld.uno" />
     <SourceFile Path="PulleyJointScene.ux.uno" />

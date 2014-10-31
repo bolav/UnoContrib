@@ -24,7 +24,6 @@ namespace TowerBuilder
 
 		protected override void OnInitializeTestBed()
 		{
-			
 	        var bd = new BodyDef();
 	        var ground = World.CreateBody(bd);
 

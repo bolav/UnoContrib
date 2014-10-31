@@ -28,7 +28,7 @@ namespace AngryBlocks
 		{
 			get { return Body.GetBodyType(); }
 			set { 
-				// Body.SetType(value);
+				Body.SetType(value);
 			}
 		}
 

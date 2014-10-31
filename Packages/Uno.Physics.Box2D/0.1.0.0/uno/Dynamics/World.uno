@@ -1282,7 +1282,7 @@ namespace Uno.Physics.Box2D
         TOISolver _toiSolver = new TOISolver();
         Contact[] _toiContacts = new Contact[Settings.b2_maxTOIContacts];
         internal Island _island = new Island();
-        internal WorldFlags _flags;
+        internal int _flags;
 
 	    internal ContactManager _contactManager = new ContactManager();
         internal Queue<Contact> _contactPool = new Queue<Contact>();

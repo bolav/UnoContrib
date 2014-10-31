@@ -12,7 +12,6 @@ namespace AngryBlocks
 	{
 		Body floorBody, cannonBody, cannonBall;
 
-
 		private List<Body> bodiesToDestroy = new List<Body>();
 
 		private float2 mousePosWorld;

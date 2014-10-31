@@ -37,6 +37,16 @@ namespace TowerBuilder
 			OnInitialize();
 		}
 
+		public override float2 ParentToLocal(float2 f) {
+			return f;
+		}
+		public override float2 LocalToParent(float2 f) {
+			return f;
+		}
+		public override void Draw(DrawContext dc) {
+			TowerBuilder.PhysicsWorld.World.DrawDebugData();
+		}
+
 		protected override void OnInitialize()
 		{
 			debug_log "On Initialize";
@@ -48,6 +58,7 @@ namespace TowerBuilder
 			mouseJointGroundBody = World.CreateBody(new BodyDef());
 
 			OnInitializeTestBed();
+			Update += OnUpdate;
 
 			base.OnInitialize();
 		}
@@ -58,7 +69,7 @@ namespace TowerBuilder
 
 		double _interval = 1.0 / 60.0;
 		double _lockTimer = 0;
-		protected void OnUpdate () {
+		protected void OnUpdate (object sender, Uno.EventArgs args) {
 			while (_lockTimer < Application.Current.FrameTime) {
 				FixedUpdate();
 				_lockTimer += _interval;
@@ -74,9 +85,11 @@ namespace TowerBuilder
 			}
 				
 			float2 pos = Input.PointerCoord;
+			pos *= DrawContext.Current.Aspect;
 			float2 center = DrawContext.Current.VirtualResolution / 2;
 
 			float2 posClip = (pos - center) / center;
+
 			posClip.X *= DrawContext.Current.Aspect;
 			posClip.Y *= -1.0f;
 			mousePosWorld = Box2DMath.UnoToBox2D(posClip);
@@ -111,7 +124,6 @@ namespace TowerBuilder
 			fixture = null;
 			point = mousePosWorld;
 		    // Query the world for overlapping shapes.
-
 		    World.QueryAABB(AABBCallback, ref aabb);
 		}
 
@@ -151,6 +163,5 @@ namespace TowerBuilder
 			
 			// base.OnDraw();
 		}
-
 	}
 }

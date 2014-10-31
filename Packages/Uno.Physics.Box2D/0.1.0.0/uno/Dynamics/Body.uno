@@ -1074,7 +1074,7 @@ namespace Uno.Physics.Box2D
             }
         }
 
-        internal BodyFlags _flags;
+        internal int _flags;
         internal BodyType _type;
 
         internal int _islandIndex;
