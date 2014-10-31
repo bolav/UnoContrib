@@ -113,12 +113,31 @@ public class RubeLoader : TowerBuilder.TestBed
 							}
 						}
 					}
+					bodies.Add(body);
 				}
-				bodies.Add(body);
 			}
 			if (Rube.HasKey("joint")) {
 				var val = Rube["joint"];
 				for (var i = 0; i<val.Count; i++) {
+					var jointValue = val[i];
+					JointDef jointDef = null;
+					var bodyIndexA = jointValue["bodyA"].AsInteger();
+					var bodyIndexB = jointValue["bodyB"].AsInteger();
+					if (jointValue["type"].AsString() == "revolute") {
+						var revoluteDef = new RevoluteJointDef();
+						revoluteDef.localAnchorA = JsonFloat2(jointValue["anchorA"]);
+						revoluteDef.localAnchorB = JsonFloat2(jointValue["anchorB"]);
+						
+						jointDef = revoluteDef;
+					}
+					else {
+						debug_log "Unknown type: " + jointValue["type"].AsString();
+					}
+					if (jointDef != null) {
+						jointDef.bodyA = bodies[bodyIndexA];
+						jointDef.bodyB = bodies[bodyIndexB];
+						World.CreateJoint(jointDef);
+					}
 				}
 			}
 		}
