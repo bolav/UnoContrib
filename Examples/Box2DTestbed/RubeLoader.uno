@@ -35,7 +35,7 @@ public class RubeLoader : TowerBuilder.TestBed
 			return defaultValue;
 		}
 	}
-	public bool JsonBool(JsonReader j, string k, bool defaultValue = false) {
+	public bool JsonBool(string k, JsonReader j, bool defaultValue = false) {
 		if (j.HasKey(k)) {
 			return j[k].AsBool();
 		}
@@ -53,8 +53,13 @@ public class RubeLoader : TowerBuilder.TestBed
 		}
 	}
 	
-	public float2 jsonToVec(string k, JsonReader j, float2 defaultValue = float2(0)) {
-		return JsonFloat2(j[k], defaultValue);
+	public float2 jsonToVec(string k, JsonReader j, int index = -1, float2 defaultValue = float2(0)) {
+		if (index == -1) {
+			return JsonFloat2(j[k], defaultValue);
+		}
+		else {
+			return float2(j[k]["x"][index].AsFloat(), j[k]["y"][index].AsFloat());
+		}
 	}
 
 	public float2 JsonFloat2(JsonReader j, float2 defaultValue = float2(0)) {
@@ -88,7 +93,7 @@ public class RubeLoader : TowerBuilder.TestBed
 						fd.friction = fixtureValue["restitution"].AsFloat();
 						fd.friction = fixtureValue["friction"].AsFloat();
 						fd.density = fixtureValue["density"].AsFloat();
-						fd.isSensor = JsonBool(fixtureValue, "sensor", false);
+						fd.isSensor = JsonBool("sensor", fixtureValue, false);
 						fd.filter.categoryBits = (ushort)JsonInt(fixtureValue, "filter-categoryBits", 0x0001);
 						fd.filter.maskBits = (ushort)JsonInt(fixtureValue, "filter-maskBits", 0xffff);
 						fd.filter.groupIndex = (short)JsonInt(fixtureValue, "filter-groupIndex", 0);
@@ -99,25 +104,44 @@ public class RubeLoader : TowerBuilder.TestBed
 							fd.shape = shape;
 							body.CreateFixture(fd);
 						}
+						else if (fixtureValue.HasKey("chain")) {
+					        var chainShape = new ChainShape();
+							int numVertices = fixtureValue["chain"]["vertices"]["x"].Count;
+							var vertices = new float2[numVertices];
+							for (var ii = 0; ii < numVertices; ii++) {
+					            vertices[ii] = jsonToVec("vertices", fixtureValue["chain"], ii);
+							}
+					        chainShape.CreateChain(vertices, numVertices);
+					        chainShape._hasPrevVertex = JsonBool("hasPrevVertex",fixtureValue["chain"],false);
+					        chainShape._hasNextVertex = JsonBool("hasNextVertex",fixtureValue["chain"],false);
+					        if ( chainShape._hasPrevVertex )
+					            chainShape._prevVertex = jsonToVec("prevVertex", fixtureValue["chain"]);
+					        if ( chainShape._hasNextVertex )
+					            chainShape._nextVertex = jsonToVec("nextVertex", fixtureValue["chain"]);
+							fd.shape = chainShape;
+							body.CreateFixture(fd);
+						}
 						else if (fixtureValue.HasKey("polygon")) {
 							int numVertices = fixtureValue["polygon"]["vertices"]["x"].Count;
 							if (numVertices > 8) {
-								debug_log "Too many vertices";
+								debug_log "polygon Too many vertices";
 							}
 							else if (numVertices < 2) {
-								debug_log "Too few vertices";
+								debug_log "polygon Too few vertices";
 							}
 							else if (numVertices == 2) {
-								debug_log "Should be edge";
+								debug_log "polygon Should be edge";
 							}
-							float2[] vertices = new float2[numVertices];
-					        var shape = new PolygonShape();
-							for (var ii = 0; ii < numVertices; ii++) {
-								vertices[ii] = float2(fixtureValue["polygon"]["vertices"]["x"][ii].AsFloat(), fixtureValue["polygon"]["vertices"]["y"][ii].AsFloat());
+							else {
+								float2[] vertices = new float2[numVertices];
+						        var shape = new PolygonShape();
+								for (var ii = 0; ii < numVertices; ii++) {
+									vertices[ii] = float2(fixtureValue["polygon"]["vertices"]["x"][ii].AsFloat(), fixtureValue["polygon"]["vertices"]["y"][ii].AsFloat());
+								}
+								shape.Set(vertices, numVertices);
+								fd.shape = shape;
+								body.CreateFixture(fd);
 							}
-							shape.Set(vertices, numVertices);
-							fd.shape = shape;
-							body.CreateFixture(fd);
 						}
 						else {
 							debug_log "No shapetype for fixture";

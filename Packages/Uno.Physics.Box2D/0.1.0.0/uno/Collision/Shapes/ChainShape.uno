@@ -1,9 +1,10 @@
 /*
-* Box2D.XNA port of Box2D:
-* Copyright (c) 2009 Brandon Furtwangler, Nathan Furtwangler
+* Box2D: r313
+* Uno port of Box2D:
+* Copyright (c) 2014 Bjørn-Olav Strand
 *
 * Original source Box2D:
-* Copyright (c) 2006-2009 Erin Catto http://www.gphysics.com
+* Copyright (c) 2006-2010 Erin Catto http://www.box2d.org
 *
 * This software is provided 'as-is', without any express or implied
 * warranty.  In no event will the authors be held liable for any damages
@@ -25,28 +26,87 @@
 
 namespace Uno.Physics.Box2D
 {
-    /// A loop Shape is a free form sequence of line segments that form a circular list.
-    /// The loop may cross upon itself, but this is not recommended for smooth collision.
-    /// The loop has double sided collision, so you can use inside and outside collision.
+    /// A Chain Shape is a free form sequence of line segments that form a circular list.
+    /// The Chain may cross upon itself, but this is not recommended for smooth collision.
+    /// The Chain has double sided collision, so you can use inside and outside collision.
     /// Therefore, you may use any winding order.
-    public class LoopShape : Shape
+    public class ChainShape : Shape
     {
-	    public LoopShape()
+	    public ChainShape()
         {
 	        ShapeType = ShapeType.Loop;
 	        _radius = Settings.b2_polygonRadius;
 	        _vertices = null;
 	        _count = 0;
+			_hasPrevVertex = false;
+			_hasNextVertex = false;
         }
+
+		public void CreateLoop (float2[] vertices, int count) {
+			// b2Assert(m_vertices == NULL && m_count == 0);
+			// b2Assert(count >= 3);
+			for (var i = 0; i < count; ++i) {
+				var v1 = vertices[i-1];
+				var v2 = vertices[i];
+				// b2Assert(b2DistanceSquared(v1, v2) > b2_linearSlop * b2_linearSlop);
+			}
+
+			_count = count + 1;
+			_vertices = new float2[_count];
+            Array.Copy(_vertices, 0, vertices, 0, vertices.Length);
+			_vertices[count] = _vertices[0];
+			_prevVertex = _vertices[_count - 2];
+			_nextVertex = _vertices[1];
+			_hasPrevVertex = true;
+			_hasNextVertex = true;
+		}
+		
+		public void CreateChain (float2[] vertices, int count) {
+			// b2Assert(m_vertices == NULL && m_count == 0);
+			// b2Assert(count >= 2);
+			for (int i = 1; i < count; ++i)
+			{
+				// If the code crashes here, it means your vertices are too close together.
+				// b2Assert(b2DistanceSquared(vertices[i-1], vertices[i]) > b2_linearSlop * b2_linearSlop);
+			}
+
+			_count = count;
+			_vertices = new float2[_count];
+            Array.Copy(_vertices, 0, vertices, 0, vertices.Length);
+
+			_hasPrevVertex = false;
+			_hasNextVertex = false;
+
+			_prevVertex = float2(0);
+			_nextVertex = float2(0);
+		}
+		
+		public float2 PrevVertex {
+			get { return _prevVertex; }
+			set {
+				_prevVertex = value;
+				_hasPrevVertex = true;
+			}
+		}
+		
+		public float2 NextVertex {
+			get { return _nextVertex; }
+			set {
+				_nextVertex = value;
+				_hasNextVertex = true;
+			}
+		}
 
 	    /// Implement Shape.
 	    public override Shape Clone()
         {
-            var loop = new LoopShape();
-            loop._count = _count;
-            loop._radius = _radius;
-            Array.Copy(_vertices, loop._vertices, loop._vertices.Length);
-            return loop;
+            var Chain = new ChainShape();
+			Chain.CreateChain(_vertices, _count);
+			Chain._prevVertex = _prevVertex;
+			Chain._nextVertex = _nextVertex;
+			Chain._hasPrevVertex = _hasPrevVertex;
+			Chain._hasNextVertex = _hasNextVertex;
+            return Chain;
         }
 
 	    /// @see Shape::GetChildCount
@@ -57,24 +117,34 @@ namespace Uno.Physics.Box2D
 	    /// Get a child edge.
         public void GetChildEdge(ref EdgeShape edge, int index)
         {
+			// 	b2Assert(0 <= index && index < m_count - 1);
 	        edge.ShapeType = ShapeType.Edge;
 	        edge._radius = _radius;
-	        edge._hasVertex0 = true;
-	        edge._hasVertex3 = true;
 
-	        int i0 = index - 1 >= 0 ? index - 1 : _count - 1;
-	        int i1 = index;
-	        int i2 = index + 1 < _count ? index + 1 : 0;
-	        int i3 = index + 2;
-	        while (i3 >= _count)
-	        {
-		        i3 -= _count;
-	        }
+			edge._vertex1 = _vertices[index + 0];
+			edge._vertex2 = _vertices[index + 1];
 
-	        edge._vertex0 = _vertices[i0];
-	        edge._vertex1 = _vertices[i1];
-	        edge._vertex2 = _vertices[i2];
-	        edge._vertex3 = _vertices[i3];
+			if (index > 0)
+			{
+				edge._vertex0 = _vertices[index - 1];
+				edge._hasVertex0 = true;
+			}
+			else
+			{
+				edge._vertex0 = _prevVertex;
+				edge._hasVertex0 = _hasPrevVertex;
+			}
+
+			if (index < _count - 2)
+			{
+				edge._vertex3 = _vertices[index + 2];
+				edge._hasVertex3 = true;
+			}
+			else
+			{
+				edge._vertex3 = _nextVertex;
+				edge._hasVertex3 = _hasNextVertex;
+			}
         }
 	    /// This always return false.
 	    /// @see Shape::TestPoint
@@ -129,11 +199,17 @@ namespace Uno.Physics.Box2D
 	        massData.I = 0.0f;
         }
 
-	    /// The vertices. These are not owned/freed by the loop Shape.
+	/// The vertices. Owned by this class.
 	    public float2[] _vertices;
 
 	    /// The vertex count.
 	    public int _count;
+
+		public float2 _prevVertex;
+		public float2 _nextVertex;
+
+		public bool _hasPrevVertex;
+		public bool _hasNextVertex;
 
         public static EdgeShape s_edgeShape = new EdgeShape();
     }
