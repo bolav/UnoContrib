@@ -6,6 +6,7 @@
 	"Collision/DynamicTree.uno",
 	"Collision/Distance.uno",
 	"Collision/Collision.uno",
+	"Collision/Shapes/ChainShape.uno",
 	"Collision/Shapes/CircleShape.uno",
 	"Collision/Shapes/EdgeShape.uno",
 	"Collision/Shapes/LoopShape.uno",
