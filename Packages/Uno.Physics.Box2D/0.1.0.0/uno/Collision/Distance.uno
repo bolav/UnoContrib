@@ -51,7 +51,6 @@ namespace Uno.Physics.Box2D
 		        }
 		        break;
 
-				// TODO: Check this for correct chain
 	        case ShapeType.Chain:
 	            {
 		            ChainShape chain = (ChainShape)shape;

@@ -33,10 +33,13 @@ namespace Uno.Physics.Box2D
         Pulley,
         Mouse,
         Gear,
-        Line,
+        Line, // Should be removed
+		Wheel,
         Weld,
         Friction,
-        MaxDistance,
+        MaxDistance, // Should be removed
+		Rope,
+		Motor,
     }
 
     public enum LimitState
