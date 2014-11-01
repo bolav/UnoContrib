@@ -1,5 +1,5 @@
 <Scene xmlns:ux="http://schemas.outracks.com/ux" ux:ClassName="RubeScene">
 	<RubeLoader>
-		<Uno.BundleFile ux:Binding="RubeFile" ux:Path="Assets/pinball.json" />
+		<Uno.BundleFile ux:Binding="RubeFile" ux:Path="Assets/images.json" />
 	</RubeLoader>
 </Scene>

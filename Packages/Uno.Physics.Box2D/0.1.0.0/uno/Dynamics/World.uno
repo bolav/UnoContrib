@@ -1262,15 +1262,16 @@ namespace Uno.Physics.Box2D
 		        }
 		        break;
 
-	        case ShapeType.Loop:
+				// TODO: Check this for correct chain
+	        case ShapeType.Chain:
 		        {
-			        LoopShape loop = (LoopShape)fixture.GetShape();
-			        int count = loop._count;
+			        ChainShape chain = (ChainShape)fixture.GetShape();
+			        int count = chain._count;
 
-			        float2 v1 = MathUtils.Multiply(ref xf, loop._vertices[count - 1]);
+			        float2 v1 = MathUtils.Multiply(ref xf, chain._vertices[count - 1]);
 			        for (int i = 0; i < count; ++i)
 			        {
-				        float2 v2 = MathUtils.Multiply(ref xf, loop._vertices[i]);
+				        float2 v2 = MathUtils.Multiply(ref xf, chain._vertices[i]);
 				        DebugDraw.DrawSegment(v1, v2, color, center);
 				        v1 = v2;
 			        }

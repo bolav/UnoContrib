@@ -51,24 +51,25 @@ namespace Uno.Physics.Box2D
 		        }
 		        break;
 
-	        case ShapeType.Loop:
+				// TODO: Check this for correct chain
+	        case ShapeType.Chain:
 	            {
-		            LoopShape loop = (LoopShape)shape;
+		            ChainShape chain = (ChainShape)shape;
 
-		            _buffer[0] = loop._vertices[index];
-		            if (index + 1 < loop._count)
+		            _buffer[0] = chain._vertices[index];
+		            if (index + 1 < chain._count)
 		            {
-			            _buffer[1] = loop._vertices[index + 1];
+			            _buffer[1] = chain._vertices[index + 1];
 		            }
 		            else
 		            {
-			            _buffer[1] = loop._vertices[0];
+			            _buffer[1] = chain._vertices[0];
 		            }
 
                     _vertices[0] = _buffer[0];
                     _vertices[1] = _buffer[1];
 		            _count = 2;
-		            _radius = loop._radius;
+		            _radius = chain._radius;
 	            }
 	            break;
 

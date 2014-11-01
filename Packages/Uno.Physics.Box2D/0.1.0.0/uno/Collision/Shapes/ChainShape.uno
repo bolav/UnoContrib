@@ -34,7 +34,7 @@ namespace Uno.Physics.Box2D
     {
 	    public ChainShape()
         {
-	        ShapeType = ShapeType.Loop;
+	        ShapeType = ShapeType.Chain;
 	        _radius = Settings.b2_polygonRadius;
 	        _vertices = null;
 	        _count = 0;
