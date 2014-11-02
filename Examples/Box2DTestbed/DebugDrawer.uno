@@ -6,11 +6,11 @@ using Uno.Content.Models;
 using Uno.Physics.Box2D;
 using Fuse;
 
-using TowerBuilder.Box2DMath;
+using TestBed.Box2DMath;
 
-namespace TowerBuilder
+namespace TestBed
 {
-	public class TowerDebugDrawer : DebugDraw
+	public class DebugDrawer : DebugDraw
 	{
 		public override void DrawPolygon(ref float2[] vertices, int count, float4 color, float2 center)
 		{

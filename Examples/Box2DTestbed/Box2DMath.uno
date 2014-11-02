@@ -4,7 +4,7 @@ using Uno.Graphics;
 using Uno.Content;
 using Uno.Content.Models;
 
-namespace TowerBuilder
+namespace TestBed
 {
 	public class Box2DMath
 	{

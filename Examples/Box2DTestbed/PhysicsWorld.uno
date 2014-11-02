@@ -6,7 +6,7 @@ using Uno.Content.Models;
 
 using Uno.Physics.Box2D;
 
-namespace TowerBuilder
+namespace TestBed
 {
 	public static class PhysicsWorld
 	{

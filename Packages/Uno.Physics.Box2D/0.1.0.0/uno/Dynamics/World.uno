@@ -1,4 +1,5 @@
 /*
+* Box2D: r313
 * Box2D.XNA port of Box2D:
 * Copyright (c) 2009 Brandon Furtwangler, Nathan Furtwangler
 *
@@ -37,9 +38,36 @@ namespace Uno.Physics.Box2D
     /// management facilities.
     public class World
     {
-        /// ruct a world object.
+        /// Construct a world object.
         /// @param gravity the world gravity vector.
-        /// @param doSleep improve performance by not simulating inactive bodies.
+        public World(float2 gravity)
+        {
+			DestructionListener = null;
+			DebugDraw = null;
+
+			_bodyList = null;
+			_jointList = null;
+
+			_bodyCount = 0;
+			_jointCount = 0;
+
+			WarmStarting = true;
+			ContinuousPhysics = true;
+			SubStepping = false;
+
+			_stepComplete = true;
+
+			_allowSleep = true;
+			Gravity = gravity;
+
+            _flags = WorldFlags.ClearForces;
+
+			_inv_dt0 = 0.0f;
+
+            _queryAABBCallbackWrapper = QueryAABBCallbackWrapper;
+            _rayCastCallbackWrapper = RayCastCallbackWrapper;
+		}
+		// XXX: Remove this constructor
         public World(float2 gravity, bool doSleep)
         {
             WarmStarting = true;
@@ -105,6 +133,7 @@ namespace Uno.Physics.Box2D
 	    /// Register a routine for debug drawing. The debug draw functions are called
 	    /// inside the World.Step method, so make sure your renderer is ready to
 	    /// consume draw commands when you call Step().
+		// XXX: Rename DebugDraw to Draw
 	    public DebugDraw DebugDraw { get; set; }
 
 	    /// Create a rigid body given a definition. No reference to the definition
@@ -156,6 +185,7 @@ namespace Uno.Physics.Box2D
 		        }
 
 		        DestroyJoint(je0.Joint);
+				b._jointList = je;
 	        }
 	        b._jointList = null;
 
@@ -183,6 +213,9 @@ namespace Uno.Physics.Box2D
 
                 f0.DestroyProxies(_contactManager._broadPhase);
 		        f0.Destroy();
+
+				b._fixtureList = f;
+				b._fixtureCount -= 1;
 	        }
 	        b._fixtureList = null;
 	        b._fixtureCount = 0;
@@ -446,7 +479,7 @@ namespace Uno.Physics.Box2D
         }
 
         /// Set flag to control automatic clearing of forces after each time step.
-	    void SetAutoClearForces(bool flag)
+	    public void SetAutoClearForces(bool flag)
         {
             if (flag)
             {
@@ -464,11 +497,24 @@ namespace Uno.Physics.Box2D
             return (_flags & WorldFlags.ClearForces) == WorldFlags.ClearForces;
         }
 
+		/// Shift the world origin. Useful for large worlds.
+		/// The body shift formula is: position -= newOrigin
+		/// @param newOrigin the new origin with respect to the old origin
+		// XXX: public void ShiftOrigin(float2 newOrigin);
+
         /// Get the contact manager for testing.
         public ContactManager GetContactManager()
         {
             return _contactManager;
         }
+
+		/// Get the current profile.
+		// const b2Profile& GetProfile() const;
+		public Profile Profile { get; set; }
+
+		/// Dump the world into the log file.
+		/// @warning this should be called outside of a time step.
+		// XXX: void Dump();
 
 	    /// Call this to draw shapes and other debug draw data.
 	    public void DrawDebugData()
@@ -674,17 +720,38 @@ namespace Uno.Physics.Box2D
 	    /// Get the world contact list. With the returned contact, use Contact.GetNext to get
 	    /// the next contact in the world list. A null contact indicates the end of the list.
 	    /// @return the head of the world contact list.
-	    /// @warning contacts are
+	    /// @warning contacts are created and destroyed in the middle of a time step.
+	    /// Use b2ContactListener to avoid missing contacts.
 	    public Contact GetContactList()
         {
             return _contactManager._contactList;
         }
+
+		/// Enable/disable sleep.
+		public bool AllowSleeping {
+			get { return _allowSleep; }
+			set {
+				if (value == _allowSleep) {
+					return;
+				}
+				_allowSleep = value;
+				if (_allowSleep == false) {
+			        for (Body b = _bodyList; b != null; b = b._next)
+			        {
+						b.SetAwake(true);
+			        }
+				}
+			}
+		}
 
 	    /// Enable/disable warm starting. For testing.
 	    public bool WarmStarting { get; set; }
 
 	    /// Enable/disable continuous physics. For testing.
 	    public bool ContinuousPhysics { get; set; }
+
+		/// Enable/disable single stepped continuous physics. For testing.
+		public bool SubStepping { get; set; }
 
 	    /// Get the number of broad-phase proxies.
 	    public int ProxyCount
@@ -721,6 +788,17 @@ namespace Uno.Physics.Box2D
             }
         }
 
+		/// Get the height of the dynamic tree.
+		// XXX: public int GetTreeHeight();
+
+		/// Get the balance of the dynamic tree.
+		// XXX: public int GetTreeBalance();
+
+		/// Get the quality metric of the dynamic tree. The smaller the better.
+		/// The minimum is 1.
+		// XXX: public float GetTreeQuality();
+
+
 	    /// Change the global gravity vector.
 	    public float2 Gravity { get; set; }
 
@@ -744,8 +822,13 @@ namespace Uno.Physics.Box2D
             }
         }
 
+		 // Find islands, integrate and solve constraints, solve position constraints
 	    void Solve(ref TimeStep step)
         {
+			_profile.solveInit = 0.0f;
+			_profile.solveVelocity = 0.0f;
+			_profile.solvePosition = 0.0f;
+
 	        // Size the island for the worst case.
             _island.Reset(_bodyCount,
 	                      _contactManager._contactCount,
@@ -882,6 +965,14 @@ namespace Uno.Physics.Box2D
 		        }
 
 		        _island.Solve(ref step, Gravity, _allowSleep);
+				// XXX: Fix after Island.Solve
+				// Profile profile;
+				// _island.Solve(ref profile, ref step, Gravity, _allowSleep);
+				// _profile.solveInit += profile.solveInit;
+				// _profile.solveVelocity += profile.solveVelocity;
+				// _profile.solvePosition += profile.solvePosition;
+				// XXX: CAME HERE!
+				// diff -u box2d-read-only-r112/Box2D/Box2D/Dynamics/b2World.cpp box2d-read-only/Box2D/Box2D/Dynamics/b2World.cpp  | less
 
 		        // Post solve cleanup.
 		        for (int i = 0; i < _island._bodyCount; ++i)
@@ -1112,6 +1203,7 @@ namespace Uno.Physics.Box2D
 	        }
         }
 
+		// XXX: Remove SolveTOI SolveTOI(body)
         // Sequentially solve TOIs for each body. We bring each
         // body to the time of contact and perform some position correction.
         // Time is not conserved.
@@ -1222,6 +1314,8 @@ namespace Uno.Physics.Box2D
 	        }
         }
 
+		// XXX: void SolveTOI(TimeStep step);
+
 	    void DrawShape(Fixture fixture, Transform xf, float4 color, float2 center)
         {
 	        switch (fixture.ShapeType)
@@ -1296,11 +1390,15 @@ namespace Uno.Physics.Box2D
 
         internal bool _allowSleep;
 
+		// XXX: This should be removed
         internal Body _groundBody;
 
 	    // This is used to compute the time step ratio to
 	    // support a variable time step.
         internal float _inv_dt0;
+
+		internal bool _stepComplete;
+		internal Profile _profile;
 
         Body[] stack = new Body[64];
     }

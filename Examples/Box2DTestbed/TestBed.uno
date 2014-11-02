@@ -7,9 +7,9 @@ using Uno.Content.Models;
 using Fuse;
 using Uno.Physics.Box2D;
 
-using TowerBuilder.Box2DMath;
+using TestBed.Box2DMath;
 
-namespace TowerBuilder
+namespace TestBed
 {
 	public abstract class TestBed : Node
 	{
@@ -44,14 +44,14 @@ namespace TowerBuilder
 			return f;
 		}
 		public override void Draw(DrawContext dc) {
-			TowerBuilder.PhysicsWorld.World.DrawDebugData();
+			PhysicsWorld.World.DrawDebugData();
 		}
 
 		protected override void OnInitialize()
 		{
 			debug_log "On Initialize";
 			PhysicsWorld.World = new World(float2(0, -10.0f), false);
-			World.DebugDraw = new TowerDebugDrawer();
+			World.DebugDraw = new DebugDrawer();
 			World.DebugDraw.AppendFlags(DebugDrawFlags.Shape);
 			World.DebugDraw.AppendFlags(DebugDrawFlags.Joint);
 
@@ -85,8 +85,8 @@ namespace TowerBuilder
 			}
 				
 			float2 pos = Input.PointerCoord;
-			pos *= DrawContext.Current.Aspect;
-			float2 center = DrawContext.Current.VirtualResolution / 2;
+			float2 cnv = DrawContext.Current.Viewport.RightBottom - DrawContext.Current.Viewport.LeftTop;
+			float2 center = cnv / 2;
 
 			float2 posClip = (pos - center) / center;
 

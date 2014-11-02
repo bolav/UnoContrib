@@ -13,19 +13,19 @@
     <PackageReference Name="Experimental.Data" />
   </References>
   <Files>
-    <UXFile Path="PulleyJointScene.ux" />
-    <UXFile Path="TowerBlockScene.ux" />
+    <!-- <UXFile Path="PulleyJointScene.ux" /> -->
+    <!-- <UXFile Path="TowerBlockScene.ux" /> -->
     <!-- <SourceFile Path="Tests/PulleyJoint.uno" />
     <SourceFile Path="Tests/TowerBlock.uno" /> -->
     <SourceFile Path="App.uno" />
     <SourceFile Path="Box2DMath.uno" />
     <SourceFile Path="PhysicsWorld.uno" />
-    <SourceFile Path="PulleyJointScene.ux.uno" />
+    <!-- <SourceFile Path="PulleyJointScene.ux.uno" /> -->
     <SourceFile Path="TestBed.uno" />
-    <SourceFile Path="TowerBlockScene.ux.uno" />
-    <SourceFile Path="TowerDebugDrawer.uno" />
-    <SourceFile Path="TowerBlock.uno" />
-    <SourceFile Path="PulleyJoint.uno" />
+    <!-- <SourceFile Path="TowerBlockScene.ux.uno" /> -->
+    <SourceFile Path="DebugDrawer.uno" />
+    <!-- <SourceFile Path="TowerBlock.uno" /> -->
+    <!-- <SourceFile Path="PulleyJoint.uno" /> -->
     <UXFile Path="RubeScene.ux" />
     <SourceFile Path="RubeScene.uno" />
     <SourceFile Path="RubeLoader.uno" />

@@ -1,4 +1,5 @@
 /*
+* Box2D: r313
 * Box2D.XNA port of Box2D:
 * Copyright (c) 2009 Brandon Furtwangler, Nathan Furtwangler
 *
@@ -22,6 +23,19 @@
 
 namespace Uno.Physics.Box2D
 {
+	/// Profiling data. Times are in milliseconds.
+	public struct Profile
+	{
+		public float step;
+		public float collide;
+		public float solve;
+		public float solveInit;
+		public float solveVelocity;
+		public float solvePosition;
+		public float broadphase;
+		public float solveTOI;
+	}
+
     /// This is an internal structure.
     public struct TimeStep
     {
