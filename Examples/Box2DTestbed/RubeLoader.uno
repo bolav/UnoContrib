@@ -39,6 +39,15 @@ namespace TestBed {
 				_BodyToNameMap = value;
 			}
 		}
+		public Body GetBodyByName (string name) {
+			foreach(KeyValuePair<Body, string> entry in _BodyToNameMap)
+			{
+				if (entry.Value == name) {
+					return entry.Key;
+				}
+			}
+			return null;
+		}
 
 		public int JsonInt(JsonReader j, string k, int defaultValue = 0) {
 			if (j.HasKey(k)) {
@@ -79,6 +88,9 @@ namespace TestBed {
 			if (j[k].AsString() == "0") {
 				return defaultValue;
 			}
+			if (!j.HasKey(k)) {
+				return defaultValue;
+			}
 			if (index == -1) {
 				return JsonFloat2(j[k], defaultValue);
 			}
@@ -104,7 +116,6 @@ namespace TestBed {
 		protected override void OnInitializeTestBed()
 		{
 			List<Body> bodies = new List<Body>();
-			debug_log "OnInitializeTestBed";
 			if (RubeFile != null) {
 				var worldValue = Rube;
 			    World world = new World( jsonToVec("gravity", worldValue) );

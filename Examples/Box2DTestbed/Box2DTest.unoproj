@@ -29,5 +29,6 @@
     <UXFile Path="RubeScene.ux" />
     <SourceFile Path="RubeScene.uno" />
     <SourceFile Path="RubeLoader.uno" />
+    <SourceFile Path="Buoyancy.uno" />
   </Files>
 </Project>

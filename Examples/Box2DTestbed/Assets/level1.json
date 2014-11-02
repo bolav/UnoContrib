@@ -1,0 +1,558 @@
+
+{
+	"allowSleep" : true,
+	"autoClearForces" : true,
+	"body" : 
+	[
+		
+		{
+			"angle" : 0,
+			"angularVelocity" : 0,
+			"awake" : true,
+			"fixture" : 
+			[
+				
+				{
+					"density" : 1,
+					"friction" : 0.2,
+					"name" : "fixture5",
+					"polygon" : 
+					{
+						"vertices" : 
+						{
+							"x" : 
+							[
+								0.5,
+								0.1545079946517944,
+								-0.4045090079307556,
+								-0.4045079946517944,
+								0.1545089930295944
+							],
+							"y" : 
+							[
+								0.0,
+								0.4755280017852783,
+								0.2938930094242096,
+								-0.2938930094242096,
+								-0.4755280017852783
+							]
+						}
+					}
+				}
+			],
+			"linearVelocity" : 0,
+			"name" : "Diamond",
+			"position" : 
+			{
+				"x" : -6.389751434326172,
+				"y" : 25.66667938232422
+			},
+			"type" : 0
+		},
+		
+		{
+			"angle" : 0,
+			"angularVelocity" : 0,
+			"awake" : true,
+			"fixture" : 
+			[
+				
+				{
+					"density" : 1,
+					"friction" : 0.2,
+					"name" : "fixture5",
+					"polygon" : 
+					{
+						"vertices" : 
+						{
+							"x" : 
+							[
+								0.5,
+								0.1545079946517944,
+								-0.4045090079307556,
+								-0.4045079946517944,
+								0.1545089930295944
+							],
+							"y" : 
+							[
+								0.0,
+								0.4755280017852783,
+								0.2938930094242096,
+								-0.2938930094242096,
+								-0.4755280017852783
+							]
+						}
+					}
+				}
+			],
+			"linearVelocity" : 0,
+			"name" : "Diamond",
+			"position" : 
+			{
+				"x" : 20.97606277465820,
+				"y" : 17.30257797241211
+			},
+			"type" : 0
+		},
+		
+		{
+			"angle" : 0,
+			"angularVelocity" : 0,
+			"awake" : true,
+			"fixture" : 
+			[
+				
+				{
+					"density" : 1,
+					"friction" : 0.2,
+					"name" : "fixture5",
+					"polygon" : 
+					{
+						"vertices" : 
+						{
+							"x" : 
+							[
+								0.5,
+								0.1545079946517944,
+								-0.4045090079307556,
+								-0.4045079946517944,
+								0.1545089930295944
+							],
+							"y" : 
+							[
+								0.0,
+								0.4755280017852783,
+								0.2938930094242096,
+								-0.2938930094242096,
+								-0.4755280017852783
+							]
+						}
+					}
+				}
+			],
+			"linearVelocity" : 0,
+			"name" : "Diamond",
+			"position" : 
+			{
+				"x" : 13.55725479125977,
+				"y" : 26.15727996826172
+			},
+			"type" : 0
+		},
+		
+		{
+			"angle" : 0,
+			"angularVelocity" : 0,
+			"awake" : true,
+			"fixture" : 
+			[
+				
+				{
+					"density" : 1,
+					"friction" : 0.2,
+					"name" : "fixture5",
+					"polygon" : 
+					{
+						"vertices" : 
+						{
+							"x" : 
+							[
+								0.5,
+								0.1545079946517944,
+								-0.4045090079307556,
+								-0.4045079946517944,
+								0.1545089930295944
+							],
+							"y" : 
+							[
+								0.0,
+								0.4755280017852783,
+								0.2938930094242096,
+								-0.2938930094242096,
+								-0.4755280017852783
+							]
+						}
+					}
+				}
+			],
+			"linearVelocity" : 0,
+			"name" : "Diamond",
+			"position" : 
+			{
+				"x" : 19.03760147094727,
+				"y" : 31.62565612792969
+			},
+			"type" : 0
+		},
+		
+		{
+			"angle" : 0,
+			"angularVelocity" : 0,
+			"awake" : true,
+			"fixture" : 
+			[
+				
+				{
+					"density" : 1,
+					"friction" : 0.2,
+					"name" : "fixture5",
+					"polygon" : 
+					{
+						"vertices" : 
+						{
+							"x" : 
+							[
+								0.5,
+								0.1545079946517944,
+								-0.4045090079307556,
+								-0.4045079946517944,
+								0.1545089930295944
+							],
+							"y" : 
+							[
+								0.0,
+								0.4755280017852783,
+								0.2938930094242096,
+								-0.2938930094242096,
+								-0.4755280017852783
+							]
+						}
+					}
+				}
+			],
+			"linearVelocity" : 0,
+			"name" : "Diamond",
+			"position" : 
+			{
+				"x" : -18.05641555786133,
+				"y" : 16.41709899902344
+			},
+			"type" : 0
+		},
+		
+		{
+			"angle" : 0,
+			"angularVelocity" : 0,
+			"awake" : true,
+			"fixture" : 
+			[
+				
+				{
+					"density" : 1,
+					"friction" : 0.2,
+					"name" : "fixture5",
+					"polygon" : 
+					{
+						"vertices" : 
+						{
+							"x" : 
+							[
+								0.5,
+								0.1545079946517944,
+								-0.4045090079307556,
+								-0.4045079946517944,
+								0.1545089930295944
+							],
+							"y" : 
+							[
+								0.0,
+								0.4755280017852783,
+								0.2938930094242096,
+								-0.2938930094242096,
+								-0.4755280017852783
+							]
+						}
+					}
+				}
+			],
+			"linearVelocity" : 0,
+			"name" : "Diamond",
+			"position" : 
+			{
+				"x" : -15.07692718505859,
+				"y" : 21.65812301635742
+			},
+			"type" : 0
+		},
+		
+		{
+			"angle" : 0,
+			"angularVelocity" : 0,
+			"awake" : true,
+			"fixture" : 
+			[
+				
+				{
+					"density" : 1,
+					"friction" : 0.2,
+					"name" : "fixture5",
+					"polygon" : 
+					{
+						"vertices" : 
+						{
+							"x" : 
+							[
+								0.5,
+								0.1545079946517944,
+								-0.4045090079307556,
+								-0.4045079946517944,
+								0.1545089930295944
+							],
+							"y" : 
+							[
+								0.0,
+								0.4755280017852783,
+								0.2938930094242096,
+								-0.2938930094242096,
+								-0.4755280017852783
+							]
+						}
+					}
+				}
+			],
+			"linearVelocity" : 0,
+			"name" : "Diamond",
+			"position" : 
+			{
+				"x" : -21.29914474487305,
+				"y" : 32.54701232910156
+			},
+			"type" : 0
+		},
+		
+		{
+			"angle" : 0,
+			"angularVelocity" : 0,
+			"awake" : true,
+			"fixture" : 
+			[
+				
+				{
+					"density" : 15.0,
+					"friction" : 0.1,
+					"name" : "Lava",
+					"polygon" : 
+					{
+						"vertices" : 
+						{
+							"x" : [ 30.0, 30.0, -30.0, -30.0 ],
+							"y" : 
+							[
+								-7.986415863037109,
+								0.01358413696289062,
+								0.01358413696289062,
+								-7.986415863037109
+							]
+						}
+					},
+					"sensor" : true
+				}
+			],
+			"linearVelocity" : 0,
+			"name" : "Lava",
+			"position" : 
+			{
+				"x" : 0,
+				"y" : -30.01358413696289
+			},
+			"type" : 0
+		},
+		
+		{
+			"angle" : 0,
+			"angularVelocity" : 0,
+			"awake" : true,
+			"fixture" : 
+			[
+				
+				{
+					"chain" : 
+					{
+						"vertices" : 
+						{
+							"x" : [ 29.82455444335938, 29.82455444335938 ],
+							"y" : [ 80.0, 0.0 ]
+						}
+					},
+					"density" : 1,
+					"friction" : 0.2,
+					"name" : "fixture3"
+				},
+				
+				{
+					"chain" : 
+					{
+						"vertices" : 
+						{
+							"x" : [ -30.0, 30.0 ],
+							"y" : [ 0.0, 0.0 ]
+						}
+					},
+					"density" : 1,
+					"friction" : 0.2,
+					"name" : "fixture2"
+				},
+				
+				{
+					"chain" : 
+					{
+						"vertices" : 
+						{
+							"x" : [ -30.0, -30.0 ],
+							"y" : [ 80.0, 0.0 ]
+						}
+					},
+					"density" : 1,
+					"friction" : 0.2,
+					"name" : "fixture3"
+				}
+			],
+			"linearVelocity" : 0,
+			"name" : "Walls",
+			"position" : 
+			{
+				"x" : 0,
+				"y" : -40.0
+			},
+			"type" : 0
+		},
+		
+		{
+			"angle" : 0,
+			"angularVelocity" : 0,
+			"awake" : true,
+			"fixture" : 
+			[
+				
+				{
+					"density" : 1.4,
+					"friction" : 0.8,
+					"name" : "fixture1",
+					"polygon" : 
+					{
+						"vertices" : 
+						{
+							"x" : 
+							[
+								3.506170034408569,
+								3.506170034408569,
+								-3.560830116271973,
+								-3.560830116271973
+							],
+							"y" : [ -0.9786319732666016, 0.5, 0.5, -0.9786319732666016 ]
+						}
+					}
+				},
+				
+				{
+					"circle" : 
+					{
+						"center" : 
+						{
+							"x" : 2.584758758544922,
+							"y" : -0.007791519165039062
+						},
+						"radius" : 0.5
+					},
+					"friction" : 0.2,
+					"name" : "fixture6"
+				}
+			],
+			"linearVelocity" : 0,
+			"massData-I" : 64.39945220947266,
+			"massData-center" : 
+			{
+				"x" : -0.02733004093170166,
+				"y" : -0.2393159866333008
+			},
+			"massData-mass" : 14.62928962707520,
+			"name" : "Ship",
+			"position" : 
+			{
+				"x" : 0,
+				"y" : -29.97496604919434
+			},
+			"type" : 2
+		},
+		
+		{
+			"angle" : 0,
+			"angularVelocity" : 0,
+			"awake" : true,
+			"fixture" : 
+			[
+				
+				{
+					"circle" : 
+					{
+						"center" : 0,
+						"radius" : 0.5
+					},
+					"density" : 1,
+					"friction" : 0.8,
+					"name" : "fixture0",
+					"restitution" : 1
+				}
+			],
+			"linearVelocity" : 0,
+			"massData-I" : 0.09817477315664291,
+			"massData-mass" : 0.7853981852531433,
+			"name" : "Ball",
+			"position" : 
+			{
+				"x" : 0,
+				"y" : 5.609170436859131
+			},
+			"type" : 2
+		}
+	],
+	"collisionbitplanes" : 
+	{
+		"names" : 
+		[
+			"bitplane1",
+			"bitplane2",
+			"bitplane3",
+			"bitplane4",
+			"bitplane5",
+			"bitplane6",
+			"bitplane7",
+			"bitplane8",
+			"bitplane9",
+			"bitplane10",
+			"bitplane11",
+			"bitplane12",
+			"bitplane13",
+			"bitplane14",
+			"bitplane15",
+			"bitplane16",
+			"bitplane17",
+			"bitplane18",
+			"bitplane19",
+			"bitplane20",
+			"bitplane21",
+			"bitplane22",
+			"bitplane23",
+			"bitplane24",
+			"bitplane25",
+			"bitplane26",
+			"bitplane27",
+			"bitplane28",
+			"bitplane29",
+			"bitplane30",
+			"bitplane31",
+			"bitplane32"
+		]
+	},
+	"continuousPhysics" : true,
+	"gravity" : 
+	{
+		"x" : 0,
+		"y" : -10
+	},
+	"positionIterations" : 3,
+	"stepsPerSecond" : 60.0,
+	"subStepping" : false,
+	"velocityIterations" : 8,
+	"warmStarting" : true
+}

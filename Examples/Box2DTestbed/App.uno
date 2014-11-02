@@ -1,4 +1,4 @@
-namespace AngryBlocks
+namespace TestBed
 {
 	public class App : Fuse.App
 	{

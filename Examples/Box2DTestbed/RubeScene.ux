@@ -1,5 +1,5 @@
 <Scene xmlns:ux="http://schemas.outracks.com/ux" ux:ClassName="RubeScene">
-	<TestBed.RubeLoader>
+	<TestBed.Buoyancy>
 		<Uno.BundleFile ux:Binding="RubeFile" ux:Path="Assets/level1.json" />
-	</TestBed.RubeLoader>
+	</TestBed.Buoyancy>
 </Scene>

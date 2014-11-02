@@ -71,12 +71,12 @@ namespace TestBed
 		double _lockTimer = 0;
 		protected void OnUpdate (object sender, Uno.EventArgs args) {
 			while (_lockTimer < Application.Current.FrameTime) {
-				FixedUpdate();
+				Step();
 				_lockTimer += _interval;
 			}
 		}
 
-		protected void FixedUpdate()
+		protected virtual void Step()
 		{
 			if(World == null) return;
 
