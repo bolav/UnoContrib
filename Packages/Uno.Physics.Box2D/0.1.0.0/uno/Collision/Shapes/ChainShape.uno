@@ -112,7 +112,7 @@ namespace Uno.Physics.Box2D
 	    /// @see Shape::GetChildCount
         public override int GetChildCount()
         {
-	        return _count;
+	        return _count - 1;
         }
 	    /// Get a child edge.
         public void GetChildEdge(ref EdgeShape edge, int index)

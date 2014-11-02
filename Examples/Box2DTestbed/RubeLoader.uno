@@ -54,6 +54,9 @@ public class RubeLoader : TowerBuilder.TestBed
 	}
 	
 	public float2 jsonToVec(string k, JsonReader j, int index = -1, float2 defaultValue = float2(0)) {
+		if (j[k].AsString() == "0") {
+			return defaultValue;
+		}
 		if (index == -1) {
 			return JsonFloat2(j[k], defaultValue);
 		}
@@ -81,11 +84,22 @@ public class RubeLoader : TowerBuilder.TestBed
 				var val = Rube["body"];
 				for (var i = 0; i<val.Count; i++) {
 					var bodyValue = val[i];
-					var bd = new BodyDef();
-			        bd.type = (BodyType)bodyValue["type"].AsInteger();
-					bd.position = JsonFloat2(bodyValue["position"]);
-					bd.angle = bodyValue["angle"].AsFloat();
-					var body = World.CreateBody(bd);
+					var bodyDef = new BodyDef();
+			        bodyDef.type = (BodyType)bodyValue["type"].AsInteger();
+					bodyDef.position = JsonFloat2(bodyValue["position"]);
+					bodyDef.angle = bodyValue["angle"].AsFloat();
+				    bodyDef.linearVelocity = jsonToVec("linearVelocity", bodyValue);
+				    bodyDef.angularVelocity = jsonToFloat("angularVelocity", bodyValue);
+				    bodyDef.linearDamping = jsonToFloat("linearDamping", bodyValue, 0);
+				    bodyDef.angularDamping = jsonToFloat("angularDamping", bodyValue, 0);
+				    bodyDef.inertiaScale = jsonToFloat("gravityScale", bodyValue, 1);
+
+				    bodyDef.allowSleep = JsonBool("allowSleep",bodyValue,true);
+				    bodyDef.awake = JsonBool("awake", bodyValue, false);
+				    bodyDef.fixedRotation = JsonBool("fixedRotation",bodyValue, false);
+				    bodyDef.bullet = JsonBool("bullet",bodyValue,false);
+				    bodyDef.active = JsonBool("active",bodyValue,true);
+					var body = World.CreateBody(bodyDef);
 					var fval = bodyValue["fixture"];
 					for (var j = 0; j < fval.Count; j++) {
 						var fixtureValue = fval[j];
@@ -100,7 +114,7 @@ public class RubeLoader : TowerBuilder.TestBed
 						if (fixtureValue.HasKey("circle")) {
 					        var shape = new CircleShape();
 							shape._radius = fixtureValue["circle"]["radius"].AsFloat();
-							shape._p = JsonFloat2(fixtureValue["circle"]["center"]);
+							shape._p = jsonToVec("center",fixtureValue["circle"]);
 							fd.shape = shape;
 							body.CreateFixture(fd);
 						}
@@ -150,6 +164,13 @@ public class RubeLoader : TowerBuilder.TestBed
 							}
 						}
 					}
+				    //may be necessary if user has overridden mass characteristics
+					MassData massData = new MassData();
+				    massData.mass = jsonToFloat("massData-mass", bodyValue);
+				    massData.center = jsonToVec("massData-center", bodyValue);
+				    massData.I = jsonToFloat("massData-I", bodyValue);
+				    body.SetMassData(ref massData);
+
 					bodies.Add(body);
 				}
 			}

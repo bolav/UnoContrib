@@ -2,3 +2,6 @@ http://google.github.io/liquidfun/
 
 https://www.iforce2d.net/rube/json-structure
 
+https://code.google.com/p/box2d/source/browse/
+
+http://www.iforce2d.net/b2dtut/buoyancy#

@@ -1,9 +1,10 @@
 /*
-* Box2D.XNA port of Box2D:
-* Copyright (c) 2009 Brandon Furtwangler, Nathan Furtwangler
+* Box2D: r313
+* Uno port of Box2D:
+* Copyright (c) 2014 Bjørn-Olav Strand
 *
 * Original source Box2D:
-* Copyright (c) 2006-2009 Erin Catto http://www.gphysics.com
+* Copyright (c) 2006-2010 Erin Catto http://www.box2d.org
 *
 * This software is provided 'as-is', without any express or implied
 * warranty.  In no event will the authors be held liable for any damages
@@ -24,11 +25,11 @@ using Uno.Collections;
 
 namespace Uno.Physics.Box2D
 {
-    /// A contact edge is used to connect bodies and contacts together
-    /// in a contact graph where each body is a box2dNode and each contact
-    /// is an edge. A contact edge belongs to a doubly linked list
-    /// maintained in each attached body. Each contact has two contact
-    /// box2dNodes, one for each attached body.
+/// A contact edge is used to connect bodies and contacts together
+/// in a contact graph where each body is a node and each contact
+/// is an edge. A contact edge belongs to a doubly linked list
+/// maintained in each attached body. Each contact has two contact
+/// nodes, one for each attached body.
     public class ContactEdge
     {
         public Body Other;			///< provides quick access to the other body attached.
@@ -40,22 +41,25 @@ namespace Uno.Physics.Box2D
     [Flags]
     public enum ContactFlags
     {
-        None = 0,
+        None 				= 0,
 
         // Used when crawling contact graph when forming islands.
-        Island = 0x0001,
+        Island 				= 0x0001,
 
         // Set when the shapes are touching.
-        Touching = 0x0002,
+        Touching 			= 0x0002,
 
         // This contact can be disabled (by user)
-        Enabled = 0x0004,
+        Enabled 			= 0x0004,
 
         // This contact needs filtering because a fixture filter was changed.
-        Filter = 0x0008,
+        Filter 				= 0x0008,
 
         // This bullet contact had a TOI event
-        BulletHit = 0x0010,
+        BulletHit 			= 0x0010,
+			
+		// This contact has a valid TOI in m_toi
+		Toi			= 0x0020
     }
 
     /// The class manages contact between two shapes. A contact exists for each overlapping
@@ -148,6 +152,47 @@ namespace Uno.Physics.Box2D
             _flags |= ContactFlags.Filter;
         }
 
+		public void SetFriction(float friction)
+		{
+			_friction = friction;
+		}
+
+		public float GetFriction()
+		{
+			return _friction;
+		}
+
+		public void ResetFriction()
+		{
+			_friction = Settings.b2MixFriction(_fixtureA.GetFriction(), _fixtureB.GetFriction());
+		}
+
+		public void SetRestitution(float restitution)
+		{
+			_restitution = restitution;
+		}
+
+		public float GetRestitution()
+		{
+			return _restitution;
+		}
+
+		public void ResetRestitution()
+		{
+			_restitution = Settings.b2MixRestitution(_fixtureA.GetRestitution(), _fixtureB.GetRestitution());
+		}
+
+		public void SetTangentSpeed(float speed)
+		{
+			_tangentSpeed = speed;
+		}
+
+		public float GetTangentSpeed()
+		{
+			return _tangentSpeed;
+		}
+		
+
         internal Contact(Fixture fA, int indexA, Fixture fB, int indexB)
         {
             Reset(fA, indexA, fB, indexB);
@@ -179,6 +224,18 @@ namespace Uno.Physics.Box2D
 	        _box2dNodeB.Other = null;
 
             _toiCount = 0;
+			
+			if (_fixtureA != null && _fixtureB != null) {
+				_friction = Settings.b2MixFriction(_fixtureA.GetFriction(), _fixtureB.GetFriction());
+				_restitution = Settings.b2MixRestitution(_fixtureA.GetRestitution(), _fixtureB.GetRestitution());
+			}
+			else {
+				_friction = 0;
+				_restitution = 0;
+			}
+
+			_tangentSpeed = 0.0f;
+			
         }
 
         // Update the contact manifold and touching status.
@@ -225,7 +282,6 @@ namespace Uno.Physics.Box2D
 			        mp2.NormalImpulse = 0.0f;
 			        mp2.TangentImpulse = 0.0f;
 			        ContactID id2 = mp2.Id;
-                    bool found = false;
 
 			        for (int j = 0; j < oldManifold._pointCount; ++j)
 			        {
@@ -235,15 +291,9 @@ namespace Uno.Physics.Box2D
 				        {
 					        mp2.NormalImpulse = mp1.NormalImpulse;
 					        mp2.TangentImpulse = mp1.TangentImpulse;
-                            found = true;
 					        break;
 				        }
 			        }
-                    if (found == false)
-                    {
-                        mp2.NormalImpulse = 0.0f;
-                        mp2.TangentImpulse = 0.0f;
-                    }
 
                     _manifold._points[i] = mp2;
 		        }
@@ -307,15 +357,15 @@ namespace Uno.Physics.Box2D
                             (EdgeShape)   _fixtureA.GetShape(), ref xfA,
                             (PolygonShape)_fixtureB.GetShape(), ref xfB);
                     break;
-                case ContactType.LoopAndCircle:
-                    var loop = (LoopShape)_fixtureA.GetShape();
-                    loop.GetChildEdge(ref s_edge, _indexA);
+                case ContactType.ChainAndCircle:
+                    var chain = (ChainShape)_fixtureA.GetShape();
+                    chain.GetChildEdge(ref s_edge, _indexA);
                     Collision.CollideEdgeAndCircle(ref manifold, s_edge, ref xfA,
                             (CircleShape)_fixtureB.GetShape(), ref xfB);
                     break;
-                case ContactType.LoopAndPolygon:
-                    var loop2 = (LoopShape)_fixtureA.GetShape();
-                    loop2.GetChildEdge(ref s_edge, _indexA);
+                case ContactType.ChainAndPolygon:
+                    var chain2 = (ChainShape)_fixtureA.GetShape();
+                    chain2.GetChildEdge(ref s_edge, _indexA);
                     Collision.CollideEdgeAndPolygon(ref manifold, s_edge, ref xfA,
                             (PolygonShape)_fixtureB.GetShape(), ref xfB);
                     break;
@@ -334,8 +384,8 @@ namespace Uno.Physics.Box2D
             Circle,
             EdgeAndPolygon,
             EdgeAndCircle,
-            LoopAndPolygon,
-            LoopAndCircle,
+            ChainAndPolygon,
+            ChainAndCircle,
         }
 
         /*public enum ShapeType
@@ -354,25 +404,25 @@ namespace Uno.Physics.Box2D
               ContactType.Circle,
               ContactType.EdgeAndCircle,
               ContactType.PolygonAndCircle,
-              ContactType.LoopAndCircle,
+              ContactType.ChainAndCircle,
             },
             new [] {
               ContactType.EdgeAndCircle,
               ContactType.EdgeAndCircle,  // 1,1 is invalid (no ContactType.Edge)
               ContactType.EdgeAndPolygon,
-              ContactType.EdgeAndPolygon, // 1,3 is invalid (no ContactType.EdgeAndLoop)
+              ContactType.EdgeAndPolygon, // 1,3 is invalid (no ContactType.EdgeAndChain)
             },
             new [] {
               ContactType.PolygonAndCircle,
               ContactType.EdgeAndPolygon,
               ContactType.Polygon,
-              ContactType.LoopAndPolygon,
+              ContactType.ChainAndPolygon,
             },
             new [] {
-              ContactType.LoopAndCircle,
-              ContactType.LoopAndCircle,  // 3,1 is invalid (no ContactType.EdgeAndLoop)
-              ContactType.LoopAndPolygon,
-              ContactType.LoopAndPolygon, // 3,3 is invalid (no ContactType.Loop)
+              ContactType.ChainAndCircle,
+              ContactType.ChainAndCircle,  // 3,1 is invalid (no ContactType.EdgeAndChain)
+              ContactType.ChainAndPolygon,
+              ContactType.ChainAndPolygon, // 3,3 is invalid (no ContactType.Chain)
             },
         };
 
@@ -446,5 +496,11 @@ namespace Uno.Physics.Box2D
 	    internal Manifold _manifold = new Manifold();
 
 	    internal int _toiCount;
+		internal float _toi;
+
+		internal float _friction;
+		internal float _restitution;
+
+		internal float _tangentSpeed;
     }
 }

@@ -1,4 +1,5 @@
 /*
+* Box2D: r313
 * Box2D.XNA port of Box2D:
 * Copyright (c) 2009 Brandon Furtwangler, Nathan Furtwangler
 *
@@ -122,7 +123,11 @@ namespace Uno.Physics.Box2D
 	    /// Set if this fixture is a sensor.
 	    public void SetSensor(bool sensor)
         {
-	        _isSensor = sensor;
+			if (sensor != _isSensor)
+			{
+				_body.SetAwake(true);
+				_isSensor = sensor;
+			}
         }
 
         /// Set the contact filtering data. This will not update contacts until the next time
@@ -131,6 +136,11 @@ namespace Uno.Physics.Box2D
         {
             _filter = filter;
 
+			Refilter();
+		}
+
+		public void Refilter()
+		{
 	        if (_body == null)
 	        {
 		        return;
@@ -150,6 +160,21 @@ namespace Uno.Physics.Box2D
 
                 edge = edge.Next;
 	        }
+
+			World world = _body.GetWorld();
+
+			if (world == null)
+			{
+				return;
+			}
+
+			// Touch each proxy so that new pairs may be created
+			BroadPhase broadPhase = world._contactManager._broadPhase;
+			for (int i = 0; i < _proxyCount; ++i)
+			{
+				// XXX: Fix when broadPhase is updated
+				// broadPhase.TouchProxy(_proxies[i].proxyId);
+			}
         }
 
 	    /// Get the contact filtering data.
@@ -311,7 +336,7 @@ namespace Uno.Physics.Box2D
         // These support body activation/deactivation.
 	    internal void CreateProxies(BroadPhase broadPhase, ref Transform xf)
         {
-            
+			//b2Assert(m_proxyCount == 0);
 
             // Create proxies in the broad-phase.
             _proxyCount = _shape.GetChildCount();
@@ -320,11 +345,11 @@ namespace Uno.Physics.Box2D
             {
                 FixtureProxy proxy = _proxies[i];
                 _shape.ComputeAABB(out proxy.aabb, ref xf, i);
+                proxy.proxyId = broadPhase.CreateProxy(ref proxy.aabb, proxy);
                 proxy.fixture = this;
                 proxy.childIndex = i;
-                proxy.proxyId = broadPhase.CreateProxy(ref proxy.aabb, proxy);
 
-                _proxies[i] = proxy;
+                _proxies[i] = proxy; // Is this unneccesary, I think we are using pointers
             }
         }
 
@@ -365,6 +390,83 @@ namespace Uno.Physics.Box2D
             }
 
         }
+
+		public void Dump(int bodyIndex)
+		{
+			debug_log String.Format("    b2FixtureDef fd;\n");
+			debug_log String.Format("    fd.friction = %.15lef;\n", _friction);
+			debug_log String.Format("    fd.restitution = %.15lef;\n", _restitution);
+			debug_log String.Format("    fd.density = %.15lef;\n", _density);
+			debug_log String.Format("    fd.isSensor = bool(%d);\n", _isSensor);
+			debug_log String.Format("    fd.filter.categoryBits = uint16(%d);\n", _filter.categoryBits);
+			debug_log String.Format("    fd.filter.maskBits = uint16(%d);\n", _filter.maskBits);
+			debug_log String.Format("    fd.filter.groupIndex = int16(%d);\n", _filter.groupIndex);
+
+			switch (_shape.ShapeType)
+			{
+			case ShapeType.Circle:
+				{
+			        CircleShape s = (CircleShape)_shape;
+					debug_log String.Format("    b2CircleShape shape;\n");
+					debug_log String.Format("    shape._radius = %.15lef;\n", s._radius);
+					debug_log String.Format("    shape._p.Set(%.15lef, %.15lef);\n", s._p.X, s._p.Y);
+				}
+				break;
+
+			case ShapeType.Edge:
+				{
+		            EdgeShape s = (EdgeShape)_shape;
+					debug_log String.Format("    b2EdgeShape shape;\n");
+					debug_log String.Format("    shape._radius = %.15lef;\n", s._radius);
+					debug_log String.Format("    shape._vertex0.Set(%.15lef, %.15lef);\n", s._vertex0.X, s._vertex0.Y);
+					debug_log String.Format("    shape._vertex1.Set(%.15lef, %.15lef);\n", s._vertex1.X, s._vertex1.Y);
+					debug_log String.Format("    shape._vertex2.Set(%.15lef, %.15lef);\n", s._vertex2.X, s._vertex2.Y);
+					debug_log String.Format("    shape._vertex3.Set(%.15lef, %.15lef);\n", s._vertex3.X, s._vertex3.Y);
+					debug_log String.Format("    shape._hasVertex0 = bool(%d);\n", s._hasVertex0);
+					debug_log String.Format("    shape._hasVertex3 = bool(%d);\n", s._hasVertex3);
+				}
+				break;
+
+			case ShapeType.Polygon:
+				{
+			        PolygonShape s = (PolygonShape)_shape;
+					debug_log String.Format("    b2PolygonShape shape;\n");
+					debug_log String.Format("    b2Vec2 vs[%d];\n", Settings.b2_maxPolygonVertices);
+					for (int i = 0; i < s._vertexCount; ++i)
+					{
+						debug_log String.Format("    vs[%d].Set(%.15lef, %.15lef);\n", i, s._vertices[i].X, s._vertices[i].Y);
+					}
+					debug_log String.Format("    shape.Set(vs, %d);\n", s._vertexCount);
+				}
+				break;
+
+			case ShapeType.Chain:
+				{
+		            ChainShape s = (ChainShape)_shape;
+					debug_log String.Format("    b2ChainShape shape;\n");
+					debug_log String.Format("    b2Vec2 vs[%d];\n", s._count);
+					for (int i = 0; i < s._count; ++i)
+					{
+						debug_log String.Format("    vs[%d].Set(%.15lef, %.15lef);\n", i, s._vertices[i].X, s._vertices[i].Y);
+					}
+					debug_log String.Format("    shape.CreateChain(vs, %d);\n", s._count);
+					debug_log String.Format("    shape._prevVertex.Set(%.15lef, %.15lef);\n", s._prevVertex.X, s._prevVertex.Y);
+					debug_log String.Format("    shape._nextVertex.Set(%.15lef, %.15lef);\n", s._nextVertex.X, s._nextVertex.Y);
+					debug_log String.Format("    shape._hasPrevVertex = bool(%d);\n", s._hasPrevVertex);
+					debug_log String.Format("    shape._hasNextVertex = bool(%d);\n", s._hasNextVertex);
+				}
+				break;
+
+			default:
+				return;
+			}
+
+			debug_log String.Format("\n");
+			debug_log String.Format("    fd.shape = &shape;\n");
+			debug_log String.Format("\n");
+			debug_log String.Format("    bodies[%d].CreateFixture(&fd);\n", bodyIndex);
+		}
+		
 
         internal AABB _aabb;
 

@@ -1,4 +1,5 @@
 /*
+* Box2D: r313
 * Box2D.XNA port of Box2D:
 * Copyright (c) 2009 Brandon Furtwangler, Nathan Furtwangler
 *
@@ -93,6 +94,10 @@ namespace Uno.Physics.Box2D
 
 	        // Call the factory.
 	        Contact c = Contact.Create(fixtureA, indexA, fixtureB, indexB);
+			if (c == null)
+			{
+				return;
+			}
 
 	        // Contact creation may swap fixtures.
 	        fixtureA = c.GetFixtureA();
@@ -136,6 +141,13 @@ namespace Uno.Physics.Box2D
 		        bodyB._contactList.Prev = c._box2dNodeB;
 	        }
 	        bodyB._contactList = c._box2dNodeB;
+
+			// Wake up the bodies
+			if (fixtureA.IsSensor() == false && fixtureB.IsSensor() == false)
+			{
+				bodyA.SetAwake(true);
+				bodyB.SetAwake(true);
+			}
 
 	        ++_contactCount;
         }
@@ -223,12 +235,6 @@ namespace Uno.Physics.Box2D
 		        Body bodyA = fixtureA.GetBody();
 		        Body bodyB = fixtureB.GetBody();
 
-		        if (bodyA.IsAwake() == false && bodyB.IsAwake() == false)
-		        {
-			        c = c.GetNext();
-			        continue;
-		        }
-
 		        // Is this contact flagged for filtering?
                 if ((c._flags & ContactFlags.Filter) == ContactFlags.Filter)
 		        {
@@ -254,9 +260,18 @@ namespace Uno.Physics.Box2D
 			        c._flags &= ~ContactFlags.Filter;
 		        }
 
+				bool activeA = bodyA.IsAwake() && bodyA._type != BodyType.Static;
+				bool activeB = bodyB.IsAwake() && bodyB._type != BodyType.Static;
+
+				// At least one body must be awake and it must be dynamic or kinematic.
+				if (activeA == false && activeB == false)
+				{
+					c = c.GetNext();
+					continue;
+				}
+
                 int proxyIdA = fixtureA._proxies[indexA].proxyId;
                 int proxyIdB = fixtureB._proxies[indexB].proxyId;
-
                 bool overlap = _broadPhase.TestOverlap(proxyIdA, proxyIdB);
 
                 // Here we destroy contacts that cease to overlap in the broad-phase.

@@ -1,4 +1,5 @@
 /*
+* Box2D: r313
 * Box2D.XNA port of Box2D:
 * Copyright (c) 2009 Brandon Furtwangler, Nathan Furtwangler
 *
@@ -39,7 +40,7 @@ namespace Uno.Physics.Box2D
 
     public enum ShapeType
     {
-        Unknown = -1,
+        Unknown = -1, // XXX: Delete this
         Circle = 0,
         Edge = 1,
         Polygon = 2,
@@ -52,10 +53,6 @@ namespace Uno.Physics.Box2D
     /// is created. Shapes may encapsulate a one or more child shapes.
     public abstract class Shape
     {
-	    public Shape()
-        {
-            ShapeType = ShapeType.Unknown;
-        }
 	    /// Clone the concrete shape using the provided allocator.
 	    public abstract Shape Clone();
 
