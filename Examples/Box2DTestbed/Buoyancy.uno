@@ -131,7 +131,7 @@ namespace TestBed {
 	                */
 
 	                //apply complex drag
-	                float dragMod = 0.25f;//adjust as desired
+	                float dragMod = 0.5f;//adjust as desired
 	                float liftMod = 0.25f;//adjust as desired
 	                float maxDrag = 2000;//adjust as desired
 	                float maxLift = 500;//adjust as desired

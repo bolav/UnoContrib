@@ -328,7 +328,7 @@
 			[
 				
 				{
-					"density" : 15.0,
+					"density" : 5,
 					"friction" : 0.1,
 					"name" : "Lava",
 					"polygon" : 
@@ -421,11 +421,12 @@
 			"angle" : 0,
 			"angularVelocity" : 0,
 			"awake" : true,
+			"fixedRotation" : true,
 			"fixture" : 
 			[
 				
 				{
-					"density" : 1.4,
+					"density" : 3,
 					"friction" : 0.8,
 					"name" : "fixture1",
 					"polygon" : 
@@ -459,13 +460,13 @@
 				}
 			],
 			"linearVelocity" : 0,
-			"massData-I" : 64.39945220947266,
+			"massData-I" : 1.818809747695923,
 			"massData-center" : 
 			{
-				"x" : -0.02733004093170166,
-				"y" : -0.2393159866333008
+				"x" : -0.02733004279434681,
+				"y" : -0.2393160015344620
 			},
-			"massData-mass" : 14.62928962707520,
+			"massData-mass" : 31.34847640991211,
 			"name" : "Ship",
 			"position" : 
 			{
