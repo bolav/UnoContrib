@@ -125,6 +125,7 @@ namespace TestBed {
 			    world.WarmStarting = worldValue["warmStarting"].AsBool();
 			    world.ContinuousPhysics = worldValue["continuousPhysics"].AsBool();
 			    world.SubStepping = worldValue["subStepping"].AsBool();
+				World = world;
 
 				if (Rube.HasKey("body")) {
 					var val = Rube["body"];

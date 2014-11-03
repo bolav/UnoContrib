@@ -17,6 +17,12 @@ namespace TestBed
 		protected World World
 		{
 			get { return PhysicsWorld.World; }
+			set {
+				PhysicsWorld.World = value;
+				World.DebugDraw = new DebugDrawer();
+				World.DebugDraw.AppendFlags(DebugDrawFlags.Shape);
+				World.DebugDraw.AppendFlags(DebugDrawFlags.Joint);
+			}
 		}
 
 		[Group("World")]
@@ -51,13 +57,11 @@ namespace TestBed
 		{
 			debug_log "On Initialize";
 			PhysicsWorld.World = new World(float2(0, -10.0f), false);
-			World.DebugDraw = new DebugDrawer();
-			World.DebugDraw.AppendFlags(DebugDrawFlags.Shape);
-			World.DebugDraw.AppendFlags(DebugDrawFlags.Joint);
+
+			OnInitializeTestBed();
 
 			mouseJointGroundBody = World.CreateBody(new BodyDef());
 
-			OnInitializeTestBed();
 			Update += OnUpdate;
 
 			base.OnInitialize();

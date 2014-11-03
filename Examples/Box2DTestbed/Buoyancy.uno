@@ -29,7 +29,6 @@ namespace TestBed {
 		protected override void OnInitializeTestBed()
 		{
 			debug_log "OnInitializeTestBed";
-			debug_log World;
 			base.OnInitializeTestBed();
 			World.ContactListener = this;
 			// var s = Parent as RubeScene;
@@ -41,14 +40,14 @@ namespace TestBed {
 		public void OnKeyPressed (object sender, Fuse.KeyPressedArgs args) {
 			// debug_log sender + " " + args.Key;
 			if (args.Key == Key.A) {
-				GetBodyByName("Ball").ApplyForce(float2(-15,0), float2(0));
+				GetBodyByName("Ball").ApplyForce(float2(-120,0), float2(0));
 			}
 			else if (args.Key == Key.D) {
-				GetBodyByName("Ball").ApplyForce(float2(15,0), float2(0));
+				GetBodyByName("Ball").ApplyForce(float2(120,0), float2(0));
 				
 			}
 			else if (args.Key == Key.W) {
-				GetBodyByName("Ball").ApplyForce(float2(0,70), float2(0));
+				GetBodyByName("Ball").ApplyForce(float2(0,400), float2(0));
 				
 			}
 			
