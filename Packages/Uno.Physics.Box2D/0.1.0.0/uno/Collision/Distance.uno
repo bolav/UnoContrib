@@ -634,10 +634,10 @@ namespace Uno.Physics.Box2D
 
 		        // Compute a tentative new simplex vertex using support points.
                 SimplexVertex simpleVertex = simplex._v[simplex._count];
-                simpleVertex.indexA = input.proxyA.GetSupport(MathUtils.MultiplyT(ref input.transformA.R, d * -1.0f));
+                simpleVertex.indexA = input.proxyA.GetSupport(MathUtils.MultiplyT(ref input.transformA.q, d * -1.0f));
                 simpleVertex.wA = MathUtils.Multiply(ref input.transformA, input.proxyA.GetVertex(simpleVertex.indexA));
 
-                simpleVertex.indexB = input.proxyB.GetSupport(MathUtils.MultiplyT(ref input.transformB.R, d));
+                simpleVertex.indexB = input.proxyB.GetSupport(MathUtils.MultiplyT(ref input.transformB.q, d));
                 simpleVertex.wB = MathUtils.Multiply(ref input.transformB, input.proxyB.GetVertex(simpleVertex.indexB));
 		        simpleVertex.w = simpleVertex.wB - simpleVertex.wA;
                 simplex._v[simplex._count] = simpleVertex;

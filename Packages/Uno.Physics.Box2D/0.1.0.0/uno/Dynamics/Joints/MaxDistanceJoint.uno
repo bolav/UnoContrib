@@ -167,8 +167,8 @@ namespace Uno.Physics.Box2D
             b2.GetTransform(out xf2);
 
 	        // Compute the effective mass matrix.
-            float2 r1 = MathUtils.Multiply(ref xf1.R, _localAnchor1 - b1.GetLocalCenter());
-            float2 r2 = MathUtils.Multiply(ref xf2.R, _localAnchor2 - b2.GetLocalCenter());
+            float2 r1 = MathUtils.Multiply(ref xf1.q, _localAnchor1 - b1.GetLocalCenter());
+            float2 r2 = MathUtils.Multiply(ref xf2.q, _localAnchor2 - b2.GetLocalCenter());
 	        _u = b2._sweep.c + r2 - b1._sweep.c - r1;
 
 	        // Handle singularity.
@@ -242,8 +242,8 @@ namespace Uno.Physics.Box2D
             b1.GetTransform(out xf1);
             b2.GetTransform(out xf2);
 
-            float2 r1 = MathUtils.Multiply(ref xf1.R, _localAnchor1 - b1.GetLocalCenter());
-            float2 r2 = MathUtils.Multiply(ref xf2.R, _localAnchor2 - b2.GetLocalCenter());
+            float2 r1 = MathUtils.Multiply(ref xf1.q, _localAnchor1 - b1.GetLocalCenter());
+            float2 r2 = MathUtils.Multiply(ref xf2.q, _localAnchor2 - b2.GetLocalCenter());
 
             float2 d = b2._sweep.c + r2 - b1._sweep.c - r1;
 
@@ -284,8 +284,8 @@ namespace Uno.Physics.Box2D
             b1.GetTransform(out xf1);
             b2.GetTransform(out xf2);
 
-	        float2 r1 = MathUtils.Multiply(ref xf1.R, _localAnchor1 - b1.GetLocalCenter());
-	        float2 r2 = MathUtils.Multiply(ref xf2.R, _localAnchor2 - b2.GetLocalCenter());
+	        float2 r1 = MathUtils.Multiply(ref xf1.q, _localAnchor1 - b1.GetLocalCenter());
+	        float2 r2 = MathUtils.Multiply(ref xf2.q, _localAnchor2 - b2.GetLocalCenter());
 
 	        float2 d = b2._sweep.c + r2 - b1._sweep.c - r1;
 

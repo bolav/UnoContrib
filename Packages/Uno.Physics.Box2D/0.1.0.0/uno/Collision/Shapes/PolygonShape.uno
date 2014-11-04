@@ -166,14 +166,14 @@ namespace Uno.Physics.Box2D
 	        _centroid = center;
 
             Transform xf = new Transform();
-	        xf.Position = center;
-	        xf.R.Set(angle);
+	        xf.p = center;
+	        xf.q.Set(angle);
 
 	        // Transform vertices and normals.
 	        for (int i = 0; i < _vertexCount; ++i)
 	        {
 		        _vertices[i] = MathUtils.Multiply(ref xf, _vertices[i]);
-		        _normals[i] = MathUtils.Multiply(ref xf.R, _normals[i]);
+		        _normals[i] = MathUtils.Multiply(ref xf.q, _normals[i]);
 	        }
         }
 
@@ -195,7 +195,7 @@ namespace Uno.Physics.Box2D
 	    /// @see Shape.TestPoint
 	    public override bool TestPoint(ref Transform xf, float2 p)
         {
-	        float2 pLocal = MathUtils.MultiplyT(ref xf.R, p - xf.Position);
+	        float2 pLocal = MathUtils.MultiplyT(ref xf.q, p - xf.p);
 
 	        for (int i = 0; i < _vertexCount; ++i)
 	        {
@@ -214,8 +214,8 @@ namespace Uno.Physics.Box2D
             output = new RayCastOutput();
 
             // Put the ray into the polygon's frame of reference.
-            float2 p1 = MathUtils.MultiplyT(ref xf.R, input.p1 - xf.Position);
-            float2 p2 = MathUtils.MultiplyT(ref xf.R, input.p2 - xf.Position);
+            float2 p1 = MathUtils.MultiplyT(ref xf.q, input.p1 - xf.p);
+            float2 p2 = MathUtils.MultiplyT(ref xf.q, input.p2 - xf.p);
             float2 d = p2 - p1;
 
             if (_vertexCount == 2)
@@ -326,7 +326,7 @@ namespace Uno.Physics.Box2D
                 if (index >= 0)
                 {
                     output.fraction = lower;
-                    output.normal = MathUtils.Multiply(ref xf.R, _normals[index]);
+                    output.normal = MathUtils.Multiply(ref xf.q, _normals[index]);
                     return true;
                 }
             }

@@ -51,7 +51,7 @@ namespace Uno.Physics.Box2D
         /// @see Shape.TestPoint
         public override bool TestPoint(ref Transform transform, Float2 p)
         {
-            Float2 center = transform.Position + MathUtils.Multiply(ref transform.R, _p);
+            Float2 center = transform.p + MathUtils.Multiply(ref transform.q, _p);
 	        Float2 d = p - center;
 	        return Uno.Vector.Dot(d, d) <= _radius * _radius;
         }
@@ -64,7 +64,7 @@ namespace Uno.Physics.Box2D
         {
             output = new RayCastOutput();
 
-	        float2 position = transform.Position + MathUtils.Multiply(ref transform.R, _p);
+	        float2 position = transform.p + MathUtils.Multiply(ref transform.q, _p);
 	        float2 s = input.p1 - position;
 	        float b = Uno.Vector.Dot(s, s) - _radius * _radius;
 
@@ -100,7 +100,7 @@ namespace Uno.Physics.Box2D
         /// @see Shape.ComputeAABB
         public override void ComputeAABB(out AABB aabb, ref Transform transform, int childIndex)
         {
-            Float2 p = transform.Position + MathUtils.Multiply(ref transform.R, _p);
+            Float2 p = transform.p + MathUtils.Multiply(ref transform.q, _p);
 	        aabb.lowerBound = float2(p.X - _radius, p.Y - _radius);
 	        aabb.upperBound = float2(p.X + _radius, p.Y + _radius);
         }

@@ -139,7 +139,7 @@ namespace TestBed {
 					    bodyDef.angularVelocity = jsonToFloat("angularVelocity", bodyValue);
 					    bodyDef.linearDamping = jsonToFloat("linearDamping", bodyValue, 0);
 					    bodyDef.angularDamping = jsonToFloat("angularDamping", bodyValue, 0);
-					    bodyDef.inertiaScale = jsonToFloat("gravityScale", bodyValue, 1);
+					    bodyDef.gravityScale = jsonToFloat("gravityScale", bodyValue, 1);
 
 					    bodyDef.allowSleep = JsonBool("allowSleep",bodyValue,true);
 					    bodyDef.awake = JsonBool("awake", bodyValue, false);

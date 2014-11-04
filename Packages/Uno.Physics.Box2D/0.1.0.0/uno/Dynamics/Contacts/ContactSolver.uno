@@ -403,7 +403,7 @@ namespace Uno.Physics.Box2D
 				        x.X = - cp1.normalMass * b.X;
 				        x.Y = 0.0f;
 				        vn1 = 0.0f;
-				        vn2 = c.K.col1.Y * x.X + b.Y;
+				        vn2 = c.K.ex.Y * x.X + b.Y;
 
 				        if (x.X >= 0.0f && vn2 >= 0.0f)
 				        {
@@ -434,7 +434,7 @@ namespace Uno.Physics.Box2D
 				        //
 				        x.X = 0.0f;
 				        x.Y = - cp2.normalMass * b.Y;
-				        vn1 = c.K.col2.X * x.Y + b.X;
+				        vn1 = c.K.ey.X * x.Y + b.X;
 				        vn2 = 0.0f;
 
 				        if (x.Y >= 0.0f && vn1 >= 0.0f)

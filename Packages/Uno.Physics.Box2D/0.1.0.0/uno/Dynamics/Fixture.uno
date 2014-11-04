@@ -384,7 +384,7 @@ namespace Uno.Physics.Box2D
 
                 proxy.aabb.Combine(ref aabb1, ref aabb2);
 
-                float2 displacement = transform2.Position - transform1.Position;
+                float2 displacement = transform2.p - transform1.p;
 
                 broadPhase.MoveProxy(proxy.proxyId, ref proxy.aabb, displacement);
             }

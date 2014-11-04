@@ -250,8 +250,8 @@ namespace Uno.Physics.Box2D
             b1.GetTransform(out xf1);
             b2.GetTransform(out xf2);
 
-	        float2 r1 = MathUtils.Multiply(ref xf1.R, _localAnchor1 - b1.GetLocalCenter());
-	        float2 r2 = MathUtils.Multiply(ref xf2.R, _localAnchor2 - b2.GetLocalCenter());
+	        float2 r1 = MathUtils.Multiply(ref xf1.q, _localAnchor1 - b1.GetLocalCenter());
+	        float2 r2 = MathUtils.Multiply(ref xf2.q, _localAnchor2 - b2.GetLocalCenter());
 
 	        // J = [-I -r1_skew I r2_skew]
 	        //     [ 0       -1 0       1]
@@ -265,15 +265,15 @@ namespace Uno.Physics.Box2D
 	        float m1 = b1._invMass, m2 = b2._invMass;
 	        float i1 = b1._invI, i2 = b2._invI;
 
-	        _mass.col1.X = m1 + m2 + r1.Y * r1.Y * i1 + r2.Y * r2.Y * i2;
-	        _mass.col2.X = -r1.Y * r1.X * i1 - r2.Y * r2.X * i2;
-	        _mass.col3.X = -r1.Y * i1 - r2.Y * i2;
-	        _mass.col1.Y = _mass.col2.X;
-	        _mass.col2.Y = m1 + m2 + r1.X * r1.X * i1 + r2.X * r2.X * i2;
-	        _mass.col3.Y = r1.X * i1 + r2.X * i2;
-	        _mass.col1.Z = _mass.col3.X;
-	        _mass.col2.Z = _mass.col3.Y;
-	        _mass.col3.Z = i1 + i2;
+	        _mass.ex.X = m1 + m2 + r1.Y * r1.Y * i1 + r2.Y * r2.Y * i2;
+	        _mass.ey.X = -r1.Y * r1.X * i1 - r2.Y * r2.X * i2;
+	        _mass.ez.X = -r1.Y * i1 - r2.Y * i2;
+	        _mass.ex.Y = _mass.ey.X;
+	        _mass.ey.Y = m1 + m2 + r1.X * r1.X * i1 + r2.X * r2.X * i2;
+	        _mass.ez.Y = r1.X * i1 + r2.X * i2;
+	        _mass.ex.Z = _mass.ez.X;
+	        _mass.ey.Z = _mass.ez.Y;
+	        _mass.ez.Z = i1 + i2;
 
             _motorMass = i1 + i2;
             if (_motorMass > 0.0f)
@@ -375,8 +375,8 @@ namespace Uno.Physics.Box2D
                 b1.GetTransform(out xf1);
                 b2.GetTransform(out xf2);
 
-		        float2 r1 = MathUtils.Multiply(ref xf1.R, _localAnchor1 - b1.GetLocalCenter());
-		        float2 r2 = MathUtils.Multiply(ref xf2.R, _localAnchor2 - b2.GetLocalCenter());
+		        float2 r1 = MathUtils.Multiply(ref xf1.q, _localAnchor1 - b1.GetLocalCenter());
+		        float2 r2 = MathUtils.Multiply(ref xf2.q, _localAnchor2 - b2.GetLocalCenter());
 
 		        // Solve point-to-point constraint
 		        float2 Cdot1 = v2 + MathUtils.Cross(w2, r2) - v1 - MathUtils.Cross(w1, r1);
@@ -432,8 +432,8 @@ namespace Uno.Physics.Box2D
                 b1.GetTransform(out xf1);
                 b2.GetTransform(out xf2);
 
-		        float2 r1 = MathUtils.Multiply(ref xf1.R, _localAnchor1 - b1.GetLocalCenter());
-		        float2 r2 = MathUtils.Multiply(ref xf2.R, _localAnchor2 - b2.GetLocalCenter());
+		        float2 r1 = MathUtils.Multiply(ref xf1.q, _localAnchor1 - b1.GetLocalCenter());
+		        float2 r2 = MathUtils.Multiply(ref xf2.q, _localAnchor2 - b2.GetLocalCenter());
 
 		        // Solve point-to-point constraint
 		        float2 Cdot = v2 + MathUtils.Cross(w2, r2) - v1 - MathUtils.Cross(w1, r1);
@@ -510,8 +510,8 @@ namespace Uno.Physics.Box2D
                 b1.GetTransform(out xf1);
                 b2.GetTransform(out xf2);
 
-		        float2 r1 = MathUtils.Multiply(ref xf1.R, _localAnchor1 - b1.GetLocalCenter());
-		        float2 r2 = MathUtils.Multiply(ref xf2.R, _localAnchor2 - b2.GetLocalCenter());
+		        float2 r1 = MathUtils.Multiply(ref xf1.q, _localAnchor1 - b1.GetLocalCenter());
+		        float2 r2 = MathUtils.Multiply(ref xf2.q, _localAnchor2 - b2.GetLocalCenter());
 
 		        float2 C = b2._sweep.c + r2 - b1._sweep.c - r1;
 		        positionError = Vector.Length(C);

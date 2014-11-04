@@ -135,8 +135,8 @@ namespace Uno.Physics.Box2D
             b1.GetTransform(out xf1);
             b2.GetTransform(out xf2);
 
-	        float2 r1 = MathUtils.Multiply(ref xf1.R, _localAnchor1 - b1.GetLocalCenter());
-	        float2 r2 = MathUtils.Multiply(ref xf2.R, _localAnchor2 - b2.GetLocalCenter());
+	        float2 r1 = MathUtils.Multiply(ref xf1.q, _localAnchor1 - b1.GetLocalCenter());
+	        float2 r2 = MathUtils.Multiply(ref xf2.q, _localAnchor2 - b2.GetLocalCenter());
 	        float2 p1 = b1._sweep.c + r1;
 	        float2 p2 = b2._sweep.c + r2;
 	        float2 d = p2 - p1;
@@ -271,8 +271,8 @@ namespace Uno.Physics.Box2D
             b2.GetTransform(out xf2);
 
 	        // Compute the effective masses.
-	        float2 r1 = MathUtils.Multiply(ref xf1.R, _localAnchor1 - _localCenterA);
-	        float2 r2 = MathUtils.Multiply(ref xf2.R, _localAnchor2 - _localCenterB);
+	        float2 r1 = MathUtils.Multiply(ref xf1.q, _localAnchor1 - _localCenterA);
+	        float2 r2 = MathUtils.Multiply(ref xf2.q, _localAnchor2 - _localCenterB);
 	        float2 d = b2._sweep.c + r2 - b1._sweep.c - r1;
 
 	        _invMassA = b1._invMass;
@@ -282,7 +282,7 @@ namespace Uno.Physics.Box2D
 
 	        // Compute motor Jacobian and effective mass.
 	        {
-		        _axis = MathUtils.Multiply(ref xf1.R, _localXAxis1);
+		        _axis = MathUtils.Multiply(ref xf1.q, _localXAxis1);
 		        _a1 = MathUtils.Cross(d + r1, _axis);
 		        _a2 = MathUtils.Cross(r2, _axis);
 
@@ -299,7 +299,7 @@ namespace Uno.Physics.Box2D
 
 	        // Prismatic constraint.
 	        {
-		        _perp = MathUtils.Multiply(ref xf1.R, _localYAxis1);
+		        _perp = MathUtils.Multiply(ref xf1.q, _localYAxis1);
 
 		        _s1 = MathUtils.Cross(d + r1, _perp);
 		        _s2 = MathUtils.Cross(r2, _perp);
@@ -311,8 +311,8 @@ namespace Uno.Physics.Box2D
 		        float k12 = i1 * _s1 * _a1 + i2 * _s2 * _a2;
 		        float k22 = m1 + m2 + i1 * _a1 * _a1 + i2 * _a2 * _a2;
 
-		        _K.col1 = float2(k11, k12);
-                _K.col2 = float2(k12, k22);
+		        _K.ex = float2(k11, k12);
+                _K.ey = float2(k12, k22);
 	        }
 
 	        // Compute motor and limit terms.
@@ -431,12 +431,12 @@ namespace Uno.Physics.Box2D
 		        }
 
 		        // f2(1) = invK(1,1) * (-Cdot(1) - K(1,2) * (f2(2) - f1(2))) + f1(1)
-		        float b = -Cdot1 - (_impulse.Y - f1.Y) * _K.col2.X;
+		        float b = -Cdot1 - (_impulse.Y - f1.Y) * _K.ey.X;
 
                 float f2r;
-                if (_K.col1.X != 0.0f)
+                if (_K.ex.X != 0.0f)
                 {
-                    f2r = b / _K.col1.X + f1.X;
+                    f2r = b / _K.ex.X + f1.X;
                 }
                 else
                 {
@@ -462,9 +462,9 @@ namespace Uno.Physics.Box2D
 		        // Limit is inactive, just solve the prismatic constraint in block form.
 
                 float df;
-                if (_K.col1.X != 0.0f)
+                if (_K.ex.X != 0.0f)
                 {
-                    df = -Cdot1 / _K.col1.X;
+                    df = -Cdot1 / _K.ex.X;
                 }
                 else
                 {
@@ -565,8 +565,8 @@ namespace Uno.Physics.Box2D
 		        float k12 = i1 * _s1 * _a1 + i2 * _s2 * _a2;
 		        float k22 = m1 + m2 + i1 * _a1 * _a1 + i2 * _a2 * _a2;
 
-                _K.col1 = float2(k11, k12);
-		        _K.col2 = float2(k12, k22);
+                _K.ex = float2(k11, k12);
+		        _K.ey = float2(k12, k22);
 
 		        float2 C = float2(-C1, -C2);
 

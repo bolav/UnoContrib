@@ -1,9 +1,10 @@
 /*
+* Box2D: r313
 * Box2D.XNA port of Box2D:
 * Copyright (c) 2009 Brandon Furtwangler, Nathan Furtwangler
 *
 * Original source Box2D:
-* Copyright (c) 2006-2009 Erin Catto http://www.gphysics.com
+* Copyright (c) 2006-2009 Erin Catto http://www.box2d.org
 *
 * This software is provided 'as-is', without any express or implied
 * warranty.  In no event will the authors be held liable for any damages
@@ -46,14 +47,18 @@ namespace Uno.Physics.Box2D
             return float2(Math.Abs(v.X), Math.Abs(v.Y));
         }
 
+		/// Multiply a matrix times a vector. If a rotation matrix is provided,
+		/// then this transforms the vector from one frame to another.
         public static float2 Multiply(ref Mat22 A, float2 v)
         {
-            return float2(A.col1.X * v.X + A.col2.X * v.Y, A.col1.Y * v.X + A.col2.Y * v.Y);
+            return float2(A.ex.X * v.X + A.ey.X * v.Y, A.ex.Y * v.X + A.ey.Y * v.Y);
         }
 
+		/// Multiply a matrix transpose times a vector. If a rotation matrix is provided,
+		/// then this transforms the vector from one frame to another (inverse transform).
         public static float2 MultiplyT(ref Mat22 A, float2 v)
         {
-            return float2(Dot(v, A.col1), Dot(v, A.col2));
+            return float2(Dot(v, A.ex), Dot(v, A.ey));
         }
         public static float Dot(float2 a, float2 b)
         {
@@ -72,31 +77,98 @@ namespace Uno.Physics.Box2D
 
         public static float2 Multiply(ref Transform T, float2 v)
         {
-            float x = T.Position.X + T.R.col1.X * v.X + T.R.col2.X * v.Y;
-            float y = T.Position.Y + T.R.col1.Y * v.X + T.R.col2.Y * v.Y;
+			float x = (T.q2.c * v.X - T.q2.s * v.Y) + T.p.X;
+			float y = (T.q2.s * v.X + T.q2.c * v.Y) + T.p.Y;
 
             return float2(x, y);
         }
 
         public static float2 MultiplyT(ref Transform T, float2 v)
         {
-            return MultiplyT(ref T.R, v - T.Position);
+			float px = v.X - T.p.X;
+			float py = v.Y - T.p.Y;
+			float x = (T.q2.c * px + T.q2.s * py);
+			float y = (-T.q2.s * px + T.q2.c * py);
+
+			return float2(x, y);
+        }
+
+		// v2 = A.q.Rot(B.q.Rot(v1) + B.p) + A.p
+		//    = (A.q * B.q).Rot(v1) + A.q.Rot(B.p) + A.p
+		public static Transform Multiply(ref Transform A, ref Transform B)
+		{
+			Transform C = new Transform();
+			Multiply(ref A.q, ref B.q, out C.q);
+			C.p = Multiply(ref A.q, B.p) + A.p;
+			return C;
+		}
+
+		// v2 = A.q' * (B.q * v1 + B.p - A.p)
+		//    = A.q' * B.q * v1 + A.q' * (B.p - A.p)
+        public static void MultiplyT(ref Transform A, ref Transform B, out Transform C)
+		{
+			C = new Transform();
+			MultiplyT(ref A.q, ref B.q, out C.q);
+			C.p = MultiplyT(ref A.q, B.p - A.p);
+		}
+
+        // A * B
+        public static void Multiply(ref Mat22 A, ref Mat22 B, out Mat22 C)
+        {
+			C = new Mat22(Multiply(ref A, B.ex), Multiply(ref A, B.ey));
         }
 
         // A^T * B
         public static void MultiplyT(ref Mat22 A, ref Mat22 B, out Mat22 C)
         {
-            float2 c1 = float2(Uno.Vector.Dot(A.col1, B.col1), Uno.Vector.Dot(A.col2, B.col1));
-            float2 c2 = float2(Uno.Vector.Dot(A.col1, B.col2), Uno.Vector.Dot(A.col2, B.col2));
+            float2 c1 = float2(Uno.Vector.Dot(A.ex, B.ex), Uno.Vector.Dot(A.ey, B.ex));
+            float2 c2 = float2(Uno.Vector.Dot(A.ex, B.ey), Uno.Vector.Dot(A.ey, B.ey));
 	        C = new Mat22(c1, c2);
         }
 
-        public static void MultiplyT(ref Transform A, ref Transform B, out Transform C)
-        {
-            Mat22 R;
-            MultiplyT(ref A.R, ref B.R, out R);
-            C = new Transform(B.Position - A.Position, ref R);
-        }
+		/// Multiply a matrix times a vector.
+		public static float2 Multiply22(ref Mat33 A, ref float2 v)
+		{
+			return float2(A.ex.X * v.X + A.ey.X * v.Y, A.ex.Y * v.X + A.ey.Y * v.Y);
+		}
+
+		/// Multiply two rotations: q * r
+		public static Rot Multiply(ref Rot q, ref Rot r)
+		{
+			// [qc -qs] * [rc -rs] = [qc*rc-qs*rs -qc*rs-qs*rc]
+			// [qs  qc]   [rs  rc]   [qs*rc+qc*rs -qs*rs+qc*rc]
+			// s = qs * rc + qc * rs
+			// c = qc * rc - qs * rs
+			Rot qr = new Rot();
+			qr.s = q.s * r.c + q.c * r.s;
+			qr.c = q.c * r.c - q.s * r.s;
+			return qr;
+		}
+
+		/// Transpose multiply two rotations: qT * r
+		public static Rot MultiplyT(ref Rot q, ref Rot r)
+		{
+			// [ qc qs] * [rc -rs] = [qc*rc+qs*rs -qc*rs+qs*rc]
+			// [-qs qc]   [rs  rc]   [-qs*rc+qc*rs qs*rs+qc*rc]
+			// s = qc * rs - qs * rc
+			// c = qc * rc + qs * rs
+			Rot qr = new Rot();
+			qr.s = q.c * r.s - q.s * r.c;
+			qr.c = q.c * r.c + q.s * r.s;
+			return qr;
+		}
+
+		/// Rotate a vector
+		public static float2 Multiply(ref Rot q, ref float2 v)
+		{
+			return float2(q.c * v.X - q.s * v.Y, q.s * v.X + q.c * v.Y);
+		}
+
+		/// Inverse rotate a vector
+		public static float2 MultiplyT(ref Rot q, ref float2 v)
+		{
+			return float2(q.c * v.X + q.s * v.Y, -q.s * v.X + q.c * v.Y);
+		}
 
         public static void Swap<T>(ref T a, ref T b)
         {
@@ -113,8 +185,7 @@ namespace Uno.Physics.Box2D
             return (x * x) + (y * y);
         }
 
-        /// This function is used to ensure that a floating point number is
-        /// not a NaN or infinity.
+        /// This function is used to ensure that a floating point number is not a NaN or infinity.
         public static bool IsValid(float x)
         {
 			return true;
@@ -155,67 +226,57 @@ namespace Uno.Physics.Box2D
 	    /// construct this matrix using columns.
         public Mat22(float2 c1, float2 c2)
 	    {
-		    col1 = c1;
-		    col2 = c2;
+		    ex = c1;
+		    ey = c2;
 	    }
 
 	    /// construct this matrix using scalars.
         public Mat22(float a11, float a12, float a21, float a22)
 	    {
-            col1 = float2(a11, a21);
-            col2 = float2(a12, a22);
-		}
-
-	    /// construct this matrix using an angle. This matrix becomes
-	    /// an orthonormal rotation matrix.
-        public Mat22(float angle)
-	    {
-		    // TODO_ERIN compute sin+cos together.
-            float c = (float)Math.Cos(angle), s = (float)Math.Sin(angle);
-            col1 = float2(c, s);
-            col2 = float2(-s, c);
+            ex = float2(a11, a21);
+            ey = float2(a12, a22);
 	    }
+
+		// XXX: DELETE THIS
+        public Mat22(float angle)
+           {
+                   // TODO_ERIN compute sin+cos together.
+            float c = (float)Math.Cos(angle), s = (float)Math.Sin(angle);
+            ex = float2(c, s);
+            ey = float2(-s, c);
+		}
 
 	    /// Initialize this matrix using columns.
         public void Set(float2 c1, float2 c2)
 	    {
-		    col1 = c1;
-		    col2 = c2;
+		    ex = c1;
+		    ey = c2;
 	    }
 
-	    /// Initialize this matrix using an angle. This matrix becomes
-	    /// an orthonormal rotation matrix.
         public void Set(float angle)
-	    {
+        {
             float c = (float)Math.Cos(angle), s = (float)Math.Sin(angle);
-		    col1.X = c; col2.X = -s;
-		    col1.Y = s; col2.Y = c;
-	    }
+            ex.X = c; ey.X = -s;
+            ex.Y = s; ey.Y = c;
+		}
 
 	    /// Set this to the identity matrix.
         public void SetIdentity()
 	    {
-		    col1.X = 1.0f; col2.X = 0.0f;
-		    col1.Y = 0.0f; col2.Y = 1.0f;
+		    ex.X = 1.0f; ey.X = 0.0f;
+		    ex.Y = 0.0f; ey.Y = 1.0f;
 	    }
 
 	    /// Set this matrix to all zeros.
         public void SetZero()
 	    {
-		    col1.X = 0.0f; col2.X = 0.0f;
-		    col1.Y = 0.0f; col2.Y = 0.0f;
-	    }
-
-	    /// Extract the angle from this matrix (assumed to be
-	    /// a rotation matrix).
-        public float GetAngle()
-	    {
-            return (float)Math.Atan2(col1.Y, col1.X);
+		    ex.X = 0.0f; ey.X = 0.0f;
+		    ex.Y = 0.0f; ey.Y = 0.0f;
 	    }
 
         public Mat22 GetInverse()
 	    {
-		    float a = col1.X, b = col2.X, c = col1.Y, d = col2.Y;
+		    float a = ex.X, b = ey.X, c = ex.Y, d = ey.Y;
 		    float det = a * d - b * c;
             if (det != 0.0f)
             {
@@ -229,7 +290,7 @@ namespace Uno.Physics.Box2D
 	    /// than computing the inverse in one-shot cases.
         public float2 Solve(float2 b)
 	    {
-		    float a11 = col1.X, a12 = col2.X, a21 = col1.Y, a22 = col2.Y;
+		    float a11 = ex.X, a12 = ey.X, a21 = ex.Y, a22 = ey.Y;
 		    float det = a11 * a22 - a12 * a21;
             if (det != 0.0f)
             {
@@ -241,10 +302,10 @@ namespace Uno.Physics.Box2D
 
         public static void Add (ref Mat22 A, ref Mat22 B, out Mat22 R)
         {
-            R = new Mat22(A.col1 + B.col1, A.col2 + B.col2);
+            R = new Mat22(A.ex + B.ex, A.ey + B.ey);
         }
 
-        public float2 col1, col2;
+        public float2 ex, ey;
     }
 
     /// A 3-by-3 matrix. Stored in column-major order.
@@ -254,32 +315,32 @@ namespace Uno.Physics.Box2D
 	    /// construct this matrix using columns.
         public Mat33(float3 c1, float3 c2, float3 c3)
 	    {
-		    col1 = c1;
-		    col2 = c2;
-		    col3 = c3;
+		    ex = c1;
+		    ey = c2;
+		    ez = c3;
 	    }
 
 	    /// Set this matrix to all zeros.
         public void SetZero()
 	    {
-            col1 = float3(0);
-            col2 = float3(0);
-            col3 = float3(0);
+            ex = float3(0);
+            ey = float3(0);
+            ez = float3(0);
 	    }
 
 	    /// Solve A * x = b, where b is a column vector. This is more efficient
 	    /// than computing the inverse in one-shot cases.
         public float3 Solve33(float3 b)
         {
-            float det = Vector.Dot(col1, Vector.Cross(col2, col3));
+            float det = Vector.Dot(ex, Vector.Cross(ey, ez));
             if (det != 0.0f)
             {
                 det = 1.0f / det;
             }
 
-            return float3( det * Vector.Dot(b, Vector.Cross(col2, col3)),
-                                det * Vector.Dot(col1, Vector.Cross(b, col3)),
-                                det * Vector.Dot(col1, Vector.Cross(col2, b)));
+            return float3( det * Vector.Dot(b, Vector.Cross(ey, ez)),
+                                det * Vector.Dot(ex, Vector.Cross(b, ez)),
+                                det * Vector.Dot(ex, Vector.Cross(ey, b)));
         }
 
 	    /// Solve A * x = b, where b is a column vector. This is more efficient
@@ -287,7 +348,7 @@ namespace Uno.Physics.Box2D
 	    /// 2-by-2 matrix equation.
         public float2 Solve22(float2 b)
         {
-            float a11 = col1.X, a12 = col2.X, a21 = col1.Y, a22 = col2.Y;
+            float a11 = ex.X, a12 = ey.X, a21 = ex.Y, a22 = ey.Y;
             float det = a11 * a22 - a12 * a21;
 
             if (det != 0.0f)
@@ -298,42 +359,129 @@ namespace Uno.Physics.Box2D
             return float2(det * (a22 * b.X - a12 * b.Y), det * (a11 * b.Y - a21 * b.X));
         }
 
-        public float3 col1, col2, col3;
+		/// Get the inverse of this matrix as a 2-by-2.
+		/// Returns the zero matrix if singular.
+		void GetInverse22(out Mat33 M)
+		{
+			float a = ex.X, b = ey.X, c = ex.Y, d = ey.Y;
+			float det = a * d - b * c;
+			if (det != 0.0f)
+			{
+				det = 1.0f / det;
+			}
+
+			M.ex.X =  det * d;	M.ey.X = -det * b; M.ex.Z = 0.0f;
+			M.ex.Y = -det * c;	M.ey.Y =  det * a; M.ey.Z = 0.0f;
+			M.ez.X = 0.0f; M.ez.Y = 0.0f; M.ez.Z = 0.0f;
+		}
+
+		/// Get the symmetric inverse of this matrix as a 3-by-3.
+		/// Returns the zero matrix if singular.
+		void GetSymInverse33(out Mat33 M)
+		{
+			float det = Uno.Vector.Dot(ex, Uno.Vector.Cross(ey, ez));
+			if (det != 0.0f)
+			{
+				det = 1.0f / det;
+			}
+
+			float a11 = ex.X, a12 = ey.X, a13 = ez.X;
+			float a22 = ey.Y, a23 = ez.Y;
+			float a33 = ez.Z;
+
+			M.ex.X = det * (a22 * a33 - a23 * a23);
+			M.ex.Y = det * (a13 * a23 - a12 * a33);
+			M.ex.Z = det * (a12 * a23 - a13 * a22);
+
+			M.ey.X = M.ex.Y;
+			M.ey.Y = det * (a11 * a33 - a13 * a13);
+			M.ey.Z = det * (a13 * a12 - a11 * a23);
+
+			M.ez.X = M.ex.Z;
+			M.ez.Y = M.ey.Z;
+			M.ez.Z = det * (a11 * a22 - a12 * a12);
+		}
+
+
+        public float3 ex, ey, ez;
     }
+
+	/// Rotation
+	public struct Rot
+	{
+		/// Initialize from an angle in radians
+		public Rot(float angle)
+		{
+			/// TODO_ERIN optimize
+			s = Math.Sin(angle);
+			c = Math.Cos(angle);
+		}
+
+		/// Set using an angle in radians.
+		void Set(float angle)
+		{
+			/// TODO_ERIN optimize
+			s = Math.Sin(angle);
+			c = Math.Cos(angle);
+		}
+
+		/// Set to the identity rotation
+		void SetIdentity()
+		{
+			s = 0.0f;
+			c = 1.0f;
+		}
+
+		/// Get the angle in radians
+		float GetAngle()
+		{
+			return Math.Atan2(s, c);
+		}
+
+		/// Get the x-axis
+		float2 GetXAxis()
+		{
+			return float2(c, s);
+		}
+
+		/// Get the u-axis
+		float2 GetYAxis()
+		{
+			return float2(-s, c);
+		}
+
+		/// Sine and cosine
+		public float s, c;
+	}
 
     /// A transform contains translation and rotation. It is used to represent
     /// the position and orientation of rigid frames.
     public struct Transform
     {
 	    /// Initialize using a position vector and a rotation matrix.
-        public Transform(float2 position, ref Mat22 r)
+        public Transform(float2 position, ref Mat22 rotation)
         {
-            Position = position;
-            R = r;
+            p = position;
+            q = rotation;
         }
 
 	    /// Set this to the identity transform.
         public void SetIdentity()
 	    {
-		    Position = float2(0);
-		    R.SetIdentity();
+		    p = float2(0);
+		    q.SetIdentity();
 	    }
 
 	    /// Set this based on the position and angle.
-        public void Set(float2 p, float angle)
+        public void Set(float2 position, float angle)
 	    {
-		    Position = p;
-		    R.Set(angle);
+		    p = p;
+		    q.Set(angle);
 	    }
 
-	    /// Calculate the angle that the rotation matrix represents.
-        public float GetAngle()
-	    {
-		    return (float)Math.Atan2(R.col1.Y, R.col1.X);
-	    }
-
-        public float2 Position;
-        public Mat22 R;
+        public float2 p; // Position
+        public Mat22 q; // R
+		public Rot q2; // XXX: Should become q
     }
 
     /// This describes the motion of a body/shape for TOI computation.
@@ -343,24 +491,27 @@ namespace Uno.Physics.Box2D
     public struct Sweep
     {
 	    /// Get the interpolated transform at a specific time.
-	    /// @param alpha is a factor in [0,1], where 0 indicates t0.
-	    public void GetTransform(out Transform xf, float alpha)
+    	/// @param beta is a factor in [0,1], where 0 indicates alpha0.
+	    public void GetTransform(out Transform xf, float beta)
         {
-            xf = new Transform();
-            xf.Position = c0 * (1.0f - alpha) + c * alpha;
-            float angle = a0 * (1.0f - alpha) + a * alpha;
-	        xf.R.Set(angle);
+			xf = new Transform();
+			xf.p = (1.0f - beta) * c0 + beta * c;
+			float angle = (1.0f - beta) * a0 + beta * a;
+			xf.q.Set(angle);
 
-	        // Shift to origin
-	        xf.Position -= MathUtils.Multiply(ref xf.R, localCenter);
+			// Shift to origin
+			xf.p -= MathUtils.Multiply(ref xf.q, localCenter);
         }
 
 	    /// Advance the sweep forward, yielding a new initial state.
-	    /// @param t the new initial time.
-	    public void Advance(float t)
+		/// @param alpha the new initial time.
+	    public void Advance(float alpha)
         {
-            c0 = c0 * (1.0f - t) + c * t;
-            a0 = a0 * (1.0f - t) + a * t;
+			// b2Assert(alpha0 < 1.0f);
+			float beta = (alpha - alpha0) / (1.0f - alpha0);
+			c0 += beta * (c - c0);
+			a0 += beta * (a - a0);
+			alpha0 = alpha;
         }
 
         /// Normalize the angles.
@@ -375,5 +526,9 @@ namespace Uno.Physics.Box2D
         public float2 localCenter;	///< local center of mass position
         public float2 c0, c;		///< center world positions
         public float a0, a;		///< world angles
+
+		/// Fraction of the current time step in the range [0,1]
+		/// c0 and a0 are the positions at alpha0.
+		public float alpha0;
     }
 }

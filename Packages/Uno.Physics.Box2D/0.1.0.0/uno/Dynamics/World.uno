@@ -635,7 +635,7 @@ namespace Uno.Physics.Box2D
 		        {
                     Transform xf;
                     b.GetTransform(out xf);
-			        xf.Position = b.GetWorldCenter();
+			        xf.p = b.GetWorldCenter();
 			        DebugDraw.DrawTransform(ref xf);
 		        }
 	        }
@@ -1278,8 +1278,8 @@ namespace Uno.Physics.Box2D
             Transform xf1, xf2;
             b1.GetTransform(out xf1);
 	        b2.GetTransform(out xf2);
-	        float2 x1 = xf1.Position;
-	        float2 x2 = xf2.Position;
+	        float2 x1 = xf1.p;
+	        float2 x2 = xf2.p;
 	        float2 p1 = joint.GetAnchorA();
 	        float2 p2 = joint.GetAnchorB();
 
@@ -1326,7 +1326,7 @@ namespace Uno.Physics.Box2D
 
 			        float2 centerF = MathUtils.Multiply(ref xf, circle._p);
 			        float radius = circle._radius;
-			        float2 axis = xf.R.col1;
+			        float2 axis = xf.q.ex;
 
 			        DebugDraw.DrawSolidCircle(centerF, radius, axis, color);
 		        }

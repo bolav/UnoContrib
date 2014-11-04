@@ -131,8 +131,8 @@ namespace Uno.Physics.Box2D
             bB.GetTransform(out xfB);
 
 	        // Compute the effective mass matrix.
-            float2 rA = MathUtils.Multiply(ref xfA.R, _localAnchor1 - bA.GetLocalCenter());
-            float2 rB = MathUtils.Multiply(ref xfB.R, _localAnchor2 - bB.GetLocalCenter());
+            float2 rA = MathUtils.Multiply(ref xfA.q, _localAnchor1 - bA.GetLocalCenter());
+            float2 rB = MathUtils.Multiply(ref xfB.q, _localAnchor2 - bB.GetLocalCenter());
 
             // J = [-I -r1_skew I r2_skew]
 	        //     [ 0       -1 0       1]
@@ -147,16 +147,16 @@ namespace Uno.Physics.Box2D
 	        float iA = bA._invI, iB = bB._invI;
 
 	        Mat22 K1 = new Mat22();
-	        K1.col1.X = mA + mB;	K1.col2.X = 0.0f;
-	        K1.col1.Y = 0.0f;		K1.col2.Y = mA + mB;
+	        K1.ex.X = mA + mB;	K1.ey.X = 0.0f;
+	        K1.ex.Y = 0.0f;		K1.ey.Y = mA + mB;
 
             Mat22 K2 = new Mat22();
-	        K2.col1.X =  iA * rA.Y * rA.Y;	K2.col2.X = -iA * rA.X * rA.Y;
-	        K2.col1.Y = -iA * rA.X * rA.Y;	K2.col2.Y =  iA * rA.X * rA.X;
+	        K2.ex.X =  iA * rA.Y * rA.Y;	K2.ey.X = -iA * rA.X * rA.Y;
+	        K2.ex.Y = -iA * rA.X * rA.Y;	K2.ey.Y =  iA * rA.X * rA.X;
 
             Mat22 K3 = new Mat22();
-	        K3.col1.X =  iB * rB.Y * rB.Y;	K3.col2.X = -iB * rB.X * rB.Y;
-	        K3.col1.Y = -iB * rB.X * rB.Y;	K3.col2.Y =  iB * rB.X * rB.X;
+	        K3.ex.X =  iB * rB.Y * rB.Y;	K3.ey.X = -iB * rB.X * rB.Y;
+	        K3.ex.Y = -iB * rB.X * rB.Y;	K3.ey.Y =  iB * rB.X * rB.X;
 
             Mat22 K12;
             Mat22.Add(ref K1, ref K2, out K12);
@@ -208,8 +208,8 @@ namespace Uno.Physics.Box2D
             bA.GetTransform(out xfA);
             bB.GetTransform(out xfB);
 
-            float2 rA = MathUtils.Multiply(ref xfA.R, _localAnchor1 - bA.GetLocalCenter());
-            float2 rB = MathUtils.Multiply(ref xfB.R, _localAnchor2 - bB.GetLocalCenter());
+            float2 rA = MathUtils.Multiply(ref xfA.q, _localAnchor1 - bA.GetLocalCenter());
+            float2 rB = MathUtils.Multiply(ref xfB.q, _localAnchor2 - bB.GetLocalCenter());
 
             // Solve angular friction
             {

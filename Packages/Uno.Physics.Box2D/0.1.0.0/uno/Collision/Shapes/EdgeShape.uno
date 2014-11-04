@@ -86,8 +86,8 @@ namespace Uno.Physics.Box2D
             output = new RayCastOutput();
 
 	        // Put the ray into the edge's frame of reference.
-	        float2 p1 = MathUtils.MultiplyT(ref transform.R, input.p1 - transform.Position);
-	        float2 p2 = MathUtils.MultiplyT(ref transform.R, input.p2 - transform.Position);
+	        float2 p1 = MathUtils.MultiplyT(ref transform.q, input.p1 - transform.p);
+	        float2 p2 = MathUtils.MultiplyT(ref transform.q, input.p2 - transform.p);
 	        float2 d = p2 - p1;
 
 	        float2 v1 = _vertex1;

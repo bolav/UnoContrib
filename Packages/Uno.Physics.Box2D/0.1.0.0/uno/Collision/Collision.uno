@@ -146,7 +146,7 @@ namespace Uno.Physics.Box2D
 
 	        case ManifoldType.FaceA:
 		        {
-                    _normal = MathUtils.Multiply(ref xfA.R, manifold._localNormal);
+                    _normal = MathUtils.Multiply(ref xfA.q, manifold._localNormal);
 			        float2 planePoint = MathUtils.Multiply(ref xfA, manifold._localPoint);
 
 			        for (int i = 0; i < manifold._pointCount; ++i)
@@ -161,7 +161,7 @@ namespace Uno.Physics.Box2D
 
 	        case ManifoldType.FaceB:
 		        {
-                    _normal = MathUtils.Multiply(ref xfB.R, manifold._localNormal);
+                    _normal = MathUtils.Multiply(ref xfB.q, manifold._localNormal);
 			        float2 planePoint = MathUtils.Multiply(ref xfB, manifold._localPoint);
 
 			        for (int i = 0; i < manifold._pointCount; ++i)
@@ -662,7 +662,7 @@ namespace Uno.Physics.Box2D
             float2 localNormal = MathUtils.Cross(localTangent, 1.0f);
 	        float2 planePoint = 0.5f * (v11 + v12);
 
-            float2 tangent = MathUtils.Multiply(ref xf1.R, localTangent);
+            float2 tangent = MathUtils.Multiply(ref xf1.q, localTangent);
 	        float2 normal = MathUtils.Cross(tangent, 1.0f);
 
 	        v11 = MathUtils.Multiply(ref xf1, v11);
@@ -1001,7 +1001,7 @@ namespace Uno.Physics.Box2D
             for (int i = 0; i < s_polygonB._vertexCount; ++i)
 	        {
                 s_polygonB._vertices[i] = MathUtils.Multiply(ref xf, polygonB_in._vertices[i]);
-                s_polygonB._normals[i] = MathUtils.Multiply(ref xf.R, polygonB_in._normals[i]);
+                s_polygonB._normals[i] = MathUtils.Multiply(ref xf.q, polygonB_in._normals[i]);
 	        }
 
             float totalRadius = s_polygonA._radius + s_polygonB._radius;
@@ -1203,7 +1203,7 @@ namespace Uno.Physics.Box2D
 	        }
 	        else
 	        {
-		        manifold._localNormal = MathUtils.MultiplyT(ref xf.R, normal);
+		        manifold._localNormal = MathUtils.MultiplyT(ref xf.q, normal);
 		        manifold._localPoint = MathUtils.MultiplyT(ref xf, planePoint);
 	        }
 
@@ -1294,8 +1294,8 @@ namespace Uno.Physics.Box2D
 	        int count2 = poly2._vertexCount;
 
 	        // Convert normal from poly1's frame into poly2's frame.
-            float2 normal1World = MathUtils.Multiply(ref xf1.R, poly1._normals[edge1]);
-            float2 normal1 = MathUtils.MultiplyT(ref xf2.R, normal1World);
+            float2 normal1World = MathUtils.Multiply(ref xf1.q, poly1._normals[edge1]);
+            float2 normal1 = MathUtils.MultiplyT(ref xf2.q, normal1World);
 	        // Find support vertex on poly2 for -normal.
 	        int index = 0;
 	        float minDot = Settings.b2_maxFloat;
@@ -1327,7 +1327,7 @@ namespace Uno.Physics.Box2D
 
 	        // Vector pointing from the centroid of poly1 to the centroid of poly2.
 	        float2 d = MathUtils.Multiply(ref xf2, poly2._centroid) - MathUtils.Multiply(ref xf1, poly1._centroid);
-	        float2 dLocal1 = MathUtils.MultiplyT(ref xf1.R, d);
+	        float2 dLocal1 = MathUtils.MultiplyT(ref xf1.q, d);
 
 	        // Find edge normal on poly1 that has the largest projection onto d.
 	        int edge = 0;
@@ -1410,7 +1410,7 @@ namespace Uno.Physics.Box2D
 	        int count2 = poly2._vertexCount;
 
 	        // Get the normal of the reference edge in poly2's frame.
-	        float2 normal1 = MathUtils.MultiplyT(ref xf2.R, MathUtils.Multiply(ref xf1.R, poly1._normals[edge1]));
+	        float2 normal1 = MathUtils.MultiplyT(ref xf2.q, MathUtils.Multiply(ref xf1.q, poly1._normals[edge1]));
 
 	        // Find the incident edge on poly2.
 	        int index = 0;

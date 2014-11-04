@@ -1,4 +1,5 @@
 /*
+* Box2D: r313
 * Box2D.XNA port of Box2D:
 * Copyright (c) 2009 Brandon Furtwangler, Nathan Furtwangler
 *
@@ -54,7 +55,7 @@ namespace Uno.Physics.Box2D
             bullet = false;
             type = BodyType.Static;
 		    active = true;
-            inertiaScale = 1.0f;
+            gravityScale = 1.0f;
         }
 
         /// The body type: static, kinematic, or dynamic.
@@ -106,8 +107,8 @@ namespace Uno.Physics.Box2D
         /// Use this to store application specific body data.
         public object userData;
 
-        /// Experimental: scales the inertia tensor.
-        public float inertiaScale;
+	    /// Scale the gravity applied to this body.
+        public float gravityScale;
     }
 
 
@@ -130,6 +131,10 @@ namespace Uno.Physics.Box2D
         /// Set the type of this body. This may alter the mass and velocity.
 	    public void SetType(BodyType type)
         {
+			if (_world.IsLocked) {
+				return;
+			}
+
             if (_type == type)
             {
                 return;
@@ -143,6 +148,9 @@ namespace Uno.Physics.Box2D
             {
                 _linearVelocity = float2(0);
                 _angularVelocity = 0.0f;
+				_sweep.a0 = _sweep.a;
+				_sweep.c0 = _sweep.c;
+				SynchronizeFixtures();
             }
 
             SetAwake(true);
@@ -150,6 +158,7 @@ namespace Uno.Physics.Box2D
             _force = float2(0);
             _torque = 0.0f;
 
+			// WE ARE HERE: diff -u box2d-read-only-r112/Box2D/Box2D/Dynamics/b2Body.cpp box2d-read-only/Box2D/Box2D/Dynamics/b2Body.cpp  | less
             // Since the body type changed, we need to flag contacts for filtering.
             for (ContactEdge ce = _contactList; ce != null; ce = ce.Next)
             {
@@ -294,11 +303,11 @@ namespace Uno.Physics.Box2D
             ResetMassData();
         }
 
-	    /// Set the position of the body's origin and rotation.
-	    /// This breaks any contacts and wakes the other bodies.
-        /// Manipulating a body's transform may cause non-physical behavior.
-	    /// @param position the world position of the body's local origin.
-	    /// @param angle the world rotation in radians.
+	/// Set the position of the body's origin and rotation.
+	/// Manipulating a body's transform may cause non-physical behavior.
+	/// Note: contacts are updated on the next call to b2World::Step.
+	/// @param position the world position of the body's local origin.
+	/// @param angle the world rotation in radians.
 	    public void SetTransform(float2 position, float angle)
         {
 
@@ -307,8 +316,8 @@ namespace Uno.Physics.Box2D
 		        return;
 	        }
 
-	        _xf.R.Set(angle);
-	        _xf.Position = position;
+	        _xf.q.Set(angle);
+	        _xf.p = position;
 
 	        _sweep.c0 = _sweep.c = MathUtils.Multiply(ref _xf, _sweep.localCenter);
 	        _sweep.a0 = _sweep.a = angle;
@@ -331,8 +340,8 @@ namespace Uno.Physics.Box2D
                 return;
             }
 
-            _xf.R.Set(angle);
-            _xf.Position = position;
+            _xf.q.Set(angle);
+            _xf.p = position;
 
             _sweep.c0 = _sweep.c = MathUtils.Multiply(ref _xf, _sweep.localCenter);
             _sweep.a0 = _sweep.a = angle;
@@ -355,7 +364,7 @@ namespace Uno.Physics.Box2D
 	    /// @return the world position of the body's origin.
 	    public float2 GetPosition()
         {
-            return _xf.Position;
+            return _xf.p;
         }
 
 	    /// Get the angle in radians.
@@ -430,35 +439,66 @@ namespace Uno.Physics.Box2D
 	    /// affect the angular velocity. This wakes up the body.
 	    /// @param force the world force vector, usually in Newtons (N).
 	    /// @param point the world position of the point of application.
-	    public void ApplyForce(float2 force, float2 point)
+		/// @param wake also wake up the body
+	    public void ApplyForce(float2 force, float2 point, bool wake)
         {
             if (_type == BodyType.Dynamic)
-            {
-                if (IsAwake() == false)
-                {
-                    SetAwake(true);
-                }
-
-                _force += force;
+			{
+				return;
+			}
+			
+			if (wake && IsAwake() == false) {
+				SetAwake(true);
+			}
+			
+			// Don't accumulate a force if the body is sleeping.
+			if (IsAwake()) {
+				_force += force;
                 _torque += MathUtils.Cross(point - _sweep.c, force);
-            }
-        }
+			}
+        
+		}
+		/// Apply a force to the center of mass. This wakes up the body.
+		/// @param force the world force vector, usually in Newtons (N).
+		/// @param wake also wake up the body
+		void ApplyForceToCenter(float2 force, bool wake)
+		{
+            if (_type == BodyType.Dynamic)
+			{
+				return;
+			}
+
+			if (wake && IsAwake() == false) {
+				SetAwake(true);
+			}
+
+			// Don't accumulate a force if the body is sleeping.
+			if (IsAwake()) {
+				_force += force;
+			}
+		}
+		
 
 	    /// Apply a torque. This affects the angular velocity
 	    /// without affecting the linear velocity of the center of mass.
 	    /// This wakes up the body.
 	    /// @param torque about the z-axis (out of the screen), usually in N-m.
-	    public void ApplyTorque(float torque)
+		/// @param wake also wake up the body
+	    public void ApplyTorque(float torque, bool wake)
         {
             if (_type == BodyType.Dynamic)
-            {
-                if (IsAwake() == false)
-                {
-                    SetAwake(true);
-                }
+			{
+				return;
+			}
 
+			if (wake && IsAwake() == false) {
+				SetAwake(true);
+			}
+
+			// Don't accumulate a force if the body is sleeping.
+			if (IsAwake()) {
                 _torque += torque;
-            }
+			}
         }
 
 	    /// Apply an impulse at a point. This immediately modifies the velocity.
@@ -466,35 +506,41 @@ namespace Uno.Physics.Box2D
 	    /// is not at the center of mass. This wakes up the body.
 	    /// @param impulse the world impulse vector, usually in N-seconds or kg-m/s.
 	    /// @param point the world position of the point of application.
-	    public void ApplyLinearImpulse(float2 impulse, float2 point)
+		/// @param wake also wake up the body
+	    public void ApplyLinearImpulse(float2 impulse, float2 point, bool wake)
         {
             if (_type != BodyType.Dynamic)
             {
                 return;
             }
-            if (IsAwake() == false)
-            {
-                SetAwake(true);
-            }
-            _linearVelocity += _invMass * impulse;
-            _angularVelocity += _invI * MathUtils.Cross(point - _sweep.c, impulse);
+			if (wake && IsAwake() == false) {
+				SetAwake(true);
+			}
+
+			// Don't accumulate a force if the body is sleeping.
+			if (IsAwake()) {
+	            _linearVelocity += _invMass * impulse;
+	            _angularVelocity += _invI * MathUtils.Cross(point - _sweep.c, impulse);
+			}
         }
 
         /// Apply an angular impulse.
         /// @param impulse the angular impulse in units of kg*m*m/s
-        public void ApplyAngularImpulse(float impulse)
+		/// @param wake also wake up the body
+        public void ApplyAngularImpulse(float impulse, bool wake)
         {
             if (_type != BodyType.Dynamic)
             {
                 return;
             }
+			if (wake && IsAwake() == false) {
+				SetAwake(true);
+			}
 
-            if (IsAwake() == false)
-            {
-                SetAwake(true);
-            }
-
-            _angularVelocity += _invI * impulse;
+			// Don't accumulate a force if the body is sleeping.
+			if (IsAwake()) {
+	            _angularVelocity += _invI * impulse;
+			}
         }
 
 	    /// Get the total mass of the body.
@@ -584,7 +630,7 @@ namespace Uno.Physics.Box2D
             // Static and kinematic bodies have zero mass.
             if (_type == BodyType.Static || _type == BodyType.Kinematic)
             {
-                _sweep.c0 = _sweep.c = _xf.Position;
+                _sweep.c0 = _sweep.c = _xf.p;
                 return;
             }
 
@@ -655,7 +701,7 @@ namespace Uno.Physics.Box2D
 	    /// @return the same vector expressed in world coordinates.
 	    public float2 GetWorldVector(float2 localVector)
         {
-            return MathUtils.Multiply(ref _xf.R, localVector);
+            return MathUtils.Multiply(ref _xf.q, localVector);
         }
 
 	    /// Gets a local point relative to the body's origin given a world point.
@@ -671,7 +717,7 @@ namespace Uno.Physics.Box2D
 	    /// @return the corresponding local vector.
 	    public float2 GetLocalVector(float2 worldVector)
         {
-            return MathUtils.MultiplyT(ref _xf.R, worldVector);
+            return MathUtils.MultiplyT(ref _xf.q, worldVector);
         }
 
 	    /// Get the world linear velocity of a world point attached to this body.
@@ -713,6 +759,13 @@ namespace Uno.Physics.Box2D
         {
             _angularDamping = angularDamping;
         }
+
+		/// Get the gravity scale of the body.
+		/// Set the gravity scale of the body.
+		public float GravityScale {
+			get { return _gravityScale; }
+			set { _gravityScale = value; }
+		}
 
 	    /// Is this body treated like a bullet for continuous collision detection?
 	    public bool IsBullet
@@ -777,7 +830,7 @@ namespace Uno.Physics.Box2D
 
 	    /// Set the sleep state of the body. A sleeping body has very
 	    /// low CPU cost.
-	    /// @param flag set to true to put body to sleep, false to wake it.
+		/// @param flag set to true to wake the body, false to put it to sleep.
 	    public void SetAwake(bool flag)
         {
             if (flag)
@@ -800,7 +853,7 @@ namespace Uno.Physics.Box2D
         }
 
         /// Get the sleeping state of this body.
-	    /// @return true if the body is sleeping.
+	    /// @return true if the body is awake.
 	    public bool IsAwake()
         {
             return (_flags & BodyFlags.Awake) == BodyFlags.Awake;
@@ -967,17 +1020,22 @@ namespace Uno.Physics.Box2D
 
 	        _world = world;
 
-	        _xf.Position = bd.position;
-	        _xf.R.Set(bd.angle);
-
-	        _sweep.a0 = _sweep.a = bd.angle;
-	        _sweep.c0 = _sweep.c = MathUtils.Multiply(ref _xf, _sweep.localCenter);
+	        _xf.p = bd.position;
+	        _xf.q.Set(bd.angle);
+			
+			_sweep.localCenter = float2(0);
+			_sweep.c0 = _xf.p;
+			_sweep.c = _xf.p;
+			_sweep.a0 = bd.angle;
+			_sweep.a = bd.angle;
+			_sweep.alpha0 = 0.0f;
 
 	        _linearVelocity = bd.linearVelocity;
 	        _angularVelocity = bd.angularVelocity;
 
 	        _linearDamping = bd.linearDamping;
 	        _angularDamping = bd.angularDamping;
+			_gravityScale = bd.gravityScale;
 
             _type = bd.type;
             if (_type == BodyType.Dynamic)
@@ -992,8 +1050,8 @@ namespace Uno.Physics.Box2D
         internal void SynchronizeFixtures()
         {
             Transform xf1 = new Transform();
-	        xf1.R.Set(_sweep.a0);
-	        xf1.Position = _sweep.c0 - MathUtils.Multiply(ref xf1.R, _sweep.localCenter);
+	        xf1.q.Set(_sweep.a0);
+	        xf1.p = _sweep.c0 - MathUtils.Multiply(ref xf1.q, _sweep.localCenter);
 
 	        BroadPhase broadPhase = _world._contactManager._broadPhase;
 	        for (Fixture f = _fixtureList; f != null; f = f._next)
@@ -1004,8 +1062,8 @@ namespace Uno.Physics.Box2D
 
 	    internal void SynchronizeTransform()
         {
-            _xf.R.Set(_sweep.a);
-	        _xf.Position = _sweep.c - MathUtils.Multiply(ref _xf.R, _sweep.localCenter);
+            _xf.q.Set(_sweep.a);
+	        _xf.p = _sweep.c - MathUtils.Multiply(ref _xf.q, _sweep.localCenter);
         }
 
 	    // This is used to prevent connected bodies from colliding.
@@ -1033,13 +1091,14 @@ namespace Uno.Physics.Box2D
 	        return true;
         }
 
-	    internal void Advance(float t)
+	    internal void Advance(float alpha)
         {
-            // Advance to the new safe time.
-	        _sweep.Advance(t);
+			// Advance to the new safe time. This doesn't sync the broad-phase.
+	        _sweep.Advance(alpha);
 	        _sweep.c = _sweep.c0;
 	        _sweep.a = _sweep.a0;
-	        SynchronizeTransform();
+            _xf.q.Set(_sweep.a);
+	        _xf.p = _sweep.c - MathUtils.Multiply(ref _xf.q, _sweep.localCenter);
         }
 
         /// <summary>
@@ -1050,7 +1109,7 @@ namespace Uno.Physics.Box2D
         {
             get
             {
-                return _xf.Position;
+                return _xf.p;
             }
             set
             {
@@ -1110,6 +1169,6 @@ namespace Uno.Physics.Box2D
 
         internal object _userData;
 
-        internal float _intertiaScale;
+        internal float _gravityScale;
     }
 }

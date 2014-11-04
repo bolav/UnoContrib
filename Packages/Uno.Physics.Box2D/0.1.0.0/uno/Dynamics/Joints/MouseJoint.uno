@@ -185,7 +185,7 @@ public class MouseJoint : Joint
 	    // Compute the effective mass matrix.
         Transform xf1;
         b.GetTransform(out xf1);
-	    float2 r = MathUtils.Multiply(ref xf1.R, _localAnchor - b.GetLocalCenter());
+	    float2 r = MathUtils.Multiply(ref xf1.q, _localAnchor - b.GetLocalCenter());
 
 	    // K    = [(1/m1 + 1/m2) * eye(2) - skew(r1) * invI1 * skew(r1) - skew(r2) * invI2 * skew(r2)]
 	    //      = [1/m1+1/m2     0    ] + invI1 * [r1.Y*r1.Y -r1.X*r1.Y] + invI2 * [r1.Y*r1.Y -r1.X*r1.Y]
@@ -199,8 +199,8 @@ public class MouseJoint : Joint
         Mat22 K;
         Mat22.Add(ref K1, ref K2, out K);
 
-	    K.col1.X += _gamma;
-	    K.col2.Y += _gamma;
+	    K.ex.X += _gamma;
+	    K.ey.Y += _gamma;
 
 	    _mass = K.GetInverse();
 
@@ -222,7 +222,7 @@ public class MouseJoint : Joint
         Transform xf1;
         b.GetTransform(out xf1);
 
-	    float2 r = MathUtils.Multiply(ref xf1.R, _localAnchor - b.GetLocalCenter());
+	    float2 r = MathUtils.Multiply(ref xf1.q, _localAnchor - b.GetLocalCenter());
 
 	    // Cdot = v + cross(w, r)
 	    float2 Cdot = b._linearVelocity + MathUtils.Cross(b._angularVelocity, r);

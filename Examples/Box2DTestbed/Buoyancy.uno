@@ -40,14 +40,14 @@ namespace TestBed {
 		public void OnKeyPressed (object sender, Fuse.KeyPressedArgs args) {
 			// debug_log sender + " " + args.Key;
 			if (args.Key == Key.A) {
-				GetBodyByName("Ball").ApplyForce(float2(-120,0), float2(0));
+				GetBodyByName("Ball").ApplyForce(float2(-120,0), float2(0), true);
 			}
 			else if (args.Key == Key.D) {
-				GetBodyByName("Ball").ApplyForce(float2(120,0), float2(0));
+				GetBodyByName("Ball").ApplyForce(float2(120,0), float2(0), true);
 				
 			}
 			else if (args.Key == Key.W) {
-				GetBodyByName("Ball").ApplyForce(float2(0,400), float2(0));
+				GetBodyByName("Ball").ApplyForce(float2(0,400), float2(0), true);
 				
 			}
 			
@@ -55,7 +55,6 @@ namespace TestBed {
 		
 		HashSet <FixturePair> _fixturePairs = new HashSet<FixturePair>();
         public void BeginContact(Contact contact) {
-			debug_log "BeginContact " + _fixturePairs.Count;
 	        Fixture fixtureA = contact.GetFixtureA();
 	        Fixture fixtureB = contact.GetFixtureB();
 
@@ -70,22 +69,17 @@ namespace TestBed {
         	
         }
         public void EndContact(Contact contact) {
-			debug_log "EndContact";
 	        Fixture fixtureA = contact.GetFixtureA();
 	        Fixture fixtureB = contact.GetFixtureB();
 
 	        //This check should be the same as for BeginContact, but here
 	        //we remove the fixture pair
 	        if ( fixtureA.IsSensor() &&
-	             fixtureB.GetBody().GetBodyType() == BodyType.Dynamic ) {
-					 debug_log "try to remove";
-	 	             debug_log _fixturePairs.Remove( make_pair(fixtureA, fixtureB) );
-	             }
+	             fixtureB.GetBody().GetBodyType() == BodyType.Dynamic )
+	 	              _fixturePairs.Remove( make_pair(fixtureA, fixtureB) );
 	        else if ( fixtureB.IsSensor() &&
-	                  fixtureA.GetBody().GetBodyType() == BodyType.Dynamic ) {
-	 					 debug_log "try to remove";
-		  	             debug_log _fixturePairs.Remove( make_pair(fixtureB, fixtureA) );
-	                  }
+	                  fixtureA.GetBody().GetBodyType() == BodyType.Dynamic )
+		  	             _fixturePairs.Remove( make_pair(fixtureB, fixtureA) );
         }
 		
 		protected override void Step() {
@@ -112,7 +106,7 @@ namespace TestBed {
 					// debug_log "displacedMass " + displacedMass;
 	                float2 gravity = float2( 0, -10 );
 	                float2 buoyancyForce = displacedMass * -gravity;
-	                fixtureB.GetBody().ApplyForce( buoyancyForce, centroid );
+	                fixtureB.GetBody().ApplyForce( buoyancyForce, centroid, true );
 
 	                /*
 	                //simple drag
@@ -157,7 +151,7 @@ namespace TestBed {
 	                    float dragMag = dragDot * dragMod * edgeLength * density * vel * vel;
 	                    dragMag = Math.Min( dragMag, maxDrag );
 	                    float2 dragForce = dragMag * -velDir;
-	                    fixtureB.GetBody().ApplyForce( dragForce, midPoint );
+	                    fixtureB.GetBody().ApplyForce( dragForce, midPoint, true );
 
 	                    //apply lift
 	                    float liftDot = Uno.Vector.Dot(edge, velDir);
@@ -165,7 +159,7 @@ namespace TestBed {
 	                    liftMag = Math.Min( liftMag, maxLift );
 	                    float2 liftDir = MathUtils.Cross(1,velDir);
 	                    float2 liftForce = liftMag * liftDir;
-	                    fixtureB.GetBody().ApplyForce( liftForce, midPoint );
+	                    fixtureB.GetBody().ApplyForce( liftForce, midPoint, true );
 	                }
 
 	                //draw debug info

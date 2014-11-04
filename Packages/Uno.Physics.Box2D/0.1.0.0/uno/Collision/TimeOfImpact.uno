@@ -95,7 +95,7 @@ namespace Uno.Physics.Box2D
 
 			    _axis = MathUtils.Cross(localPointB2 - localPointB1, 1.0f);
                 _axis = Vector.Normalize(_axis);
-                float2 normal = MathUtils.Multiply(ref xfB.R, _axis);
+                float2 normal = MathUtils.Multiply(ref xfB.q, _axis);
 
                 _localPoint = 0.5f * (localPointB1 + localPointB2);
 			    float2 pointB = MathUtils.Multiply(ref xfB, _localPoint);
@@ -120,7 +120,7 @@ namespace Uno.Physics.Box2D
 
 			    _axis = MathUtils.Cross(localPointA2 - localPointA1, 1.0f);
 			    _axis = Vector.Normalize(_axis);
-			    float2 normal = MathUtils.Multiply(ref xfA.R, _axis);
+			    float2 normal = MathUtils.Multiply(ref xfA.q, _axis);
 
 			    _localPoint = 0.5f * (localPointA1 + localPointA2);
 			    float2 pointA = MathUtils.Multiply(ref xfA, _localPoint);
@@ -148,8 +148,8 @@ namespace Uno.Physics.Box2D
 		    {
                 case SeparationFunctionType.Points:
 			    {
-				    float2 axisA = MathUtils.MultiplyT(ref xfA.R,  _axis);
-				    float2 axisB = MathUtils.MultiplyT(ref xfB.R, -_axis);
+				    float2 axisA = MathUtils.MultiplyT(ref xfA.q,  _axis);
+				    float2 axisB = MathUtils.MultiplyT(ref xfB.q, -_axis);
 
 				    indexA = _proxyA.GetSupport(axisA);
 				    indexB = _proxyB.GetSupport(axisB);
@@ -166,10 +166,10 @@ namespace Uno.Physics.Box2D
 
                 case SeparationFunctionType.FaceA:
 			    {
-				    float2 normal = MathUtils.Multiply(ref xfA.R, _axis);
+				    float2 normal = MathUtils.Multiply(ref xfA.q, _axis);
 				    float2 pointA = MathUtils.Multiply(ref xfA, _localPoint);
 
-				    float2 axisB = MathUtils.MultiplyT(ref xfB.R, -normal);
+				    float2 axisB = MathUtils.MultiplyT(ref xfB.q, -normal);
 
 				    indexA = -1;
 				    indexB = _proxyB.GetSupport(axisB);
@@ -183,10 +183,10 @@ namespace Uno.Physics.Box2D
 
 		        case SeparationFunctionType.FaceB:
 			    {
-				    float2 normal = MathUtils.Multiply(ref xfB.R, _axis);
+				    float2 normal = MathUtils.Multiply(ref xfB.q, _axis);
 				    float2 pointB = MathUtils.Multiply(ref xfB, _localPoint);
 
-				    float2 axisA = MathUtils.MultiplyT(ref xfA.R, normal * -1.0f);
+				    float2 axisA = MathUtils.MultiplyT(ref xfA.q, normal * -1.0f);
 
 				    indexB = -1;
 				    indexA = _proxyA.GetSupport(axisA);
@@ -215,8 +215,8 @@ namespace Uno.Physics.Box2D
 		    {
                 case SeparationFunctionType.Points:
 			    {
-                    float2 axisA = MathUtils.MultiplyT(ref xfA.R, _axis);
-                    float2 axisB = MathUtils.MultiplyT(ref xfB.R, _axis * -1.0f);
+                    float2 axisA = MathUtils.MultiplyT(ref xfA.q, _axis);
+                    float2 axisB = MathUtils.MultiplyT(ref xfB.q, _axis * -1.0f);
 
                     float2 localPointA = _proxyA.GetVertex(indexA);
                     float2 localPointB = _proxyB.GetVertex(indexB);
@@ -230,10 +230,10 @@ namespace Uno.Physics.Box2D
 
                 case SeparationFunctionType.FaceA:
 			    {
-                    float2 normal = MathUtils.Multiply(ref xfA.R, _axis);
+                    float2 normal = MathUtils.Multiply(ref xfA.q, _axis);
                     float2 pointA = MathUtils.Multiply(ref xfA, _localPoint);
 
-                    float2 axisB = MathUtils.MultiplyT(ref xfB.R, normal * -1.0f);
+                    float2 axisB = MathUtils.MultiplyT(ref xfB.q, normal * -1.0f);
 
                     float2 localPointB = _proxyB.GetVertex(indexB);
                     float2 pointB = MathUtils.Multiply(ref xfB, localPointB);
@@ -244,10 +244,10 @@ namespace Uno.Physics.Box2D
 
                 case SeparationFunctionType.FaceB:
 			    {
-                    float2 normal = MathUtils.Multiply(ref xfB.R, _axis);
+                    float2 normal = MathUtils.Multiply(ref xfB.q, _axis);
                     float2 pointB = MathUtils.Multiply(ref xfB, _localPoint);
 
-                    float2 axisA = MathUtils.MultiplyT(ref xfA.R, normal * -1.0f);
+                    float2 axisA = MathUtils.MultiplyT(ref xfA.q, normal * -1.0f);
 
                     float2 localPointA = _proxyA.GetVertex(indexA);
                     float2 pointA = MathUtils.Multiply(ref xfA, localPointA);

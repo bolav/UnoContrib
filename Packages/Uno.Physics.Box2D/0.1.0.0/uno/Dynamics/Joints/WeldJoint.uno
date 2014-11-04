@@ -110,8 +110,8 @@ namespace Uno.Physics.Box2D
             bB.GetTransform(out xfB);
 
 	        // Compute the effective mass matrix.
-            float2 rA = MathUtils.Multiply(ref xfA.R, _localAnchorA - bA.GetLocalCenter());
-            float2 rB = MathUtils.Multiply(ref xfB.R, _localAnchorB - bB.GetLocalCenter());
+            float2 rA = MathUtils.Multiply(ref xfA.q, _localAnchorA - bA.GetLocalCenter());
+            float2 rB = MathUtils.Multiply(ref xfB.q, _localAnchorB - bB.GetLocalCenter());
 	        
            	// J = [-I -r1_skew I r2_skew]
 	        //     [ 0       -1 0       1]
@@ -125,15 +125,15 @@ namespace Uno.Physics.Box2D
 	        float mA = bA._invMass, mB = bB._invMass;
 	        float iA = bA._invI, iB = bB._invI;
 
-	        _mass.col1.X = mA + mB + rA.Y * rA.Y * iA + rB.Y * rB.Y * iB;
-	        _mass.col2.X = -rA.Y * rA.X * iA - rB.Y * rB.X * iB;
-	        _mass.col3.X = -rA.Y * iA - rB.Y * iB;
-	        _mass.col1.Y = _mass.col2.X;
-	        _mass.col2.Y = mA + mB + rA.X * rA.X * iA + rB.X * rB.X * iB;
-	        _mass.col3.Y = rA.X * iA + rB.X * iB;
-	        _mass.col1.Z = _mass.col3.X;
-	        _mass.col2.Z = _mass.col3.Y;
-	        _mass.col3.Z = iA + iB;
+	        _mass.ex.X = mA + mB + rA.Y * rA.Y * iA + rB.Y * rB.Y * iB;
+	        _mass.ey.X = -rA.Y * rA.X * iA - rB.Y * rB.X * iB;
+	        _mass.ez.X = -rA.Y * iA - rB.Y * iB;
+	        _mass.ex.Y = _mass.ey.X;
+	        _mass.ey.Y = mA + mB + rA.X * rA.X * iA + rB.X * rB.X * iB;
+	        _mass.ez.Y = rA.X * iA + rB.X * iB;
+	        _mass.ex.Z = _mass.ez.X;
+	        _mass.ey.Z = _mass.ez.Y;
+	        _mass.ez.Z = iA + iB;
 
 	        if (step.warmStarting)
 	        {
@@ -172,8 +172,8 @@ namespace Uno.Physics.Box2D
             bA.GetTransform(out xfA);
             bB.GetTransform(out xfB);
 
-            float2 rA = MathUtils.Multiply(ref xfA.R, _localAnchorA - bA.GetLocalCenter());
-            float2 rB = MathUtils.Multiply(ref xfB.R, _localAnchorB - bB.GetLocalCenter());
+            float2 rA = MathUtils.Multiply(ref xfA.q, _localAnchorA - bA.GetLocalCenter());
+            float2 rB = MathUtils.Multiply(ref xfB.q, _localAnchorB - bB.GetLocalCenter());
 
             //  Solve point-to-point constraint
 	        float2 Cdot1 = vB + MathUtils.Cross(wB, rB) - vA - MathUtils.Cross(wA, rA);
@@ -211,8 +211,8 @@ namespace Uno.Physics.Box2D
             bA.GetTransform(out xfA);
             bB.GetTransform(out xfB);
 
-	        float2 rA = MathUtils.Multiply(ref xfA.R, _localAnchorA - bA.GetLocalCenter());
-	        float2 rB = MathUtils.Multiply(ref xfB.R, _localAnchorB - bB.GetLocalCenter());
+	        float2 rA = MathUtils.Multiply(ref xfA.q, _localAnchorA - bA.GetLocalCenter());
+	        float2 rB = MathUtils.Multiply(ref xfB.q, _localAnchorB - bB.GetLocalCenter());
 
 	        float2 C1 =  bB._sweep.c + rB - bA._sweep.c - rA;
 	        float C2 = bB._sweep.a - bA._sweep.a - _referenceAngle;
@@ -227,15 +227,15 @@ namespace Uno.Physics.Box2D
 		        iB *= 1.0f;
 	        }
 
-	        _mass.col1.X = mA + mB + rA.Y * rA.Y * iA + rB.Y * rB.Y * iB;
-	        _mass.col2.X = -rA.Y * rA.X * iA - rB.Y * rB.X * iB;
-	        _mass.col3.X = -rA.Y * iA - rB.Y * iB;
-	        _mass.col1.Y = _mass.col2.X;
-	        _mass.col2.Y = mA + mB + rA.X * rA.X * iA + rB.X * rB.X * iB;
-	        _mass.col3.Y = rA.X * iA + rB.X * iB;
-	        _mass.col1.Z = _mass.col3.X;
-	        _mass.col2.Z = _mass.col3.Y;
-	        _mass.col3.Z = iA + iB;
+	        _mass.ex.X = mA + mB + rA.Y * rA.Y * iA + rB.Y * rB.Y * iB;
+	        _mass.ey.X = -rA.Y * rA.X * iA - rB.Y * rB.X * iB;
+	        _mass.ez.X = -rA.Y * iA - rB.Y * iB;
+	        _mass.ex.Y = _mass.ey.X;
+	        _mass.ey.Y = mA + mB + rA.X * rA.X * iA + rB.X * rB.X * iB;
+	        _mass.ez.Y = rA.X * iA + rB.X * iB;
+	        _mass.ex.Z = _mass.ez.X;
+	        _mass.ey.Z = _mass.ez.Y;
+	        _mass.ez.Z = iA + iB;
 
             float3 C = float3(C1.X, C1.Y, C2);
 

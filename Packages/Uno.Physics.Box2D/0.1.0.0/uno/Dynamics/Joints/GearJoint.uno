@@ -80,7 +80,7 @@ namespace Uno.Physics.Box2D
             Transform xf1;
             _bodyB.GetTransform(out xf1);
 
-            float2 r = MathUtils.Multiply(ref xf1.R, _localAnchor2 - _bodyB.GetLocalCenter());
+            float2 r = MathUtils.Multiply(ref xf1.q, _localAnchor2 - _bodyB.GetLocalCenter());
 	        float2 P = _impulse * _J.linearB;
 	        float L = _impulse * _J.angularB - MathUtils.Cross(r, P);
 	        return inv_dt * L;
@@ -178,8 +178,8 @@ namespace Uno.Physics.Box2D
                 b1.GetTransform(out xf1);
                 g1.GetTransform(out xfg1);
 
-		        float2 ug = MathUtils.Multiply(ref xfg1.R, _prismatic1._localXAxis1);
-		        float2 r = MathUtils.Multiply(ref xf1.R, _localAnchor1 - b1.GetLocalCenter());
+		        float2 ug = MathUtils.Multiply(ref xfg1.q, _prismatic1._localXAxis1);
+		        float2 r = MathUtils.Multiply(ref xf1.q, _localAnchor1 - b1.GetLocalCenter());
 		        float crug = MathUtils.Cross(r, ug);
 		        _J.linearA = -ug;
 		        _J.angularA = -crug;
@@ -197,8 +197,8 @@ namespace Uno.Physics.Box2D
                 g1.GetTransform(out xfg1);
                 b2.GetTransform(out xf2);
 
-		        float2 ug = MathUtils.Multiply(ref xfg1.R, _prismatic2._localXAxis1);
-		        float2 r = MathUtils.Multiply(ref xf2.R, _localAnchor2 - b2.GetLocalCenter());
+		        float2 ug = MathUtils.Multiply(ref xfg1.q, _prismatic2._localXAxis1);
+		        float2 r = MathUtils.Multiply(ref xf2.q, _localAnchor2 - b2.GetLocalCenter());
 		        float crug = MathUtils.Cross(r, ug);
 		        _J.linearB = -_ratio * ug;
 		        _J.angularB = -_ratio * crug;
