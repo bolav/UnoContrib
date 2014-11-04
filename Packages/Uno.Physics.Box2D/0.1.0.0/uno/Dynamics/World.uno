@@ -1326,7 +1326,7 @@ namespace Uno.Physics.Box2D
 
 			        float2 centerF = MathUtils.Multiply(ref xf, circle._p);
 			        float radius = circle._radius;
-			        float2 axis = xf.q.ex;
+			        float2 axis = xf.q2.ex;
 
 			        DebugDraw.DrawSolidCircle(centerF, radius, axis, color);
 		        }

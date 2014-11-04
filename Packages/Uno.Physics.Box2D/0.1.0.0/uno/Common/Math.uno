@@ -77,8 +77,8 @@ namespace Uno.Physics.Box2D
 
         public static float2 Multiply(ref Transform T, float2 v)
         {
-			float x = (T.q2.c * v.X - T.q2.s * v.Y) + T.p.X;
-			float y = (T.q2.s * v.X + T.q2.c * v.Y) + T.p.Y;
+			float x = (T.q.c * v.X - T.q.s * v.Y) + T.p.X;
+			float y = (T.q.s * v.X + T.q.c * v.Y) + T.p.Y;
 
             return float2(x, y);
         }
@@ -87,8 +87,8 @@ namespace Uno.Physics.Box2D
         {
 			float px = v.X - T.p.X;
 			float py = v.Y - T.p.Y;
-			float x = (T.q2.c * px + T.q2.s * py);
-			float y = (-T.q2.s * px + T.q2.c * py);
+			float x = (T.q.c * px + T.q.s * py);
+			float y = (-T.q.s * px + T.q.c * py);
 
 			return float2(x, y);
         }
@@ -98,7 +98,7 @@ namespace Uno.Physics.Box2D
 		public static Transform Multiply(ref Transform A, ref Transform B)
 		{
 			Transform C = new Transform();
-			Multiply(ref A.q, ref B.q, out C.q);
+			C.q = Multiply(ref A.q, ref B.q);
 			C.p = Multiply(ref A.q, B.p) + A.p;
 			return C;
 		}
@@ -108,7 +108,7 @@ namespace Uno.Physics.Box2D
         public static void MultiplyT(ref Transform A, ref Transform B, out Transform C)
 		{
 			C = new Transform();
-			MultiplyT(ref A.q, ref B.q, out C.q);
+			C.q = MultiplyT(ref A.q, ref B.q);
 			C.p = MultiplyT(ref A.q, B.p - A.p);
 		}
 
@@ -159,13 +159,13 @@ namespace Uno.Physics.Box2D
 		}
 
 		/// Rotate a vector
-		public static float2 Multiply(ref Rot q, ref float2 v)
+		public static float2 Multiply(ref Rot q, float2 v)
 		{
 			return float2(q.c * v.X - q.s * v.Y, q.s * v.X + q.c * v.Y);
 		}
 
 		/// Inverse rotate a vector
-		public static float2 MultiplyT(ref Rot q, ref float2 v)
+		public static float2 MultiplyT(ref Rot q, float2 v)
 		{
 			return float2(q.c * v.X + q.s * v.Y, -q.s * v.X + q.c * v.Y);
 		}
@@ -418,7 +418,7 @@ namespace Uno.Physics.Box2D
 		}
 
 		/// Set using an angle in radians.
-		void Set(float angle)
+		public void Set(float angle)
 		{
 			/// TODO_ERIN optimize
 			s = Math.Sin(angle);
@@ -426,26 +426,26 @@ namespace Uno.Physics.Box2D
 		}
 
 		/// Set to the identity rotation
-		void SetIdentity()
+		public void SetIdentity()
 		{
 			s = 0.0f;
 			c = 1.0f;
 		}
 
 		/// Get the angle in radians
-		float GetAngle()
+		public float GetAngle()
 		{
 			return Math.Atan2(s, c);
 		}
 
 		/// Get the x-axis
-		float2 GetXAxis()
+		public float2 GetXAxis()
 		{
 			return float2(c, s);
 		}
 
 		/// Get the u-axis
-		float2 GetYAxis()
+		public float2 GetYAxis()
 		{
 			return float2(-s, c);
 		}
@@ -459,7 +459,7 @@ namespace Uno.Physics.Box2D
     public struct Transform
     {
 	    /// Initialize using a position vector and a rotation matrix.
-        public Transform(float2 position, ref Mat22 rotation)
+        public Transform(float2 position, ref Rot rotation)
         {
             p = position;
             q = rotation;
@@ -480,8 +480,8 @@ namespace Uno.Physics.Box2D
 	    }
 
         public float2 p; // Position
-        public Mat22 q; // R
-		public Rot q2; // XXX: Should become q
+        public Mat22 q2; 
+		public Rot q; // R
     }
 
     /// This describes the motion of a body/shape for TOI computation.
